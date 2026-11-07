@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "André Menezes — Portfólio",
-    "description": "Projetos, experimentos e aventuras em código de André Menezes."
+    "description": "André Menezes, Endpoint Engineer: automação para infraestrutura, homologação de hardware e produtos construídos com Spec-Driven Development."
   },
   "nav": {
     "skip": "Pular para o conteúdo",
@@ -27,9 +27,9 @@
   "hero": {
     "speaker": "André",
     "lines": [
-      "Olá, viajante! Eu sou o André.",
-      "Construo interfaces e sistemas para a web — de ponta a ponta.",
-      "Abra o inventário abaixo para ver os itens que já conquistei. Ah… e fique de olho em gemas escondidas pelo caminho."
+      "Olá, viajante! Eu sou o André, Endpoint Engineer no Rio de Janeiro.",
+      "Automatizo a infraestrutura: testo hardware, padronizo máquinas e escrevo scripts que rodam sozinhos — cada teste devolve PASS ou FAIL.",
+      "No inventário abaixo estão os itens que forjei, do laboratório a produtos open source. Ah… e fique de olho em gemas escondidas pelo caminho."
     ],
     "next": "Continuar",
     "restart": "Ouvir de novo",
@@ -37,17 +37,20 @@
   },
   "inventory": {
     "title": "Inventário",
-    "subtitle": "Cada item é um projeto. Use as setas do teclado ou o mouse para escolher.",
+    "subtitle": "Cada item é um projeto — ferramentas de laboratório, skills de IA e produtos. Use as setas do teclado ou o mouse para escolher.",
     "empty": "Slot vazio — próxima aventura",
     "open": "Inspecionar item",
-    "selected": "Item selecionado"
+    "selected": "Item selecionado",
+    "attributes": "Atributos"
   },
   "modal": {
     "obtained": "Você obteve",
     "demo": "Live demo",
     "github": "GitHub",
     "more": "Ver detalhes",
-    "close": "Fechar"
+    "close": "Fechar",
+    "private": "Código privado",
+    "askDemo": "Pedir uma demonstração"
   },
   "project": {
     "back": "Voltar ao inventário",
@@ -57,7 +60,9 @@
     "links": "Links",
     "zoom": "Ampliar imagem",
     "prev": "Anterior",
-    "next": "Próxima"
+    "next": "Próxima",
+    "private": "Repositório privado — posso mostrar numa conversa.",
+    "kind": "Tipo"
   },
   "about": {
     "title": "Ficha do herói",
@@ -65,7 +70,8 @@
     "class": "Classe",
     "home": "Vila natal",
     "equipment": "Equipamento",
-    "questLog": "Diário de missões"
+    "questLog": "Diário de missões",
+    "training": "Em treinamento"
   },
   "contact": {
     "title": "Placas do caminho",
@@ -81,9 +87,10 @@
     "tips": [
       "Psst! Tem gemas escondidas pela página…",
       "Experimente navegar o inventário com as setas!",
+      "O escudo é um hub de testes de hardware: 9 módulos, cada um devolve PASS ou FAIL.",
+      "O pergaminho é uma spec — no SDD Maestri, a spec é o contrato. A spec ganha!",
       "Já tentou a noite? O botão de lua fica lá em cima.",
-      "Dizem que uma melodia antiga abre segredos…",
-      "Clique em um item para inspecioná-lo de perto."
+      "Dizem que uma melodia antiga abre segredos…"
     ]
   },
   "gems": {

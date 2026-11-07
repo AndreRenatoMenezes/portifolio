@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "André Menezes — Portfolio",
-    "description": "Projects, experiments and coding adventures by André Menezes."
+    "description": "André Menezes, Endpoint Engineer: infrastructure automation, hardware certification and products built with Spec-Driven Development."
   },
   "nav": {
     "skip": "Skip to content",
@@ -27,9 +27,9 @@
   "hero": {
     "speaker": "André",
     "lines": [
-      "Hello, traveler! I'm André.",
-      "I build interfaces and systems for the web — end to end.",
-      "Open the inventory below to see the items I've collected. Oh… and keep an eye out for hidden gems along the way."
+      "Hello, traveler! I'm André, an Endpoint Engineer in Rio de Janeiro.",
+      "I automate infrastructure: I test hardware, standardize machines and write scripts that run on their own — every test returns PASS or FAIL.",
+      "The inventory below holds the items I've forged, from the lab to open-source products. Oh… and keep an eye out for hidden gems along the way."
     ],
     "next": "Continue",
     "restart": "Listen again",
@@ -37,17 +37,20 @@
   },
   "inventory": {
     "title": "Inventory",
-    "subtitle": "Every item is a project. Use the arrow keys or your mouse to choose.",
+    "subtitle": "Every item is a project — lab tools, AI skills and products. Use the arrow keys or your mouse to choose.",
     "empty": "Empty slot — next adventure",
     "open": "Inspect item",
-    "selected": "Selected item"
+    "selected": "Selected item",
+    "attributes": "Attributes"
   },
   "modal": {
     "obtained": "You got",
     "demo": "Live demo",
     "github": "GitHub",
     "more": "See details",
-    "close": "Close"
+    "close": "Close",
+    "private": "Private code",
+    "askDemo": "Ask for a demo"
   },
   "project": {
     "back": "Back to inventory",
@@ -57,7 +60,9 @@
     "links": "Links",
     "zoom": "Enlarge image",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "private": "Private repository — happy to show it in a conversation.",
+    "kind": "Type"
   },
   "about": {
     "title": "Hero profile",
@@ -65,7 +70,8 @@
     "class": "Class",
     "home": "Home village",
     "equipment": "Equipment",
-    "questLog": "Quest log"
+    "questLog": "Quest log",
+    "training": "In training"
   },
   "contact": {
     "title": "Signposts",
@@ -81,9 +87,10 @@
     "tips": [
       "Psst! There are gems hidden around this page…",
       "Try browsing the inventory with your arrow keys!",
+      "The shield is a hardware test hub: 9 modules, each returning PASS or FAIL.",
+      "The scroll is a spec — in SDD Maestri, the spec is the contract. The spec wins!",
       "Have you tried the night? The moon button is up top.",
-      "They say an ancient melody unlocks secrets…",
-      "Click an item to inspect it up close."
+      "They say an ancient melody unlocks secrets…"
     ]
   },
   "gems": {

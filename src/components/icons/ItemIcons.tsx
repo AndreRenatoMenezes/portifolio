@@ -81,6 +81,23 @@ const icons = {
       <path d="M11 12h10M11 16h10M11 20h7" stroke="#8a6a3a" strokeWidth="1.2" />
     </>
   ),
+  letter: (
+    <>
+      <rect x="3" y="8" width="26" height="18" rx="2" fill="#fbf3e4" stroke="#8a6a3a" strokeWidth="1.3" />
+      <path d="M3 9 16 19 29 9" fill="#efe1c4" stroke="#8a6a3a" strokeWidth="1.3" strokeLinejoin="round" />
+      <circle cx="16" cy="18" r="4" fill="#c0392b" stroke="#7a1610" strokeWidth="1" />
+      <path d="M14.5 17.6c.6-.9 1.5-.3 1.5.3 0-.6.9-1.2 1.5-.3.4.7-1.5 2.2-1.5 2.2s-1.9-1.5-1.5-2.2z" fill="#fbf3e4" />
+    </>
+  ),
+  pouch: (
+    <>
+      <path d="M11 9c-5 3-7 8-7 12 0 5 5 8 12 8s12-3 12-8c0-4-2-9-7-12z" fill="#a0703c" stroke="#5a3a1c" strokeWidth="1.3" />
+      <path d="M10 6c2 1 4 1.5 6 1.5S20 7 22 6l-1 4c-2 .7-3.3 1-5 1s-3-.3-5-1z" fill="#c98a3a" stroke="#5a3a1c" strokeWidth="1.1" />
+      <path d="M11 10c3 1 7 1 10 0" stroke="#f2c94c" strokeWidth="1.4" fill="none" />
+      <path d="M16 14l4 4-4 6-4-6z" fill="#3fd17a" stroke="#0f5e30" strokeWidth="1" />
+      <path d="M16 14v10M12 18h8" stroke="#0f5e30" strokeWidth=".6" opacity=".6" />
+    </>
+  ),
 } as const;
 
 export type ItemIcon = keyof typeof icons;

@@ -11,13 +11,30 @@ import { playCursor, playItemGet } from "@/lib/sound";
 export type InventoryItem = {
   slug: string;
   title: string;
+  kind: string;
   summary: string;
   item: ItemIcon;
+  stats: { value: string; label: string }[];
   tags: string[];
   year: number;
   cover?: { src: string; alt: string };
   links: { demo?: string; github?: string };
+  private?: boolean;
 };
+
+/** Atributos do item, estilo ficha de RPG. */
+function Stats({ stats }: { stats: InventoryItem["stats"] }) {
+  return (
+    <dl className="item-stats">
+      {stats.slice(0, 3).map((s) => (
+        <div key={s.label}>
+          <dt>{s.label}</dt>
+          <dd>{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 type Props = {
   lang: Locale;
@@ -100,9 +117,12 @@ export function Inventory({ lang, items, dict, modalDict }: Props) {
 
       {current && (
         <aside className="item-panel dialog-frame" aria-live="polite">
-          <p className="item-panel-label">{dict.selected}</p>
+          <p className="item-panel-label">
+            {dict.selected} · {current.kind}
+          </p>
           <h3 className="item-panel-title">{current.title}</h3>
           <p>{current.summary}</p>
+          <Stats stats={current.stats} />
           <ul className="tags">
             {current.tags.map((t) => (
               <li key={t}>{t}</li>
@@ -161,7 +181,9 @@ function ItemGetModal({
               <ItemIconSvg name={item.item} size={72} />
             </span>
           </div>
-          <p className="item-get-kicker">{dict.obtained}</p>
+          <p className="item-get-kicker">
+            {dict.obtained} · {item.kind}
+          </p>
           <h3 id="item-get-title" className="item-get-title">
             {item.title}!
           </h3>
@@ -177,6 +199,7 @@ function ItemGetModal({
             />
           )}
           <p>{item.summary}</p>
+          <Stats stats={item.stats} />
           <div className="btn-row">
             {item.links.demo && (
               <a className="btn btn-primary" href={item.links.demo} target="_blank" rel="noreferrer">
@@ -186,6 +209,11 @@ function ItemGetModal({
             {item.links.github && (
               <a className="btn" href={item.links.github} target="_blank" rel="noreferrer">
                 {dict.github} ↗
+              </a>
+            )}
+            {item.private && (
+              <a className="btn" href={`/${lang}#contact`} onClick={onClose} title={dict.private}>
+                🔒 {dict.askDemo}
               </a>
             )}
             <Link className="btn" href={`/${lang}/projects/${item.slug}`}>

@@ -40,6 +40,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
           <ItemIconSvg name={project.item} size={64} />
         </span>
         <div>
+          <p className="item-panel-label">{project.kind[lang]}</p>
           <h1 className="section-title">{project.title[lang]}</h1>
           <p className="project-summary">{project.summary[lang]}</p>
         </div>
@@ -52,6 +53,14 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
           ))}
         </div>
         <aside className="project-meta dialog-frame">
+          <dl className="item-stats">
+            {project.stats.map((s) => (
+              <div key={s.label.en}>
+                <dt>{s.label[lang]}</dt>
+                <dd>{s.value}</dd>
+              </div>
+            ))}
+          </dl>
           <dl>
             <dt>{dict.project.year}</dt>
             <dd>{project.year}</dd>
@@ -76,6 +85,11 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
               </a>
             )}
           </div>
+          {project.private && (
+            <p className="private-note">
+              🔒 {dict.project.private} <Link href={`/${lang}#contact`}>{dict.modal.askDemo} →</Link>
+            </p>
+          )}
         </aside>
       </div>
 

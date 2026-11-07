@@ -13,13 +13,14 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const dict = getDictionary(lang);
   const gem = { label: dict.gems.collect, foundText: dict.gems.found, allText: dict.gems.all };
 
-  const items: InventoryItem[] = [...projects]
-    .sort((a, b) => b.year - a.year)
-    .map((p) => ({
+  const items: InventoryItem[] = projects.map((p) => ({
       slug: p.slug,
       title: p.title[lang],
+      kind: p.kind[lang],
       summary: p.summary[lang],
       item: p.item,
+      stats: p.stats.map((s) => ({ value: s.value, label: s.label[lang] })),
+      private: p.private,
       tags: p.tags,
       year: p.year,
       cover: p.images[0] && { src: p.images[0].src, alt: p.images[0].alt[lang] },
@@ -105,11 +106,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 </li>
               ))}
             </ul>
+            <h3 className="subhead">{dict.about.training}</h3>
+            <ul className="equipment equipment-training">
+              {profile.training.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
             <h3 className="subhead">{dict.about.questLog}</h3>
             <ol className="quests">
               {profile.quests.map((q) => (
-                <li key={q.when + q.title.en}>
-                  <span className="quest-when">{q.when}</span>
+                <li key={q.title.en}>
+                  <span className="quest-when">{q.when[lang]}</span>
                   <strong>{q.title[lang]}</strong>
                   <span>{q.text[lang]}</span>
                 </li>
