@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "André Menezes — Portfolio",
+    "description": "Projects, experiments and coding adventures by André Menezes."
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "projects": "Inventory",
+    "about": "Profile",
+    "contact": "Contact"
+  },
+  "controls": {
+    "language": "Language",
+    "switchTo": "Mudar para português",
+    "themeDay": "Switch to night",
+    "themeNight": "Switch to day",
+    "themeTemple": "Leave the secret temple",
+    "soundOn": "Turn sound off",
+    "soundOff": "Turn sound on",
+    "fairyOn": "Dismiss the fairy",
+    "fairyOff": "Call the fairy"
+  },
+  "hud": {
+    "hearts": "Full health",
+    "gems": "Gems found"
+  },
+  "hero": {
+    "speaker": "André",
+    "lines": [
+      "Hello, traveler! I'm André.",
+      "I build interfaces and systems for the web — end to end.",
+      "Open the inventory below to see the items I've collected. Oh… and keep an eye out for hidden gems along the way."
+    ],
+    "next": "Continue",
+    "restart": "Listen again",
+    "cta": "Open inventory"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle": "Every item is a project. Use the arrow keys or your mouse to choose.",
+    "empty": "Empty slot — next adventure",
+    "open": "Inspect item",
+    "selected": "Selected item"
+  },
+  "modal": {
+    "obtained": "You got",
+    "demo": "Live demo",
+    "github": "GitHub",
+    "more": "See details",
+    "close": "Close"
+  },
+  "project": {
+    "back": "Back to inventory",
+    "gallery": "Screenshots",
+    "year": "Year",
+    "stack": "Gear used",
+    "links": "Links",
+    "zoom": "Enlarge image",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "about": {
+    "title": "Hero profile",
+    "subtitle": "Who's behind the inventory.",
+    "class": "Class",
+    "home": "Home village",
+    "equipment": "Equipment",
+    "questLog": "Quest log"
+  },
+  "contact": {
+    "title": "Signposts",
+    "text": "Want to talk about a project, a role, or just chat? Pick a signpost.",
+    "cv": "Download résumé"
+  },
+  "footer": {
+    "made": "Handmade with Next.js and a little magic.",
+    "melody": "An old sage's hint: ♪ ↑ ↓ ← → A"
+  },
+  "fairy": {
+    "label": "Fairy companion — click for a tip",
+    "tips": [
+      "Psst! There are gems hidden around this page…",
+      "Try browsing the inventory with your arrow keys!",
+      "Have you tried the night? The moon button is up top.",
+      "They say an ancient melody unlocks secrets…",
+      "Click an item to inspect it up close."
+    ]
+  },
+  "gems": {
+    "collect": "Hidden gem",
+    "found": "You found a gem!",
+    "all": "All gems found! The secret temple is unlocked — check the theme button."
+  },
+  "melody": {
+    "success": "What a lovely melody! The stars answered."
+  },
+  "notFound": {
+    "title": "You got lost in the woods…",
+    "text": "Every path around here seems to loop back. Maybe head back to the village.",
+    "back": "Back to the start"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "André Menezes — Portfólio",
+    "description": "Projetos, experimentos e aventuras em código de André Menezes."
+  },
+  "nav": {
+    "skip": "Pular para o conteúdo",
+    "projects": "Inventário",
+    "about": "Ficha",
+    "contact": "Contato"
+  },
+  "controls": {
+    "language": "Idioma",
+    "switchTo": "Switch to English",
+    "themeDay": "Mudar para a noite",
+    "themeNight": "Mudar para o dia",
+    "themeTemple": "Sair do templo secreto",
+    "soundOn": "Desligar som",
+    "soundOff": "Ligar som",
+    "fairyOn": "Dispensar a fada",
+    "fairyOff": "Chamar a fada"
+  },
+  "hud": {
+    "hearts": "Vida cheia",
+    "gems": "Gemas encontradas"
+  },
+  "hero": {
+    "speaker": "André",
+    "lines": [
+      "Olá, viajante! Eu sou o André.",
+      "Construo interfaces e sistemas para a web — de ponta a ponta.",
+      "Abra o inventário abaixo para ver os itens que já conquistei. Ah… e fique de olho em gemas escondidas pelo caminho."
+    ],
+    "next": "Continuar",
+    "restart": "Ouvir de novo",
+    "cta": "Abrir inventário"
+  },
+  "inventory": {
+    "title": "Inventário",
+    "subtitle": "Cada item é um projeto. Use as setas do teclado ou o mouse para escolher.",
+    "empty": "Slot vazio — próxima aventura",
+    "open": "Inspecionar item",
+    "selected": "Item selecionado"
+  },
+  "modal": {
+    "obtained": "Você obteve",
+    "demo": "Live demo",
+    "github": "GitHub",
+    "more": "Ver detalhes",
+    "close": "Fechar"
+  },
+  "project": {
+    "back": "Voltar ao inventário",
+    "gallery": "Prints",
+    "year": "Ano",
+    "stack": "Equipamento usado",
+    "links": "Links",
+    "zoom": "Ampliar imagem",
+    "prev": "Anterior",
+    "next": "Próxima"
+  },
+  "about": {
+    "title": "Ficha do herói",
+    "subtitle": "Quem está por trás do inventário.",
+    "class": "Classe",
+    "home": "Vila natal",
+    "equipment": "Equipamento",
+    "questLog": "Diário de missões"
+  },
+  "contact": {
+    "title": "Placas do caminho",
+    "text": "Quer conversar sobre um projeto, uma vaga ou só trocar ideia? Escolha uma placa.",
+    "cv": "Baixar currículo"
+  },
+  "footer": {
+    "made": "Feito à mão com Next.js e um pouco de magia.",
+    "melody": "Dica de um velho sábio: ♪ ↑ ↓ ← → A"
+  },
+  "fairy": {
+    "label": "Fada companheira — clique para uma dica",
+    "tips": [
+      "Psst! Tem gemas escondidas pela página…",
+      "Experimente navegar o inventário com as setas!",
+      "Já tentou a noite? O botão de lua fica lá em cima.",
+      "Dizem que uma melodia antiga abre segredos…",
+      "Clique em um item para inspecioná-lo de perto."
+    ]
+  },
+  "gems": {
+    "collect": "Gema escondida",
+    "found": "Você achou uma gema!",
+    "all": "Todas as gemas! O templo secreto foi desbloqueado — veja o botão de tema."
+  },
+  "melody": {
+    "success": "Que melodia linda! As estrelas responderam."
+  },
+  "notFound": {
+    "title": "Você se perdeu na floresta…",
+    "text": "Todo caminho por aqui parece dar voltas. Talvez seja melhor voltar para a vila.",
+    "back": "Voltar para o início"
+  }
+}
