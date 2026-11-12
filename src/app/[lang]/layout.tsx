@@ -1,19 +1,32 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cinzel, Nunito } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Analytics } from "@/components/Analytics";
 import { Controls } from "@/components/Controls";
+import { CookieNotice, CookiePrefsLink } from "@/components/CookieNotice";
 import { MelodyListener, MessageToast, Starfall } from "@/components/Effects";
 import { Fairy } from "@/components/Fairy";
 import { Gem } from "@/components/Gem";
 import { Hud } from "@/components/Hud";
 import { InlineScript } from "@/components/InlineScript";
+import { MobileContactBar } from "@/components/MobileContactBar";
+import { NavProgress } from "@/components/NavProgress";
 import { profile } from "@/content/profile";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
+import { whatsappUrl } from "@/lib/contact";
+import { alternatesFor, siteUrl } from "@/lib/site";
 import "../globals.css";
 
-const display = Cinzel({ variable: "--font-display", subsets: ["latin"], weight: ["600", "800"] });
+const display = Cinzel({ variable: "--font-display", subsets: ["latin"], weight: ["800"] });
 const body = Nunito({ variable: "--font-body", subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eef1dc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1430" },
+  ],
+};
 
 export const dynamicParams = false;
 export const generateStaticParams = () => locales.map((lang) => ({ lang }));
@@ -25,8 +38,17 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   return {
     title: { default: dict.meta.title, template: `%s · ${profile.name}` },
     description: dict.meta.description,
-    alternates: { languages: { pt: "/pt", en: "/en" } },
-    openGraph: { title: dict.meta.title, description: dict.meta.description, locale: lang === "pt" ? "pt_BR" : "en_US" },
+    metadataBase: new URL(siteUrl),
+    alternates: alternatesFor(lang),
+    openGraph: {
+      type: "website",
+      siteName: profile.name,
+      url: `/${lang}`,
+      title: dict.meta.title,
+      description: dict.meta.description,
+      locale: lang === "pt" ? "pt_BR" : "en_US",
+    },
+    twitter: { card: "summary_large_image" },
   };
 }
 
@@ -52,10 +74,13 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
             <Link href={`/${lang}`} className="logo">
               <span className="logo-mark" aria-hidden="true">◆</span> {profile.name}
             </Link>
-            <nav aria-label="Principal" className="main-nav">
+            <nav aria-label={dict.nav.label} className="main-nav">
               <a href={`/${lang}#inventory`}>{dict.nav.projects}</a>
               <a href={`/${lang}#about`}>{dict.nav.about}</a>
-              <a href={`/${lang}#contact`}>{dict.nav.contact}</a>
+              <a href={`/${lang}#contact`} className="btn btn-primary nav-cta">
+                <span className="cta-long">{dict.nav.cta}</span>
+                <span className="cta-short">{dict.nav.contact}</span>
+              </a>
             </nav>
             <Hud dict={dict.hud} />
             <Controls lang={lang} dict={dict.controls} />
@@ -69,6 +94,10 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
             <p>
               © {new Date().getFullYear()} {profile.name}. {dict.footer.made}
             </p>
+            <p className="footer-links">
+              <Link href={`/${lang}/privacy`}>{dict.footer.privacy}</Link>
+              <CookiePrefsLink label={dict.footer.cookiePrefs} />
+            </p>
             <p className="melody-hint">
               {dict.footer.melody}
               <Gem id="footer" label={dict.gems.collect} foundText={dict.gems.found} allText={dict.gems.all} className="gem-inline" />
@@ -76,9 +105,13 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
           </div>
         </footer>
 
+        <MobileContactBar lang={lang} dict={dict.contact} whatsapp={whatsappUrl(dict.contact.whatsappText)} />
         <Fairy label={dict.fairy.label} tips={dict.fairy.tips} />
         <MessageToast />
+        <NavProgress label={dict.loading.text} />
         <MelodyListener successText={dict.melody.success} />
+        <CookieNotice lang={lang} dict={dict.cookies} />
+        <Analytics />
         <Starfall />
       </body>
     </html>

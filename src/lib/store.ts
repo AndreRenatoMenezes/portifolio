@@ -8,7 +8,9 @@ import { useSyncExternalStore } from "react";
  * aqui só lemos o atributo `data-theme` do <html>.
  */
 export type Theme = "day" | "night" | "temple";
-export type Prefs = { sound: boolean; fairy: boolean; gems: string[]; theme: Theme };
+export type Consent = "granted" | "denied" | null;
+/** `consent` é `undefined` só no servidor/hidratação (ainda não sabemos); `null` = visitante não escolheu. */
+export type Prefs = { sound: boolean; fairy: boolean; gems: string[]; theme: Theme; consent?: Consent };
 
 export const GEM_IDS = ["hero", "inventory", "about", "contact", "footer"] as const;
 export type GemId = (typeof GEM_IDS)[number];
@@ -31,6 +33,7 @@ function load(): Prefs {
     fairy: saved.fairy ?? true,
     gems: Array.isArray(saved.gems) ? saved.gems.filter((g) => GEM_IDS.includes(g as GemId)) : [],
     theme,
+    consent: saved.consent === "granted" || saved.consent === "denied" ? saved.consent : null,
   };
 }
 
@@ -47,8 +50,8 @@ function subscribe(listener: () => void) {
 function setPrefs(patch: Partial<Prefs>) {
   state = { ...getSnapshot(), ...patch };
   try {
-    const { sound, fairy, gems } = state;
-    localStorage.setItem(PREFS_KEY, JSON.stringify({ sound, fairy, gems }));
+    const { sound, fairy, gems, consent } = state;
+    localStorage.setItem(PREFS_KEY, JSON.stringify({ sound, fairy, gems, consent }));
     if (patch.theme) localStorage.setItem(THEME_KEY, patch.theme);
   } catch {}
   if (patch.theme) document.documentElement.dataset.theme = patch.theme;
@@ -60,6 +63,22 @@ export const readPrefs = getSnapshot;
 
 export const toggleSound = () => setPrefs({ sound: !getSnapshot().sound });
 export const toggleFairy = () => setPrefs({ fairy: !getSnapshot().fairy });
+
+/** Escolha do aviso de cookies (só existe uma categoria opcional: analytics). */
+export function setConsent(consent: "granted" | "denied") {
+  // Sem localStorage não dá para guardar (nem provar) o aceite: o GA fica desligado nesta visita
+  // e o aviso volta na próxima (spec 003, CA-05).
+  let canStore = true;
+  try {
+    localStorage.setItem("portfolio-probe", "1");
+    localStorage.removeItem("portfolio-probe");
+  } catch {
+    canStore = false;
+  }
+  setPrefs({ consent: canStore ? consent : "denied" });
+}
+/** "Preferências de cookies" no rodapé: mostra o aviso de novo. */
+export const reopenConsent = () => setPrefs({ consent: null });
 
 export const templeUnlocked = (p: Prefs) => p.gems.length >= GEM_IDS.length;
 
