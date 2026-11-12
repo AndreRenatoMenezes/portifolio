@@ -199,6 +199,7 @@ Nenhum arquivo raster (`.png`, `.webp`, `.jpg`) pode entrar em `public/projects/
 Os 3 projetos de laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard`) são publicados de forma neutra ("laboratório de endpoints de uma fintech") e como repositórios privados (spec 005, DP-2 e CA-05).
 
 - [ ] Se obtiver autorização formal para citar o nome do empregador, registrar aqui a **data** e **quem autorizou**. Só depois disso uma spec futura poderá mencionar o nome.
+- A autorização também é condição para publicar ícones de projetos do laboratório; não usar ícone que revele marca ou identidade do empregador.
 
 ---
 

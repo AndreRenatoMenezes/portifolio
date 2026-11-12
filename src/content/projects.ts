@@ -27,6 +27,8 @@ export type Project = {
   /** Texto mais longo para a página do projeto. Parágrafos separados por linha em branco. */
   description?: Localized;
   item: ItemIcon;
+  /** Ícone real do app, quando a publicação está autorizada. */
+  icon?: { src: string; width: number; height: number };
   tags: string[];
   year: number;
   /** Atributos do item (até 3 aparecem no inventário). */
@@ -41,6 +43,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "hardware-test-hub",
+    icon: { src: "/projects/hardware-test-hub/icon.svg", width: 512, height: 512 },
     title: { pt: "Hardware Test Hub", en: "Hardware Test Hub" },
     kind: { pt: "Ferramenta de laboratório", en: "Lab tool" },
     role: {
@@ -227,6 +230,7 @@ export const projects: Project[] = [
   },
   {
     slug: "indice",
+    icon: { src: "/projects/indice/icon.svg", width: 256, height: 256 },
     title: { pt: "Índice", en: "Índice" },
     kind: { pt: "Produto pessoal · web + Android", en: "Personal product · web + Android" },
     role: {
@@ -353,6 +357,7 @@ export const projects: Project[] = [
   },
   {
     slug: "orcazen",
+    icon: { src: "/projects/orcazen/icon.svg", width: 944, height: 944 },
     title: { pt: "OrçaZen", en: "OrçaZen" },
     kind: { pt: "App pessoal", en: "Personal app" },
     role: {
