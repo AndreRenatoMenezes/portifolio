@@ -84,7 +84,7 @@ export function ContactForm({ lang, dict, title }: Props) {
       <input type="hidden" name="t" defaultValue="0" />
       {/* Armadilha para robôs: invisível para pessoas e leitores de tela. */}
       <div className="hp" aria-hidden="true">
-        <label htmlFor="contact-website">Website</label>
+        <label htmlFor="contact-website">{dict.honeypot}</label>
         <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
@@ -94,7 +94,7 @@ export function ContactForm({ lang, dict, title }: Props) {
       </div>
       {field("message", dict.message, <textarea rows={5} maxLength={2400} {...aria("message")} />)}
 
-      <button type="submit" className="btn btn-primary" disabled={pending} aria-live="polite">
+      <button type="submit" className="btn btn-primary" disabled={pending}>
         {pending ? (
           <>
             <span className="spinner" aria-hidden="true" /> {dict.sending}

@@ -2,7 +2,7 @@
 
 Itens do checklist de lançamento que dependem de conta, dados pessoais ou decisão sua. O resto já foi feito ou está especificado em `.claude/specs/` (auditoria completa em `.claude/specs/AUDITORIA-2026-11-07.md`).
 
-**Ordem sugerida:** T1 → T2 → T3 → T4 → T5 → T6 → T7. T8 é opcional.
+**Ordem sugerida:** T1 → T2 → T3 → T4 → T5 → T6 → T7. T8 e T9 são opcionais.
 
 | Task | O quê | Libera | Tempo |
 |---|---|---|---|
@@ -14,6 +14,7 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 | [T6](#t6--revisar-a-política-de-privacidade) | Revisar a política de privacidade | item 15 (depois da spec 003) | 15 min |
 | [T7](#t7--google-search-console-recomendado) | Google Search Console (recomendado) | indexação do sitemap | 10 min |
 | [T8](#t8--prints-reais-dos-projetos-opcional) | Prints reais dos projetos (opcional) | capas melhores | — |
+| [T9](#t9--limite-de-envios-do-formulário-opcional) | Limite de envios do formulário por IP (opcional) | proteção extra contra spam | 10 min |
 
 ---
 
@@ -140,3 +141,18 @@ As capas atuais são ilustrações. Para trocar:
 3. Em `src/content/projects.ts`, troque `src`, `width` e `height` da imagem e ajuste o `alt`.
 
 O `next/image` otimiza tamanho e formato sozinho.
+
+---
+
+## T9 — Limite de envios do formulário (opcional)
+
+O formulário já tem armadilha para robôs (campo oculto e tempo mínimo de preenchimento), mas não limita quantas mensagens um mesmo IP pode mandar. Para isso, a recomendação é uma regra de **rate limit** no **Vercel Firewall**, sem mudar código. Depende da T2.
+
+1. Vercel → projeto `portifolio` → **Firewall** → **Configure** → **New Rule**.
+2. Nome: "Limite do formulário de contato".
+3. **If:** `Request Method` igual a `POST` **e** `Request Path` começa com `/pt` ou `/en`. O envio usa Server Action, que faz `POST` na própria página.
+4. **Then:** **Rate Limit**, chave **IP**, por exemplo **5 requisições por 10 minutos (600 s)**. Ação ao exceder: **Deny** (429).
+5. **Save** → **Review Changes** → **Publish**.
+6. Teste: mande uma mensagem pelo site, que deve funcionar normalmente. Depois veja em **Firewall → Overview** se a regra aparece.
+
+> O rate limit do Firewall pode depender do plano da Vercel. Se não estiver disponível no seu, a proteção atual já basta para um portfólio pessoal.

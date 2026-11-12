@@ -120,6 +120,7 @@
     "name": "Nome",
     "email": "E-mail",
     "message": "Mensagem",
+    "honeypot": "Site",
     "send": "Enviar mensagem",
     "sending": "Enviando…",
     "summary": "Confira os campos destacados antes de enviar.",

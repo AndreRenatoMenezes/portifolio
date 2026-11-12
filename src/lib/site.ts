@@ -21,6 +21,8 @@ export const personJsonLd = (lang: "pt" | "en") => ({
   jobTitle: profile.role[lang],
   url: `${siteUrl}/${lang}`,
   address: { "@type": "PostalAddress", addressLocality: profile.home[lang] },
+  ...(profile.contacts.email && { email: profile.contacts.email }),
+  ...(profile.contacts.whatsapp && { telephone: `+${profile.contacts.whatsapp}` }),
   sameAs: [profile.contacts.github, profile.contacts.linkedin].filter(Boolean),
   knowsAbout: profile.skills,
 });
