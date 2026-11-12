@@ -229,7 +229,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </a>
             </li>
           )}
-          <li className="signpost-gem">
+          <li className="signpost-gem" data-mode-only="adventure">
             <Gem id="contact" {...gem} />
           </li>
         </ul>

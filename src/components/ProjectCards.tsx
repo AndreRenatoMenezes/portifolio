@@ -18,7 +18,7 @@ type Props = {
 export function ProjectCards({ lang, items, projectDict, modalDict }: Props) {
   return (
     <ul className="project-cards" data-mode-only="direct">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <li key={item.slug} className="project-card-item">
           <article className="project-card dialog-frame">
             {item.cover && (
@@ -29,7 +29,8 @@ export function ProjectCards({ lang, items, projectDict, modalDict }: Props) {
                   alt={item.cover.alt}
                   width={item.cover.width}
                   height={item.cover.height}
-                  loading="lazy"
+                  preload={index === 0}
+                  loading={index === 0 ? "eager" : "lazy"}
                   sizes="(max-width: 860px) 92vw, 480px"
                   unoptimized={item.cover.src.endsWith(".svg")}
                 />
