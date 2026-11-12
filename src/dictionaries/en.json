@@ -6,8 +6,6 @@
   "nav": {
     "label": "Main navigation",
     "skip": "Skip to content",
-    "projects": "Inventory",
-    "about": "Profile",
     "contact": "Contact",
     "cta": "Contact me"
   },
@@ -28,6 +26,8 @@
   },
   "hero": {
     "speaker": "André",
+    "pitch": "I automate endpoint infrastructure — hardware certification across Windows, macOS and Linux — and build products with spec-driven AI agent teams.",
+    "gameHint": "This portfolio is a game: open the inventory, follow the fairy and look for hidden gems.",
     "lines": [
       "Hello, traveler! I'm André, an Endpoint Engineer in Rio de Janeiro.",
       "I automate infrastructure: I test hardware, standardize machines and write scripts that run on their own — every test returns PASS or FAIL.",
@@ -38,18 +38,17 @@
     "cta": "Open inventory",
     "ctaContact": "Contact me"
   },
+  "sections": { "projects": "Projects", "about": "About", "contact": "Contact" },
   "inventory": {
     "title": "Inventory",
-    "subtitle": "Every item is a project — lab tools, AI skills and products. Use the arrow keys or your mouse to choose.",
-    "empty": "Empty slot — next adventure",
+    "subtitle": "Every item is a project: lab tools, products and open source, with role, stack and outcome. Select the icon to inspect it.",
     "open": "Inspect item",
-    "selected": "Selected item",
     "attributes": "Attributes"
   },
   "modal": {
     "obtained": "You got",
-    "demo": "Live demo",
-    "github": "GitHub",
+    "demo": "View live",
+    "github": "Code on GitHub",
     "more": "See details",
     "close": "Close",
     "private": "Private code",
@@ -59,13 +58,17 @@
     "back": "Back to inventory",
     "gallery": "Screenshots",
     "year": "Year",
-    "stack": "Gear used",
+    "stack": "Gear used · Stack",
     "links": "Links",
     "zoom": "Enlarge image",
     "prev": "Previous",
     "next": "Next",
     "private": "Private repository — happy to show it in a conversation.",
-    "kind": "Type"
+    "kind": "Type",
+    "role": "Role",
+    "outcome": "Outcome",
+    "live": "View live",
+    "code": "Code on GitHub"
   },
   "about": {
     "title": "Hero profile",
@@ -97,7 +100,7 @@
     "tips": [
       "Psst! There are gems hidden around this page…",
       "Try browsing the inventory with your arrow keys!",
-      "The shield is a hardware test hub: 9 modules, each returning PASS or FAIL.",
+      "Hardware Test Hub has 9 test modules, and each one returns PASS or FAIL.",
       "The scroll is a spec — in SDD Maestri, the spec is the contract. The spec wins!",
       "Have you tried the night? The moon button is up top.",
       "They say an ancient melody unlocks secrets…"

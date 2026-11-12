@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
-import { ItemIconSvg } from "@/components/icons/ItemIcons";
 import { JsonLd } from "@/components/JsonLd";
+import { ProjectIcon } from "@/components/ProjectIcon";
+import { ProjectLinks } from "@/components/ProjectLinks";
 import { getProject, projects } from "@/content/projects";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
 import { absoluteUrl, alternatesFor, personJsonLd } from "@/lib/site";
+import "../../../projects.css";
 
 export const dynamicParams = false;
 export const generateStaticParams = () =>
@@ -59,12 +61,22 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
 
       <header className="project-header">
         <span className="project-icon dialog-frame">
-          <ItemIconSvg name={project.item} size={64} />
+          <ProjectIcon icon={project.icon} item={project.item} size={64} />
         </span>
         <div>
           <p className="item-panel-label">{project.kind[lang]}</p>
           <h1 className="section-title">{project.title[lang]}</h1>
           <p className="project-summary">{project.summary[lang]}</p>
+          <dl className="project-role-outcome">
+            <div>
+              <dt>{dict.project.role}</dt>
+              <dd>{project.role[lang]}</dd>
+            </div>
+            <div>
+              <dt>{dict.project.outcome}</dt>
+              <dd>{project.outcome[lang]}</dd>
+            </div>
+          </dl>
         </div>
       </header>
 
@@ -86,7 +98,9 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
           <dl>
             <dt>{dict.project.year}</dt>
             <dd>{project.year}</dd>
-            <dt>{dict.project.stack}</dt>
+            <dt>
+              {dict.project.stack}
+            </dt>
             <dd>
               <ul className="tags">
                 {project.tags.map((t) => (
@@ -95,21 +109,20 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
               </ul>
             </dd>
           </dl>
-          <div className="btn-row">
-            {project.links.demo && (
-              <a className="btn btn-primary" href={project.links.demo} target="_blank" rel="noreferrer">
-                {dict.modal.demo} ↗
-              </a>
-            )}
-            {project.links.github && (
-              <a className="btn" href={project.links.github} target="_blank" rel="noreferrer">
-                {dict.modal.github} ↗
-              </a>
-            )}
-          </div>
+          <ProjectLinks
+            lang={lang}
+            slug={project.slug}
+            title={project.title[lang]}
+            links={project.links}
+            isPrivate={project.private}
+            liveLabel={dict.project.live}
+            codeLabel={dict.project.code}
+            askDemoLabel={dict.modal.askDemo}
+            privateTitle={dict.modal.private}
+          />
           {project.private && (
             <p className="private-note">
-              🔒 {dict.project.private} <Link href={`/${lang}#contact`}>{dict.modal.askDemo} →</Link>
+              🔒 {dict.project.private}
             </p>
           )}
         </aside>

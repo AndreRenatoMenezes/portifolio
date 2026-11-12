@@ -1,0 +1,251 @@
+/* =========================================================
+   Primeira dobra, fichas de projeto e papéis/resultados (spec 005)
+   ========================================================= */
+
+/* Ajustes de primeira dobra para caber em 1366x768 e 390x844 */
+.hero {
+  min-height: min(68vh, 560px);
+}
+
+.hero-inner {
+  padding-block: 32px 26px;
+  gap: 14px;
+}
+
+.hero-pitch {
+  margin: 0;
+  max-width: 68ch;
+  padding: 11px 15px;
+  border-radius: 10px;
+  background: var(--frame-bg);
+  color: var(--frame-ink);
+  border: 2px solid var(--frame-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  font-size: clamp(0.92rem, 1.3vw, 1.04rem);
+  font-weight: 600;
+  line-height: 1.48;
+}
+
+.hero-cta {
+  align-items: center;
+}
+
+@media (max-height: 800px) {
+  .hero {
+    min-height: min(62vh, 490px);
+  }
+  .hero-inner {
+    padding-block: 22px 20px;
+    gap: 11px;
+  }
+  .hero .dialog-box {
+    margin-top: 2px;
+    padding: 14px 18px 20px;
+  }
+  .hero .dialog-text {
+    min-height: 2.3em;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: auto;
+  }
+  .hero-inner {
+    padding-block: 18px 20px;
+    gap: 10px;
+  }
+  .hero-title {
+    font-size: clamp(1.42rem, 5.8vw, 1.95rem);
+  }
+  .hero-pitch {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  .hero .dialog-box {
+    margin-top: 2px;
+    padding: 13px 14px 18px;
+  }
+  .hero .dialog-text {
+    min-height: 2.4em;
+    font-size: 0.92rem;
+  }
+  .hero-cta {
+    gap: 8px;
+  }
+  .hero-cta .btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Inventário em fichas */
+.hero-game-hint {
+  margin: 0;
+  color: var(--frame-ink);
+  font-weight: 700;
+}
+
+.inventory-sheets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+.inventory { display: block; }
+
+.inventory-sheets > li,
+.item-sheet { min-width: 0; }
+
+.item-sheet {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 16px;
+}
+
+.item-sheet-slot {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.item-sheet-slot img,
+.project-icon-real {
+  display: block;
+  object-fit: contain;
+  filter: none;
+  transition: transform 160ms ease;
+}
+
+.item-sheet-slot:hover img,
+.item-sheet-slot:focus-visible img { transform: scale(1.08); }
+
+.item-sheet-slot:hover svg,
+.item-sheet-slot:focus-visible svg { transform: scale(1.12) rotate(-6deg); }
+
+.item-sheet-slot:hover .target-cursor,
+.item-sheet-slot:focus-visible .target-cursor { opacity: 1; }
+.item-sheet-slot .target-cursor { opacity: 0; }
+
+.item-sheet-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-sheet-title,
+.item-sheet-summary { margin: 0; }
+
+.item-sheet-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.18rem;
+  line-height: 1.25;
+}
+
+.item-sheet-summary { color: var(--frame-ink); line-height: 1.5; }
+.item-sheet .tags li { overflow-wrap: anywhere; }
+
+@media (min-width: 900px) {
+  .inventory-sheets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 559px) {
+  .item-sheet-slot { width: 72px; height: 72px; }
+  .item-sheet-slot img,
+  .item-sheet-slot svg { width: 48px; height: 48px; }
+  .item-sheet { gap: 12px; padding: 12px; }
+  .item-sheet-body { overflow-wrap: anywhere; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item-sheet-slot svg,
+  .item-sheet-slot img,
+  .item-sheet-slot:hover svg,
+  .item-sheet-slot:focus-visible svg,
+  .item-sheet-slot:hover img,
+  .item-sheet-slot:focus-visible img { transform: none; }
+  .item-sheet-slot .target-cursor { animation: none; }
+}
+
+.item-get-icon:has(.project-icon-real) {
+  filter: none;
+}
+
+/* Bloco Papel e Resultado (cartões, inventário e página do projeto) */
+.project-role-outcome {
+  margin: 2px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(216, 166, 40, 0.35);
+  display: grid;
+  gap: 8px;
+}
+
+.project-role-outcome > div {
+  display: grid;
+  gap: 2px;
+}
+
+.project-role-outcome dt {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.project-role-outcome dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--frame-ink);
+}
+
+.project-header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.project-header > div {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.project-header .project-role-outcome {
+  margin-top: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--frame-border);
+}
+
+.project-header .project-role-outcome dt {
+  color: var(--muted);
+}
+
+[data-theme="temple"] .project-header .project-role-outcome dt {
+  color: var(--ink);
+}
+
+.project-header .project-role-outcome dd {
+  color: var(--ink);
+}
+
+.project-links {
+  gap: 8px;
+}
+
+.project-links .btn {
+  padding: 9px 14px;
+  font-size: 0.88rem;
+}

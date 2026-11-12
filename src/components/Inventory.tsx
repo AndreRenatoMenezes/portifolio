@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { ItemIconSvg, type ItemIcon } from "@/components/icons/ItemIcons";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type RefObject } from "react";
+import { type ItemIcon } from "@/components/icons/ItemIcons";
+import { ProjectIcon } from "@/components/ProjectIcon";
+import { ProjectLinks } from "@/components/ProjectLinks";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { playCursor, playItemGet } from "@/lib/sound";
@@ -13,8 +15,11 @@ export type InventoryItem = {
   slug: string;
   title: string;
   kind: string;
+  role: string;
+  outcome: string;
   summary: string;
   item: ItemIcon;
+  icon?: { src: string; width: number; height: number };
   stats: { value: string; label: string }[];
   tags: string[];
   year: number;
@@ -42,107 +47,148 @@ type Props = {
   items: InventoryItem[];
   dict: Dictionary["inventory"];
   modalDict: Dictionary["modal"];
+  projectDict: Dictionary["project"];
 };
 
-const SLOTS_PER_PAGE = 12; // divisível por 3 e 4 (colunas mobile/desktop)
-
-export function Inventory({ lang, items, dict, modalDict }: Props) {
-  const [selected, setSelected] = useState(0);
+export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) {
   const [open, setOpen] = useState<InventoryItem | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const slotRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const totalSlots = Math.max(SLOTS_PER_PAGE, Math.ceil((items.length + 1) / SLOTS_PER_PAGE) * SLOTS_PER_PAGE);
-  const current = items[selected];
+  const listRef = useRef<HTMLUListElement>(null);
+  const openerRef = useRef<HTMLAnchorElement | null>(null);
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const shouldRestoreFocusRef = useRef(false);
 
-  const select = (index: number, focus = false) => {
-    if (index < 0 || index >= items.length) return;
-    if (index !== selected) playCursor();
-    setSelected(index);
-    if (focus) slotRefs.current[index]?.focus();
-  };
+  const restoreFocus = useCallback(() => {
+    const opener = openerRef.current;
+    if (!opener) return;
+    opener.focus();
+    requestAnimationFrame(() => {
+      opener.focus();
+    });
+    window.setTimeout(() => {
+      opener.focus();
+    }, 0);
+  }, []);
 
-  const columns = () => {
-    const grid = gridRef.current;
-    if (!grid) return 4;
-    return getComputedStyle(grid).gridTemplateColumns.split(" ").length;
-  };
+  const handleClose = useCallback(() => {
+    shouldRestoreFocusRef.current = true;
+    if (dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+    setOpen(null);
+    restoreFocus();
+  }, [restoreFocus]);
 
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+  const handleActionClose = useCallback(() => {
+    shouldRestoreFocusRef.current = false;
+    if (dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+    setOpen(null);
+  }, []);
+
+  useEffect(() => {
+    if (!open && shouldRestoreFocusRef.current) {
+      shouldRestoreFocusRef.current = false;
+      restoreFocus();
+    }
+  }, [open, restoreFocus]);
+
+  const onKeyDown = (e: KeyboardEvent<HTMLUListElement>) => {
+    const active = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[data-index]");
+    if (!active) return;
+    const index = Number(active.dataset.index);
+    if (!Number.isInteger(index)) return;
+    const columns = getComputedStyle(e.currentTarget).gridTemplateColumns.split(" ").length;
     const moves: Record<string, number> = {
-      ArrowLeft: -1,
-      ArrowRight: 1,
-      ArrowUp: -columns(),
-      ArrowDown: columns(),
+      ArrowLeft: -1, ArrowRight: 1, ArrowUp: -columns, ArrowDown: columns,
     };
     if (e.key in moves) {
       e.preventDefault();
-      select(selected + moves[e.key], true);
+      const next = index + moves[e.key];
+      const slot = listRef.current?.querySelector<HTMLAnchorElement>(`[data-index="${next}"]`);
+      if (slot) { slot.focus(); playCursor(); }
     } else if (e.key === "Home") {
       e.preventDefault();
-      select(0, true);
+      listRef.current?.querySelector<HTMLAnchorElement>('[data-index="0"]')?.focus();
     } else if (e.key === "End") {
       e.preventDefault();
-      select(items.length - 1, true);
+      listRef.current?.querySelector<HTMLAnchorElement>(`[data-index="${items.length - 1}"]`)?.focus();
     }
   };
 
   return (
     <div className="inventory" data-inventory>
-      <div className="inventory-grid dialog-frame" ref={gridRef} onKeyDown={onKeyDown}>
-        {Array.from({ length: totalSlots }, (_, i) => {
-          const item = items[i];
-          if (!item) {
-            return <div key={`empty-${i}`} className="slot slot-empty" aria-hidden="true" title={dict.empty} />;
-          }
-          return (
-            <Link
-              key={item.slug}
-              ref={(node) => {
-                slotRefs.current[i] = node;
-              }}
-              href={`/${lang}/projects/${item.slug}`}
-              prefetch={false}
-              data-opens-modal
-              className="slot"
-              data-selected={i === selected || undefined}
-              tabIndex={i === selected ? 0 : -1}
-              onMouseEnter={() => select(i)}
-              onFocus={() => select(i)}
-              onClick={(e) => {
-                // Clique simples abre o modal; com modificador (nova aba etc.) segue o link.
-                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                e.preventDefault();
-                setOpen(item);
-              }}
-            >
-              <ItemIconSvg name={item.item} size={44} />
-              <span className="slot-name">{item.title}</span>
-              {i === selected && <span className="target-cursor" aria-hidden="true" />}
-            </Link>
-          );
-        })}
-      </div>
-
-      {current && (
-        <aside className="item-panel dialog-frame" aria-live="polite">
-          <p className="item-panel-label">
-            {dict.selected} · {current.kind}
-          </p>
-          <h3 className="item-panel-title">{current.title}</h3>
-          <p>{current.summary}</p>
-          <Stats stats={current.stats} />
+      <ul className="inventory-sheets" ref={listRef} onKeyDown={onKeyDown}>
+        {items.map((item, i) => (
+          <li key={item.slug}>
+            <article className="item-sheet dialog-frame">
+              <Link
+                ref={i === 0 ? undefined : undefined}
+                href={`/${lang}/projects/${item.slug}`}
+                prefetch={false}
+                aria-label={`${dict.open}: ${item.title}`}
+                data-index={i}
+                className="slot item-sheet-slot"
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  openerRef.current = e.currentTarget;
+                  e.currentTarget.focus();
+                  setOpen(item);
+                }}
+              >
+                <ProjectIcon icon={item.icon} item={item.item} size={56} />
+                <span className="target-cursor" aria-hidden="true" />
+              </Link>
+              <div className="item-sheet-body">
+          <p className="item-panel-label">{item.kind} · {item.year}</p>
+          <h3 className="item-sheet-title">{item.title}</h3>
+          <p className="item-sheet-summary">{item.summary}</p>
+          <dl className="project-role-outcome">
+            <div>
+              <dt>{projectDict.role}</dt>
+              <dd>{item.role}</dd>
+            </div>
+            <div>
+              <dt>{projectDict.outcome}</dt>
+              <dd>{item.outcome}</dd>
+            </div>
+          </dl>
+          <Stats stats={item.stats} />
           <ul className="tags">
-            {current.tags.map((t) => (
+            {item.tags.map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
-          <button type="button" className="btn btn-primary" onClick={() => setOpen(current)}>
-            {dict.open}
-          </button>
-        </aside>
-      )}
+          <ProjectLinks
+            lang={lang}
+            slug={item.slug}
+            title={item.title}
+            links={item.links}
+            isPrivate={item.private}
+            liveLabel={projectDict.live}
+            codeLabel={projectDict.code}
+            askDemoLabel={modalDict.askDemo}
+            privateTitle={modalDict.private}
+            moreLabel={modalDict.more}
+            showDetails
+          />
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
 
-      <ItemGetModal lang={lang} item={open} dict={modalDict} onClose={() => setOpen(null)} />
+      <ItemGetModal
+        lang={lang}
+        item={open}
+        dict={modalDict}
+        projectDict={projectDict}
+        dialogRef={dialogRef}
+        openerRef={openerRef}
+        onClose={handleClose}
+        onActionClose={handleActionClose}
+      />
     </div>
   );
 }
@@ -151,32 +197,55 @@ function ItemGetModal({
   lang,
   item,
   dict,
+  projectDict,
+  dialogRef,
+  openerRef,
   onClose,
+  onActionClose,
 }: {
   lang: Locale;
   item: InventoryItem | null;
   dict: Dictionary["modal"];
+  projectDict: Dictionary["project"];
+  dialogRef: RefObject<HTMLDialogElement | null>;
+  openerRef: RefObject<HTMLAnchorElement | null>;
   onClose: () => void;
+  onActionClose: () => void;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
-    const dialog = ref.current;
+    const dialog = dialogRef.current;
     if (!dialog) return;
     if (item && !dialog.open) {
+      openerRef.current?.focus();
       dialog.showModal();
       playItemGet();
       track("item_open", { slug: item.slug });
     } else if (!item && dialog.open) {
       dialog.close();
     }
-  }, [item]);
+  }, [item, dialogRef, openerRef]);
+
+  useEffect(() => {
+    if (!item) return;
+    const onWindowKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onWindowKeyDown, true);
+    return () => window.removeEventListener("keydown", onWindowKeyDown, true);
+  }, [item, onClose]);
 
   return (
     <dialog
-      ref={ref}
+      ref={dialogRef}
       className="item-get"
       aria-labelledby="item-get-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
       onClose={onClose}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose(); // clique no fundo
@@ -187,7 +256,7 @@ function ItemGetModal({
           <div className="item-get-hero" aria-hidden="true">
             <span className="item-get-rays" />
             <span className="item-get-icon">
-              <ItemIconSvg name={item.item} size={72} />
+            <ProjectIcon icon={item.icon} item={item.item} size={72} />
             </span>
           </div>
           <p className="item-get-kicker">
@@ -203,32 +272,37 @@ function ItemGetModal({
               alt={item.cover.alt}
               width={item.cover.width}
               height={item.cover.height}
+              loading="lazy"
               sizes="(max-width: 640px) 90vw, 560px"
               unoptimized={item.cover.src.endsWith(".svg")}
             />
           )}
           <p>{item.summary}</p>
+          <dl className="project-role-outcome">
+            <div>
+              <dt>{projectDict.role}</dt>
+              <dd>{item.role}</dd>
+            </div>
+            <div>
+              <dt>{projectDict.outcome}</dt>
+              <dd>{item.outcome}</dd>
+            </div>
+          </dl>
           <Stats stats={item.stats} />
-          <div className="btn-row">
-            {item.links.demo && (
-              <a className="btn btn-primary" href={item.links.demo} target="_blank" rel="noreferrer">
-                {dict.demo} ↗
-              </a>
-            )}
-            {item.links.github && (
-              <a className="btn" href={item.links.github} target="_blank" rel="noreferrer">
-                {dict.github} ↗
-              </a>
-            )}
-            {item.private && (
-              <a className="btn" href={`/${lang}#contact`} onClick={onClose} title={dict.private}>
-                🔒 {dict.askDemo}
-              </a>
-            )}
-            <Link className="btn" href={`/${lang}/projects/${item.slug}`}>
-              {dict.more} →
-            </Link>
-          </div>
+          <ProjectLinks
+            lang={lang}
+            slug={item.slug}
+            title={item.title}
+            links={item.links}
+            isPrivate={item.private}
+            liveLabel={projectDict.live}
+            codeLabel={projectDict.code}
+            askDemoLabel={dict.askDemo}
+            privateTitle={dict.private}
+            moreLabel={dict.more}
+            showDetails
+            onAction={onActionClose}
+          />
           <button type="button" className="item-get-close" onClick={onClose} aria-label={dict.close}>
             ✕
           </button>

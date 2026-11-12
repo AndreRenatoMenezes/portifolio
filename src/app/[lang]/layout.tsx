@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   };
 }
 
-/** Aplica o tema antes da primeira pintura: salvo pelo visitante ou pela hora local. */
+/** Aplica o tema antes da primeira pintura. */
 const themeScript = `(function(){var t;try{t=localStorage.getItem("portfolio-theme")}catch(e){}if(t!=="day"&&t!=="night"&&t!=="temple"){var h=new Date().getHours();t=h>=6&&h<18?"day":"night"}document.documentElement.dataset.theme=t})()`;
 
 export default async function LangLayout({ children, params }: LayoutProps<"/[lang]">) {
@@ -76,8 +76,12 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
               <span className="logo-mark" aria-hidden="true">◆</span> {profile.name}
             </Link>
             <nav aria-label={dict.nav.label} className="main-nav">
-              <a href={`/${lang}#inventory`}>{dict.nav.projects}</a>
-              <a href={`/${lang}#about`}>{dict.nav.about}</a>
+              <a href={`/${lang}#inventory`}>
+                {dict.sections.projects}
+              </a>
+              <a href={`/${lang}#about`}>
+                {dict.sections.about}
+              </a>
               <a href={`/${lang}#contact`} className="btn btn-primary nav-cta">
                 <span className="cta-long">{dict.nav.cta}</span>
                 <span className="cta-short">{dict.nav.contact}</span>

@@ -566,32 +566,7 @@ a {
   margin: 24px 0 12px;
 }
 
-/* =========================================================
-   Inventário
-   ========================================================= */
-.inventory {
-  display: grid;
-  gap: 20px;
-}
-@media (min-width: 900px) {
-  .inventory {
-    grid-template-columns: 1.3fr 1fr;
-    align-items: start;
-  }
-}
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 16px;
-}
-@media (min-width: 560px) {
-  .inventory-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    padding: 22px;
-  }
-}
+/* Slot usado pelo inventário em fichas. */
 .slot {
   position: relative;
   color: var(--frame-ink);
@@ -609,44 +584,9 @@ a {
   filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.4));
   transition: transform 0.2s;
 }
-.slot-name {
-  position: absolute;
-  left: 4px;
-  right: 4px;
-  bottom: 6px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  color: var(--frame-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.slot[data-selected] .slot-name {
-  color: var(--accent);
-}
-@media (min-width: 560px) {
-  .slot-name {
-    font-size: 0.75rem;
-    bottom: 8px;
-  }
-}
-.slot[data-selected] {
-  background: radial-gradient(circle at 50% 40%, rgba(232, 184, 74, 0.35), rgba(255, 255, 255, 0.05) 70%);
-}
-.slot[data-selected] svg {
-  transform: scale(1.12) rotate(-6deg);
-}
 .slot:focus-visible {
   outline: none;
 }
-.slot-empty {
-  cursor: default;
-  background: rgba(255, 255, 255, 0.03);
-  border-style: dashed;
-}
-
 /* Cursor de mira: quatro cantoneiras douradas pulsando */
 .target-cursor {
   --c: var(--accent);
@@ -674,24 +614,12 @@ a {
   }
 }
 
-.item-panel {
-  padding: 22px 24px;
-}
 .item-panel-label {
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 800;
-}
-.item-panel-title {
-  font-family: var(--font-display), serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  margin: 4px 0 8px;
-}
-.item-panel p {
-  color: var(--frame-muted);
 }
 
 /* Atributos do item (ficha de RPG) */

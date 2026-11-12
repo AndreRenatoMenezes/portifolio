@@ -12,7 +12,8 @@ export function Controls({ lang, dict }: { lang: Locale; dict: Dictionary["contr
   const other: Locale = lang === "pt" ? "en" : "pt";
   // Trocar de idioma remonta o <html> (layout raiz por idioma): reaplica o tema atual.
   useEffect(() => {
-    document.documentElement.dataset.theme = readPrefs().theme;
+    const current = readPrefs();
+    document.documentElement.dataset.theme = current.theme;
   }, [lang]);
 
   const otherPath = pathname.replace(/^\/(pt|en)(?=\/|$)/, `/${other}`);

@@ -10,6 +10,7 @@ import { projects } from "@/content/projects";
 import { whatsappUrl } from "@/lib/contact";
 import { getDictionary, hasLocale } from "@/lib/i18n";
 import { personJsonLd } from "@/lib/site";
+import "../projects.css";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -18,18 +19,21 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const gem = { label: dict.gems.collect, foundText: dict.gems.found, allText: dict.gems.all };
 
   const items: InventoryItem[] = projects.map((p) => ({
-      slug: p.slug,
-      title: p.title[lang],
-      kind: p.kind[lang],
-      summary: p.summary[lang],
-      item: p.item,
-      stats: p.stats.map((s) => ({ value: s.value, label: s.label[lang] })),
-      private: p.private,
-      tags: p.tags,
-      year: p.year,
-      cover: p.images[0] && { ...p.images[0], alt: p.images[0].alt[lang] },
-      links: p.links,
-    }));
+    slug: p.slug,
+    title: p.title[lang],
+    kind: p.kind[lang],
+    role: p.role[lang],
+    outcome: p.outcome[lang],
+    summary: p.summary[lang],
+    item: p.item,
+    icon: p.icon,
+    stats: p.stats.map((s) => ({ value: s.value, label: s.label[lang] })),
+    private: p.private,
+    tags: p.tags,
+    year: p.year,
+    cover: p.images[0] && { ...p.images[0], alt: p.images[0].alt[lang] },
+    links: p.links,
+  }));
 
   const contacts = [
     profile.contacts.github && { label: "GitHub", href: profile.contacts.github },
@@ -50,6 +54,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {profile.name}{" "}
             <span className="hero-role">{profile.role[lang]}</span>
           </h1>
+          <p className="hero-pitch">{dict.hero.pitch}</p>
+          <p className="hero-game-hint">{dict.hero.gameHint}</p>
           <DialogBox
             speaker={dict.hero.speaker}
             lines={dict.hero.lines}
@@ -70,20 +76,30 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="inventory" className="section container" aria-labelledby="inventory-title">
         <header className="section-header">
           <h2 id="inventory-title" className="section-title">
-            {dict.inventory.title}
+            {dict.inventory.title} · {dict.sections.projects}
           </h2>
-          <p>{dict.inventory.subtitle}</p>
+          <p>
+            {dict.inventory.subtitle}
+          </p>
           <Gem id="inventory" {...gem} className="gem-inline" />
         </header>
-        <Inventory lang={lang} items={items} dict={dict.inventory} modalDict={dict.modal} />
+        <Inventory
+          lang={lang}
+          items={items}
+          dict={dict.inventory}
+          modalDict={dict.modal}
+          projectDict={dict.project}
+        />
       </section>
 
       <section id="about" className="section container" aria-labelledby="about-title">
         <header className="section-header">
           <h2 id="about-title" className="section-title">
-            {dict.about.title}
+            {dict.about.title} · {dict.sections.about}
           </h2>
-          <p>{dict.about.subtitle}</p>
+          <p>
+            {dict.about.subtitle}
+          </p>
         </header>
         <div className="about-grid">
           <div className="hero-card dialog-frame">
@@ -97,11 +113,15 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
             <dl className="stats">
               <div>
-                <dt>{dict.about.class}</dt>
+                <dt>
+                  {dict.about.class}
+                </dt>
                 <dd>{profile.role[lang]}</dd>
               </div>
               <div>
-                <dt>{dict.about.home}</dt>
+                <dt>
+                  {dict.about.home}
+                </dt>
                 <dd>{profile.home[lang]}</dd>
               </div>
             </dl>
@@ -110,7 +130,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           </div>
 
           <div className="about-side">
-            <h3 className="subhead">{dict.about.equipment}</h3>
+            <h3 className="subhead">
+              {dict.about.equipment}
+            </h3>
             <ul className="equipment">
               {profile.skills.map((s) => (
                 <li key={s} className="dialog-frame">
@@ -118,13 +140,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 </li>
               ))}
             </ul>
-            <h3 className="subhead">{dict.about.training}</h3>
+            <h3 className="subhead">
+              {dict.about.training}
+            </h3>
             <ul className="equipment equipment-training">
               {profile.training.map((s) => (
                 <li key={s}>{s}</li>
               ))}
             </ul>
-            <h3 className="subhead">{dict.about.questLog}</h3>
+            <h3 className="subhead">
+              {dict.about.questLog}
+            </h3>
             <ol className="quests">
               {profile.quests.map((q) => (
                 <li key={q.title.en}>
@@ -141,9 +167,11 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="contact" className="section container" aria-labelledby="contact-title">
         <header className="section-header">
           <h2 id="contact-title" className="section-title">
-            {dict.contact.title}
+            {dict.contact.title} · {dict.sections.contact}
           </h2>
-          <p>{dict.contact.text}</p>
+          <p>
+            {dict.contact.text}
+          </p>
         </header>
         <ul className="signposts">
           {contacts.map((c) => (

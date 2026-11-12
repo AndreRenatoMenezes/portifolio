@@ -3,9 +3,8 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Estado do visitante (som, fada, gemas, tema), guardado no localStorage.
- * O tema inicial é aplicado antes da pintura pelo script inline do layout;
- * aqui só lemos o atributo `data-theme` do <html>.
+ * Estado do visitante (som, fada, gemas e tema), guardado no localStorage.
+ * O tema inicial é aplicado antes da pintura pelo script inline do layout.
  */
 export type Theme = "day" | "night" | "temple";
 export type Consent = "granted" | "denied" | null;
@@ -24,10 +23,15 @@ const listeners = new Set<() => void>();
 
 function load(): Prefs {
   let saved: Partial<Prefs> = {};
+  let storedTheme: string | null = null;
   try {
     saved = JSON.parse(localStorage.getItem(PREFS_KEY) ?? "{}");
+    storedTheme = localStorage.getItem(THEME_KEY);
   } catch {}
-  const theme = (document.documentElement.dataset.theme as Theme) || "day";
+  const candidate = storedTheme ?? saved.theme ?? document.documentElement.dataset.theme;
+  const theme: Theme =
+    candidate === "day" || candidate === "night" || candidate === "temple" ? candidate : "day";
+  document.documentElement.dataset.theme = theme;
   return {
     sound: saved.sound ?? false,
     fairy: saved.fairy ?? true,

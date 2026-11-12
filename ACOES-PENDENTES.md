@@ -15,6 +15,10 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 | [T7](#t7--google-search-console-recomendado) | Google Search Console (recomendado) | indexação do sitemap | 10 min |
 | [T8](#t8--prints-reais-dos-projetos-opcional) | Prints reais dos projetos (opcional) | capas melhores | — |
 | [T9](#t9--limite-de-envios-do-formulário-opcional) | Limite de envios do formulário por IP (opcional) | proteção extra contra spam | 10 min |
+| [T10](#t10--conferir-o-site-do-casamento-antes-de-linkar) | ✅ Concluída em 2026-11-12 — conferida pelo usuário | link ao vivo e prints reais do OpenWeddy publicados (spec 005, CA-03/CA-04) | — |
+| [T11](#t11--aprovar-prints-dos-projetos-do-laboratório) | Aprovar prints dos projetos do laboratório | prints reais em `macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard` (CA-07) | — |
+| [T12](#t12--autorização-do-empregador-opcional) | Autorização do empregador (opcional) | citar o nome da empresa em spec futura | — |
+| [T13](#t13--confirmar-papel-nos-projetos) | Confirmar papel (`role`) e resultado (`outcome`) nos 8 projetos | premissa P1 da spec 005 | 5 min |
 
 ---
 
@@ -142,13 +146,15 @@ Ajuda o Google a indexar o site mais rápido e mostra erros de SEO. Depende da T
 
 ## T8 — Prints reais dos projetos (opcional)
 
-As capas atuais são ilustrações. Para trocar:
+O `openweddy` já usa prints reais (`1.webp` a `3.webp`, publicados na WP-13). Nos demais projetos, as capas atuais são ilustrações SVG. Para trocar nos projetos públicos ou pessoais:
 
 1. Tire os prints (PNG ou WebP, de preferência 1600×1000 ou maior).
-2. Salve em `public/projects/<slug>/` (ex.: `public/projects/openweddy/1.png`).
+2. Salve em `public/projects/<slug>/` (ex.: `public/projects/hardware-test-hub/1.webp`).
 3. Em `src/content/projects.ts`, troque `src`, `width` e `height` da imagem e ajuste o `alt`.
 
 O `next/image` otimiza tamanho e formato sozinho.
+
+> **Projetos privados do laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard`):** qualquer print raster só entra com aprovação registrada na [T11](#t11--aprovar-prints-dos-projetos-do-laboratório) (spec 005, CA-07).
 
 ---
 
@@ -164,3 +170,48 @@ O formulário já tem armadilha para robôs (campo oculto e tempo mínimo de pre
 6. Teste: mande uma mensagem pelo site, que deve funcionar normalmente. Depois veja em **Firewall → Overview** se a regra aparece.
 
 > O rate limit do Firewall pode depender do plano da Vercel. Se não estiver disponível no seu, a proteção atual já basta para um portfólio pessoal.
+
+---
+
+## T10 — Conferir o site do casamento antes de linkar
+
+✅ **Concluída em 2026-11-12 (conferida pelo usuário).** `openweddy.links.demo` (`https://www.emanuele-andre.site/`) e os 3 prints reais (`public/projects/openweddy/{1,2,3}.webp`) estão ativos em `src/content/projects.ts` (spec 005, CA-03, CA-04 e CA-31).
+
+- [x] Abrir `https://www.emanuele-andre.site/` numa janela anônima, sem link de convidado, e confirmar que um estranho **não** vê endereço residencial, chave Pix, telefones nem nomes de convidados, e não consegue enviar RSVP em nome de alguém.
+- [x] Decisão: marcado como **feito** em 2026-11-12 (link ao vivo e 3 prints reais publicados na WP-13).
+
+---
+
+## T11 — Aprovar prints dos projetos do laboratório
+
+Nenhum arquivo raster (`.png`, `.webp`, `.jpg`) pode entrar em `public/projects/macbenchmark/`, `public/projects/linux-endpoint-bench/` ou `public/projects/homolog-dashboard/` sem estar listado e marcado como aprovado abaixo (spec 005, DP-8 e CA-07). Enquanto a tabela estiver vazia, valem as capas ilustradas em SVG (`1.svg`).
+
+**Critério de aprovação:** sem logo, sem nome da empresa ou de marca interna, sem hostname, sem número de série e sem dado interno.
+
+| Projeto (`slug`) | Arquivo proposto | Descrição da tela | Status (`[ ]` pendente / `[x]` aprovada / recusada) |
+|---|---|---|---|
+| — | — | *(nenhum print raster proposto — em uso: capas ilustradas `1.svg`)* | — |
+
+---
+
+## T12 — Autorização do empregador (opcional)
+
+Os 3 projetos de laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard`) são publicados de forma neutra ("laboratório de endpoints de uma fintech") e como repositórios privados (spec 005, DP-2 e CA-05).
+
+- [ ] Se obtiver autorização formal para citar o nome do empregador, registrar aqui a **data** e **quem autorizou**. Só depois disso uma spec futura poderá mencionar o nome.
+- A autorização também é condição para publicar ícones de projetos do laboratório; não usar ícone que revele marca ou identidade do empregador.
+
+---
+
+## T13 — Confirmar papel nos projetos
+
+Conferir os textos de `role` (premissa P1 da spec 005: autor único dos 8 projetos) e o `outcome` do OpenWeddy em `src/content/projects.ts`:
+
+- [ ] `hardware-test-hub` — *"Autor único: framework, módulos de teste e relatórios"*
+- [ ] `macbenchmark` — *"Autor único: arquitetura, app em Swift, backend e metodologia de medição"*
+- [ ] `openweddy` — *"Autor único: produto, front-end, banco e painel dos noivos"* (o `outcome` atual afirma apenas o que o site e os prints comprovam: *"Convite digital do meu casamento, com confirmação de presença e lista de presentes, publicado e no ar."*; você pode confirmar o `role` e, se quiser, um `outcome` mais forte sobre o uso pelos convidados)
+- [ ] `sdd-maestri` — *"Autor: desenho do método, papéis e documentação"*
+- [ ] `indice` — *"Autor único: API, web, app Android e infraestrutura"*
+- [ ] `linux-endpoint-bench` — *"Autor único: orquestrador, testes e documentação de operação"*
+- [ ] `homolog-dashboard` — *"Autor único: coleta, modelo de dados, geração dos relatórios e integração com IA"*
+- [ ] `orcazen` — *"Autor único: produto, front-end, banco e integração com IA"*
