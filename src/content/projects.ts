@@ -314,7 +314,7 @@ export const projects: Project[] = [
     stats: [
       { value: "3", label: { pt: "artefatos por execução", en: "artifacts per run" } },
       { value: "2", label: { pt: "sistemas (Windows, macOS)", en: "OSes (Windows, macOS)" } },
-      { value: "IA", label: { pt: "no parecer", en: "in assessment" } },
+      { value: "Gemini", label: { pt: "parecer por IA", en: "AI assessment" } },
     ],
     images: [
       {
@@ -356,7 +356,7 @@ export const projects: Project[] = [
     stats: [
       { value: "26+", label: { pt: "features entregues", en: "features shipped" } },
       { value: "638", label: { pt: "testes automatizados", en: "automated tests" } },
-      { value: "IA", label: { pt: "na importação", en: "on import" } },
+      { value: "Gemini", label: { pt: "importação por IA", en: "AI import" } },
     ],
     images: [
       {

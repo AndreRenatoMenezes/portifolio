@@ -154,6 +154,8 @@ As capas atuais são ilustrações. Para trocar:
 
 O `next/image` otimiza tamanho e formato sozinho.
 
+> **Projetos privados do laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard`):** qualquer print raster só entra com aprovação registrada na [T11](#t11--aprovar-prints-dos-projetos-do-laboratório) (spec 005, CA-07).
+
 ---
 
 ## T9 — Limite de envios do formulário (opcional)
@@ -212,4 +214,3 @@ Conferir os textos de `role` (premissa P1 da spec 005: autor único dos 8 projet
 - [ ] `linux-endpoint-bench` — *"Autor único: orquestrador, testes e documentação de operação"*
 - [ ] `homolog-dashboard` — *"Autor único: coleta, modelo de dados, geração dos relatórios e integração com IA"*
 - [ ] `orcazen` — *"Autor único: produto, front-end, banco e integração com IA"*
-
