@@ -6,8 +6,6 @@
   "nav": {
     "label": "Navegação principal",
     "skip": "Pular para o conteúdo",
-    "projects": "Inventário",
-    "about": "Ficha",
     "contact": "Contato",
     "cta": "Fale comigo"
   },
@@ -29,6 +27,7 @@
   "hero": {
     "speaker": "André",
     "pitch": "Automatizo a infraestrutura de endpoints — homologação de hardware em Windows, macOS e Linux — e construo produtos com times de agentes de IA guiados por spec.",
+    "gameHint": "Este portfólio é um jogo: abra o inventário, siga a fada e procure as gemas escondidas.",
     "lines": [
       "Olá, viajante! Eu sou o André, Endpoint Engineer no Rio de Janeiro.",
       "Automatizo a infraestrutura: testo hardware, padronizo máquinas e escrevo scripts que rodam sozinhos — cada teste devolve PASS ou FAIL.",
@@ -39,44 +38,11 @@
     "cta": "Abrir inventário",
     "ctaContact": "Fale comigo"
   },
-  "mode": {
-    "toAdventure": "Jogar o modo aventura",
-    "toDirect": "Ver a versão direta",
-    "hint": "Este portfólio também é um jogo: inventário, fada e gemas escondidas."
-  },
-  "direct": {
-    "nav": {
-      "projects": "Projetos",
-      "about": "Sobre"
-    },
-    "projects": {
-      "title": "Projetos",
-      "subtitle": "Ferramentas de laboratório, produtos e open source. Papel, stack e resultado de cada um."
-    },
-    "about": {
-      "title": "Sobre",
-      "subtitle": "Quem sou e com o que trabalho.",
-      "role": "Cargo",
-      "location": "Local",
-      "skills": "Tecnologias",
-      "learning": "Estudando agora",
-      "timeline": "Trajetória"
-    },
-    "contact": {
-      "title": "Contato",
-      "text": "Quer conversar sobre uma vaga ou um projeto? Escolha um canal ou mande uma mensagem."
-    },
-    "project": {
-      "back": "Voltar aos projetos",
-      "stack": "Stack"
-    }
-  },
+  "sections": { "projects": "Projetos", "about": "Sobre", "contact": "Contato" },
   "inventory": {
     "title": "Inventário",
-    "subtitle": "Cada item é um projeto — ferramentas de laboratório, skills de IA e produtos. Use as setas do teclado ou o mouse para escolher.",
-    "empty": "Slot vazio — próxima aventura",
+    "subtitle": "Cada item é um projeto: ferramentas de laboratório, produtos e open source, com papel, stack e resultado. Clique no ícone para inspecionar.",
     "open": "Inspecionar item",
-    "selected": "Item selecionado",
     "attributes": "Atributos"
   },
   "modal": {
@@ -92,7 +58,7 @@
     "back": "Voltar ao inventário",
     "gallery": "Prints",
     "year": "Ano",
-    "stack": "Equipamento usado",
+    "stack": "Equipamento usado · Stack",
     "links": "Links",
     "zoom": "Ampliar imagem",
     "prev": "Anterior",
@@ -134,7 +100,7 @@
     "tips": [
       "Psst! Tem gemas escondidas pela página…",
       "Experimente navegar o inventário com as setas!",
-      "O escudo é um hub de testes de hardware: 9 módulos, cada um devolve PASS ou FAIL.",
+      "O Hardware Test Hub tem 9 módulos de teste, e cada um devolve PASS ou FAIL.",
       "O pergaminho é uma spec — no SDD Maestri, a spec é o contrato. A spec ganha!",
       "Já tentou a noite? O botão de lua fica lá em cima.",
       "Dizem que uma melodia antiga abre segredos…"
