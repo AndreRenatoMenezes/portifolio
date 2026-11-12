@@ -135,8 +135,8 @@ export const projects: Project[] = [
       en: "Open-source, fee-free digital wedding invitation: animated envelope, countdown, per-family RSVP and a gift list paid by Pix straight to the couple.",
     },
     outcome: {
-      pt: "Usado no meu próprio casamento: convidados confirmaram presença e presentearam por Pix, sem taxa de plataforma.",
-      en: "Used at my own wedding: guests confirmed attendance and sent gifts via Pix, with zero platform fees.",
+      pt: "Convite digital do meu casamento, com confirmação de presença e lista de presentes, publicado e no ar.",
+      en: "Digital invitation for my wedding, featuring RSVP and a gift list, published and live.",
     },
     description: {
       pt: "Nasceu do convite do meu próprio casamento e virou produto: um site completo que o casal hospeda no próprio domínio. As plataformas fechadas cobram por convidado, ficam com parte dos presentes e guardam a lista num banco que não é seu — o OpenWeddy inverte isso.\n\nCada família recebe um link único e responde pessoa a pessoa, sem login. Os presentes geram Pix Copia e Cola e QR Code na hora, e o dinheiro cai 100% na conta do casal. Há um painel para os noivos acompanharem confirmações, marcarem pagamentos e importarem convidados por planilha.\n\nRoda nos planos gratuitos da Vercel e do Supabase: custo zero.",
@@ -152,16 +152,37 @@ export const projects: Project[] = [
     ],
     images: [
       {
-        src: "/projects/openweddy/1.svg",
-        width: 1200,
-        height: 750,
+        src: "/projects/openweddy/1.webp",
+        width: 2880,
+        height: 1800,
         alt: {
-          pt: "Ilustração do convite: envelope fechado com selo, contagem regressiva e botão de confirmar presença",
-          en: "Invitation illustration: sealed envelope, countdown and RSVP button",
+          pt: "Tela inicial do convite real no OpenWeddy: envelope fechado com monograma AE e botão para tocar e abrir",
+          en: "Real OpenWeddy invitation home screen: sealed envelope with AE monogram and tap-to-open button",
+        },
+      },
+      {
+        src: "/projects/openweddy/2.webp",
+        width: 2880,
+        height: 1800,
+        alt: {
+          pt: "Convite aberto de Emanuele e André com moldura floral em aquarela, data da cerimônia e seção de contagem regressiva",
+          en: "Opened wedding invitation for Emanuele and André with watercolor floral frame, ceremony date and countdown section",
+        },
+      },
+      {
+        src: "/projects/openweddy/3.webp",
+        width: 2880,
+        height: 1800,
+        alt: {
+          pt: "Catálogo da lista de presentes do OpenWeddy com filtros por categoria e cartões ilustrados de presentes bem-humorados",
+          en: "OpenWeddy gift list catalog with category filters and illustrated humorous gift cards",
         },
       },
     ],
-    links: { github: "https://github.com/AndreRenatoMenezes/OpenWeddy" },
+    links: {
+      demo: "https://www.emanuele-andre.site/",
+      github: "https://github.com/AndreRenatoMenezes/OpenWeddy",
+    },
   },
   {
     slug: "sdd-maestri",

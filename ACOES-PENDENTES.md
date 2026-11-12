@@ -15,7 +15,7 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 | [T7](#t7--google-search-console-recomendado) | Google Search Console (recomendado) | indexação do sitemap | 10 min |
 | [T8](#t8--prints-reais-dos-projetos-opcional) | Prints reais dos projetos (opcional) | capas melhores | — |
 | [T9](#t9--limite-de-envios-do-formulário-opcional) | Limite de envios do formulário por IP (opcional) | proteção extra contra spam | 10 min |
-| [T10](#t10--conferir-o-site-do-casamento-antes-de-linkar) | Conferir o site do casamento antes de linkar | link ao vivo e prints reais do OpenWeddy (spec 005, CA-03/CA-04) | 5 min |
+| [T10](#t10--conferir-o-site-do-casamento-antes-de-linkar) | ✅ Concluída em 2026-11-12 — conferida pelo usuário | link ao vivo e prints reais do OpenWeddy publicados (spec 005, CA-03/CA-04) | — |
 | [T11](#t11--aprovar-prints-dos-projetos-do-laboratório) | Aprovar prints dos projetos do laboratório | prints reais em `macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard` (CA-07) | — |
 | [T12](#t12--autorização-do-empregador-opcional) | Autorização do empregador (opcional) | citar o nome da empresa em spec futura | — |
 | [T13](#t13--confirmar-papel-nos-projetos) | Confirmar papel (`role`) e resultado (`outcome`) nos 8 projetos | premissa P1 da spec 005 | 5 min |
@@ -146,10 +146,10 @@ Ajuda o Google a indexar o site mais rápido e mostra erros de SEO. Depende da T
 
 ## T8 — Prints reais dos projetos (opcional)
 
-As capas atuais são ilustrações. Para trocar:
+O `openweddy` já usa prints reais (`1.webp` a `3.webp`, publicados na WP-13). Nos demais projetos, as capas atuais são ilustrações SVG. Para trocar nos projetos públicos ou pessoais:
 
 1. Tire os prints (PNG ou WebP, de preferência 1600×1000 ou maior).
-2. Salve em `public/projects/<slug>/` (ex.: `public/projects/openweddy/1.png`).
+2. Salve em `public/projects/<slug>/` (ex.: `public/projects/hardware-test-hub/1.webp`).
 3. Em `src/content/projects.ts`, troque `src`, `width` e `height` da imagem e ajuste o `alt`.
 
 O `next/image` otimiza tamanho e formato sozinho.
@@ -175,10 +175,10 @@ O formulário já tem armadilha para robôs (campo oculto e tempo mínimo de pre
 
 ## T10 — Conferir o site do casamento antes de linkar
 
-Condiciona a entrada de `openweddy.links.demo` (`https://www.emanuele-andre.site/`) e dos prints reais do OpenWeddy (spec 005, CA-03, CA-04 e CA-31).
+✅ **Concluída em 2026-11-12 (conferida pelo usuário).** `openweddy.links.demo` (`https://www.emanuele-andre.site/`) e os 3 prints reais (`public/projects/openweddy/{1,2,3}.webp`) estão ativos em `src/content/projects.ts` (spec 005, CA-03, CA-04 e CA-31).
 
-- [ ] Abrir `https://www.emanuele-andre.site/` numa janela anônima, sem link de convidado, e confirmar que um estranho **não** vê endereço residencial, chave Pix, telefones nem nomes de convidados, e não consegue enviar RSVP em nome de alguém.
-- [ ] Decisão: marcar como **feito** (libera o link e os prints na WP-13) ou pedir **"sem link"** (mantém `links.demo` ausente).
+- [x] Abrir `https://www.emanuele-andre.site/` numa janela anônima, sem link de convidado, e confirmar que um estranho **não** vê endereço residencial, chave Pix, telefones nem nomes de convidados, e não consegue enviar RSVP em nome de alguém.
+- [x] Decisão: marcado como **feito** em 2026-11-12 (link ao vivo e 3 prints reais publicados na WP-13).
 
 ---
 
@@ -204,11 +204,11 @@ Os 3 projetos de laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog
 
 ## T13 — Confirmar papel nos projetos
 
-Conferir os textos de `role` (premissa P1 da spec 005: autor único dos 8 projetos) e o `outcome` de uso real do OpenWeddy em `src/content/projects.ts`:
+Conferir os textos de `role` (premissa P1 da spec 005: autor único dos 8 projetos) e o `outcome` do OpenWeddy em `src/content/projects.ts`:
 
 - [ ] `hardware-test-hub` — *"Autor único: framework, módulos de teste e relatórios"*
 - [ ] `macbenchmark` — *"Autor único: arquitetura, app em Swift, backend e metodologia de medição"*
-- [ ] `openweddy` — *"Autor único: produto, front-end, banco e painel dos noivos"* (e `outcome`: *"Usado no meu próprio casamento: convidados confirmaram presença e presentearam por Pix, sem taxa de plataforma."*)
+- [ ] `openweddy` — *"Autor único: produto, front-end, banco e painel dos noivos"* (o `outcome` atual afirma apenas o que o site e os prints comprovam: *"Convite digital do meu casamento, com confirmação de presença e lista de presentes, publicado e no ar."*; você pode confirmar o `role` e, se quiser, um `outcome` mais forte sobre o uso pelos convidados)
 - [ ] `sdd-maestri` — *"Autor: desenho do método, papéis e documentação"*
 - [ ] `indice` — *"Autor único: API, web, app Android e infraestrutura"*
 - [ ] `linux-endpoint-bench` — *"Autor único: orquestrador, testes e documentação de operação"*
