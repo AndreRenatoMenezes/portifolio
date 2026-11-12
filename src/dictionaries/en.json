@@ -28,6 +28,7 @@
   },
   "hero": {
     "speaker": "André",
+    "pitch": "I automate endpoint infrastructure — hardware certification across Windows, macOS and Linux — and build products with spec-driven AI agent teams.",
     "lines": [
       "Hello, traveler! I'm André, an Endpoint Engineer in Rio de Janeiro.",
       "I automate infrastructure: I test hardware, standardize machines and write scripts that run on their own — every test returns PASS or FAIL.",
@@ -37,6 +38,38 @@
     "restart": "Listen again",
     "cta": "Open inventory",
     "ctaContact": "Contact me"
+  },
+  "mode": {
+    "toAdventure": "Play adventure mode",
+    "toDirect": "View direct version",
+    "hint": "This portfolio is also a game: inventory, fairy and hidden gems."
+  },
+  "direct": {
+    "nav": {
+      "projects": "Projects",
+      "about": "About"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "Lab tools, products and open source. Role, tech stack and outcome for each one."
+    },
+    "about": {
+      "title": "About",
+      "subtitle": "Who I am and what I work with.",
+      "role": "Role",
+      "location": "Location",
+      "skills": "Technologies",
+      "learning": "Currently learning",
+      "timeline": "Timeline"
+    },
+    "contact": {
+      "title": "Contact",
+      "text": "Want to talk about an open role or a project? Pick a channel or send a message."
+    },
+    "project": {
+      "back": "Back to projects",
+      "stack": "Tech stack"
+    }
   },
   "inventory": {
     "title": "Inventory",
@@ -48,8 +81,8 @@
   },
   "modal": {
     "obtained": "You got",
-    "demo": "Live demo",
-    "github": "GitHub",
+    "demo": "View live",
+    "github": "Code on GitHub",
     "more": "See details",
     "close": "Close",
     "private": "Private code",
@@ -65,7 +98,11 @@
     "prev": "Previous",
     "next": "Next",
     "private": "Private repository — happy to show it in a conversation.",
-    "kind": "Type"
+    "kind": "Type",
+    "role": "Role",
+    "outcome": "Outcome",
+    "live": "View live",
+    "code": "Code on GitHub"
   },
   "about": {
     "title": "Hero profile",

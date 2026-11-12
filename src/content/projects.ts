@@ -18,8 +18,12 @@ export type Project = {
   title: Localized;
   /** Tipo do item, como num RPG: "Ferramenta de laboratório", "Skill de IA"... */
   kind: Localized;
+  /** Papel do autor no projeto, em uma linha. Ex.: "Autor único: arquitetura, código e documentação". */
+  role: Localized;
   /** 1–2 frases. Aparece no inventário e no modal. */
   summary: Localized;
+  /** Resultado concreto em uma frase: o que mudou para quem usa. Sem adjetivo vago. */
+  outcome: Localized;
   /** Texto mais longo para a página do projeto. Parágrafos separados por linha em branco. */
   description?: Localized;
   item: ItemIcon;
@@ -39,9 +43,17 @@ export const projects: Project[] = [
     slug: "hardware-test-hub",
     title: { pt: "Hardware Test Hub", en: "Hardware Test Hub" },
     kind: { pt: "Ferramenta de laboratório", en: "Lab tool" },
+    role: {
+      pt: "Autor único: framework, módulos de teste e relatórios",
+      en: "Sole author: framework, test modules and reports",
+    },
     summary: {
       pt: "Framework para homologar notebooks e desktops Windows: CPU, memória, disco, rede, boot, bateria e Wi-Fi 802.11r, com relatórios rastreáveis por cenário.",
       en: "Framework to certify Windows laptops and desktops: CPU, memory, disk, network, boot, battery and 802.11r Wi-Fi, with traceable per-scenario reports.",
+    },
+    outcome: {
+      pt: "Homologar um notebook virou uma bateria retomável, com PASS ou FAIL por teste e evidência guardada por cenário.",
+      en: "Certifying a laptop became a resumable test suite, with PASS or FAIL per test and evidence stored per scenario.",
     },
     description: {
       pt: "Um único ponto de entrada (hub.bat) eleva privilégios, prepara a máquina e abre um menu no console onde o operador escolhe os testes. Cada teste é um script independente que devolve PASS ou FAIL pelo exit code e grava evidências numa pasta controlada pelo hub.\n\nOs resultados ficam agrupados em cenários — por exemplo, imagem limpa × com agentes de segurança — para comparar a mesma máquina em configurações diferentes, retomar uma bateria em outro dia e reexecutar só o que falhou, sem perder evidência. A saída sai em HTML, CSV, JSON e log, além de CSVs temáticos prontos para BI.\n\nÉ extensível por convenção: qualquer .py ou .ps1 colocado na pasta de testes vira um item do menu.",
@@ -72,9 +84,17 @@ export const projects: Project[] = [
     slug: "sdd-maestri",
     title: { pt: "SDD Maestri", en: "SDD Maestri" },
     kind: { pt: "Skill de IA · open source", en: "AI skill · open source" },
+    role: {
+      pt: "Autor: desenho do método, papéis e documentação",
+      en: "Author: method design, roles and documentation",
+    },
     summary: {
       pt: "Skill de Spec-Driven Development para times de agentes de IA: papéis que não se cruzam, a spec como contrato e um painel auditável no canvas.",
       en: "Spec-Driven Development skill for teams of AI agents: roles that never overlap, the spec as a contract and an auditable board on the canvas.",
+    },
+    outcome: {
+      pt: "Times de agentes de IA trabalham em paralelo sem dois editarem o mesmo arquivo, com um commit por pacote aprovado.",
+      en: "AI agent teams work in parallel without two agents editing the same file, with one commit per approved work package.",
     },
     description: {
       pt: "Rodar cinco agentes ao mesmo tempo é fácil; o que quebra é sempre a mesma coisa: dois agentes editando o mesmo arquivo, cada um inventando uma regra de negócio, contexto que não atravessa terminais e um histórico de git que vira sopa.\n\nA skill impõe disciplina: a spec é o contrato e existe antes do primeiro executor começar. Quem escreve o contrato (Arquiteto) não é quem rege a execução (Maestro); quem implementa (Engineer) não é quem aprova (Reviewer); e só um papel toca no git, com um commit por pacote de trabalho aprovado.\n\nTudo isso com referências a Star Wars espalhadas pela documentação — porque ninguém ataca a estação antes de roubar a planta.",
@@ -105,9 +125,17 @@ export const projects: Project[] = [
     slug: "openweddy",
     title: { pt: "OpenWeddy", en: "OpenWeddy" },
     kind: { pt: "Produto open source", en: "Open-source product" },
+    role: {
+      pt: "Autor único: produto, front-end, banco e painel dos noivos",
+      en: "Sole author: product, front-end, database and couple's dashboard",
+    },
     summary: {
       pt: "Convite digital de casamento open-source e sem taxas: envelope animado, contagem regressiva, RSVP por família e lista de presentes com Pix direto para o casal.",
       en: "Open-source, fee-free digital wedding invitation: animated envelope, countdown, per-family RSVP and a gift list paid by Pix straight to the couple.",
+    },
+    outcome: {
+      pt: "Usado no meu próprio casamento: convidados confirmaram presença e presentearam por Pix, sem taxa de plataforma.",
+      en: "Used at my own wedding: guests confirmed attendance and sent gifts via Pix, with zero platform fees.",
     },
     description: {
       pt: "Nasceu do convite do meu próprio casamento e virou produto: um site completo que o casal hospeda no próprio domínio. As plataformas fechadas cobram por convidado, ficam com parte dos presentes e guardam a lista num banco que não é seu — o OpenWeddy inverte isso.\n\nCada família recebe um link único e responde pessoa a pessoa, sem login. Os presentes geram Pix Copia e Cola e QR Code na hora, e o dinheiro cai 100% na conta do casal. Há um painel para os noivos acompanharem confirmações, marcarem pagamentos e importarem convidados por planilha.\n\nRoda nos planos gratuitos da Vercel e do Supabase: custo zero.",
@@ -138,9 +166,17 @@ export const projects: Project[] = [
     slug: "orcazen",
     title: { pt: "OrçaZen", en: "OrçaZen" },
     kind: { pt: "App pessoal", en: "Personal app" },
+    role: {
+      pt: "Autor único: produto, front-end, banco e integração com IA",
+      en: "Sole author: product, front-end, database and AI integration",
+    },
     summary: {
       pt: "App de finanças pessoais: despesas, receitas, faturas de cartão e assinaturas, com importação de extrato por IA e lançamentos em linguagem natural.",
       en: "Personal finance app: expenses, income, credit card bills and subscriptions, with AI statement import and natural-language entries.",
+    },
+    outcome: {
+      pt: "Substituiu a planilha de finanças da casa, com extratos importados por IA e conferidos antes de gravar.",
+      en: "Replaced the household finance spreadsheet, with statements imported by AI and reviewed before saving.",
     },
     description: {
       pt: "Começou como uma planilha e virou um app completo, construído inteiro com Spec-Driven Development: cada funcionalidade tem spec, pacotes de trabalho e revisão independente antes de entrar.\n\nImporta extratos e faturas em OFX, CSV ou PDF — a IA (Gemini, com retry, fallback entre modelos e circuit breaker) sugere categorias, e nada é gravado sem confirmação. Também aceita lançamentos em linguagem natural e por um bot de Telegram, projeta compras parceladas nas faturas futuras e concilia pagamentos e estornos.\n\nO código é privado; posso mostrar numa conversa.",
