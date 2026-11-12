@@ -27,8 +27,8 @@ export type Project = {
   year: number;
   /** Atributos do item (até 3 aparecem no inventário). */
   stats: { value: string; label: Localized }[];
-  /** A primeira imagem é a capa. `alt` é obrigatório (acessibilidade). */
-  images: { src: string; alt: Localized }[];
+  /** A primeira imagem é a capa. `alt` é obrigatório (acessibilidade); width/height = tamanho real do arquivo. */
+  images: { src: string; width: number; height: number; alt: Localized }[];
   links: { demo?: string; github?: string };
   /** Código fechado: mostra o selo "privado" em vez do link do GitHub. */
   private?: boolean;
@@ -58,6 +58,8 @@ export const projects: Project[] = [
     images: [
       {
         src: "/projects/hardware-test-hub/1.svg",
+        width: 1200,
+        height: 750,
         alt: {
           pt: "Ilustração do menu do console com os módulos de teste e o status PASS/FAIL de cada um",
           en: "Illustration of the console menu listing test modules with their PASS/FAIL status",
@@ -89,6 +91,8 @@ export const projects: Project[] = [
     images: [
       {
         src: "/projects/sdd-maestri/banner.svg",
+        width: 1200,
+        height: 340,
         alt: {
           pt: "Banner do SDD Maestri: Spec-Driven Development para times de agentes de IA",
           en: "SDD Maestri banner: Spec-Driven Development for AI agent teams",
@@ -120,6 +124,8 @@ export const projects: Project[] = [
     images: [
       {
         src: "/projects/openweddy/1.svg",
+        width: 1200,
+        height: 750,
         alt: {
           pt: "Ilustração do convite: envelope fechado com selo, contagem regressiva e botão de confirmar presença",
           en: "Invitation illustration: sealed envelope, countdown and RSVP button",
@@ -151,6 +157,8 @@ export const projects: Project[] = [
     images: [
       {
         src: "/projects/orcazen/1.svg",
+        width: 1200,
+        height: 750,
         alt: {
           pt: "Ilustração do painel: cards de entradas, saídas e fatura, gráfico mensal e importação de extrato",
           en: "Dashboard illustration: income, expense and card bill cards, monthly chart and statement import",

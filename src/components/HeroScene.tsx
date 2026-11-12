@@ -4,11 +4,12 @@ export function HeroScene() {
     [60, 40], [140, 90], [220, 30], [310, 70], [420, 25], [520, 85], [600, 45], [700, 20],
     [780, 75], [860, 35], [950, 60], [1040, 28], [1120, 80], [1180, 40], [380, 120], [880, 115],
   ];
-  const fireflies = [
-    [180, 330], [260, 300], [420, 350], [640, 310], [820, 340], [980, 300], [1080, 360],
-  ];
+  // Camadas animadas ficam fora do SVG (HTML com transform/opacity = só composição, sem repintar a cena).
+  const twinkles = [[8, 12], [22, 26], [37, 8], [51, 20], [66, 6], [74, 30], [88, 14], [95, 40]];
+  const fireflies = [[14, 80], [22, 72], [36, 84], [53, 74], [68, 82], [82, 72], [90, 86]];
   return (
-    <svg className="hero-scene" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <div className="hero-scene" aria-hidden="true">
+    <svg className="hero-scene-art" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice">
       <defs>
         <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stopColor="var(--sky-top)" />
@@ -21,26 +22,15 @@ export function HeroScene() {
       </defs>
       <rect width="1200" height="420" fill="url(#sky)" />
 
-      <g className="scene-stars">
+      <g className="scene-stars" fill="#fff">
         {stars.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r={i % 3 ? 1.4 : 2.2} fill="#fff" style={{ animationDelay: `${(i % 5) * 0.6}s` }} />
+          <circle key={i} cx={x} cy={y} r={i % 3 ? 1.4 : 2.2} />
         ))}
       </g>
 
       <circle cx="960" cy="90" r="90" fill="url(#glow)" />
       <circle cx="960" cy="90" r="34" fill="var(--orb)" />
       <circle className="scene-moon-cut" cx="976" cy="80" r="30" fill="var(--sky-top)" />
-
-      <g className="scene-clouds" fill="var(--cloud)">
-        <g className="cloud cloud-a">
-          <ellipse cx="200" cy="110" rx="60" ry="18" />
-          <ellipse cx="235" cy="98" rx="36" ry="20" />
-        </g>
-        <g className="cloud cloud-b">
-          <ellipse cx="640" cy="70" rx="70" ry="16" />
-          <ellipse cx="610" cy="60" rx="34" ry="16" />
-        </g>
-      </g>
 
       {/* montanha distante com nuvem no topo */}
       <path d="M560 300 760 120 820 160 870 130 1060 300z" fill="var(--mountain)" />
@@ -67,11 +57,25 @@ export function HeroScene() {
         <path d="M8 15h26" stroke="var(--trunk)" strokeWidth="2" />
       </g>
 
-      <g className="scene-fireflies">
-        {fireflies.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="3" fill="#f6ff8f" style={{ animationDelay: `${i * 0.7}s` }} />
-        ))}
-      </g>
     </svg>
+      <div className="scene-layer scene-clouds">
+        <svg className="cloud cloud-a" viewBox="0 0 120 40" width="190">
+          <ellipse cx="50" cy="26" rx="48" ry="13" />
+          <ellipse cx="78" cy="17" rx="28" ry="15" />
+        </svg>
+        <svg className="cloud cloud-b" viewBox="0 0 140 36" width="210">
+          <ellipse cx="78" cy="22" rx="58" ry="12" />
+          <ellipse cx="48" cy="15" rx="28" ry="12" />
+        </svg>
+      </div>
+      <div className="scene-layer scene-night">
+        {twinkles.map(([x, y], i) => (
+          <span key={i} className="twinkle" style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${(i % 5) * 0.6}s` }} />
+        ))}
+        {fireflies.map(([x, y], i) => (
+          <span key={i} className="firefly" style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${i * 0.7}s` }} />
+        ))}
+      </div>
+    </div>
   );
 }

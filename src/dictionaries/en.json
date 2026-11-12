@@ -4,10 +4,12 @@
     "description": "André Menezes, Endpoint Engineer: infrastructure automation, hardware certification and products built with Spec-Driven Development."
   },
   "nav": {
+    "label": "Main navigation",
     "skip": "Skip to content",
     "projects": "Inventory",
     "about": "Profile",
-    "contact": "Contact"
+    "contact": "Contact",
+    "cta": "Contact me"
   },
   "controls": {
     "language": "Language",
@@ -33,7 +35,8 @@
     ],
     "next": "Continue",
     "restart": "Listen again",
-    "cta": "Open inventory"
+    "cta": "Open inventory",
+    "ctaContact": "Contact me"
   },
   "inventory": {
     "title": "Inventory",
@@ -76,11 +79,18 @@
   "contact": {
     "title": "Signposts",
     "text": "Want to talk about a project, a role, or just chat? Pick a signpost.",
-    "cv": "Download résumé"
+    "cv": "Download résumé",
+    "whatsappText": "Hi André! I saw your portfolio and would like to talk.",
+    "barWhatsapp": "WhatsApp",
+    "barMessage": "Send a message",
+    "barLabel": "Contact shortcuts",
+    "formTitle": "Or drop a note in the mailbox"
   },
   "footer": {
     "made": "Handmade with Next.js and a little magic.",
-    "melody": "An old sage's hint: ♪ ↑ ↓ ← → A"
+    "melody": "An old sage's hint: ♪ ↑ ↓ ← → A",
+    "privacy": "Privacy",
+    "cookiePrefs": "Cookie preferences"
   },
   "fairy": {
     "label": "Fairy companion — click for a tip",
@@ -105,5 +115,43 @@
     "title": "You got lost in the woods…",
     "text": "Every path around here seems to loop back. Maybe head back to the village.",
     "back": "Back to the start"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "summary": "Please check the highlighted fields before sending.",
+    "general": "I couldn't deliver your message right now. Your text is still here: try again in a few minutes or reach me directly by email or WhatsApp.",
+    "errors": {
+      "nameShort": "Please enter your name (at least 2 letters).",
+      "nameLong": "Name is too long (80 characters max).",
+      "emailInvalid": "That email doesn't look valid. E.g.: you@email.com",
+      "messageShort": "Tell me a bit more (at least 10 characters).",
+      "messageLong": "Message is too long (2,000 characters max)."
+    }
+  },
+  "thanks": {
+    "metaTitle": "Message sent",
+    "kicker": "You delivered",
+    "title": "Message delivered!",
+    "text": "Thanks for reaching out. I'll reply within 2 business days to the email you provided.",
+    "back": "Back to the start"
+  },
+  "loading": {
+    "text": "Loading…"
+  },
+  "cookies": {
+    "label": "Cookie notice",
+    "text": "I use Google Analytics to understand, in aggregate, which projects people find most interesting. It only turns on if you accept.",
+    "accept": "Accept",
+    "reject": "Decline",
+    "policy": "Privacy policy"
+  },
+  "privacy": {
+    "metaTitle": "Privacy policy",
+    "metaDescription": "What data this portfolio processes, why, with whom, and how to exercise your rights (LGPD).",
+    "updated": "Last updated"
   }
 }

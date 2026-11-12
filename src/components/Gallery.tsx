@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
 
 type Props = {
-  images: { src: string; alt: string }[];
+  images: { src: string; width: number; height: number; alt: string }[];
   dict: Dictionary["project"];
   closeLabel: string;
 };
@@ -32,8 +32,8 @@ export function Gallery({ images, dict, closeLabel }: Props) {
               <Image
                 src={img.src}
                 alt={img.alt}
-                width={960}
-                height={600}
+                width={img.width}
+                height={img.height}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 unoptimized={img.src.endsWith(".svg")}
               />
@@ -58,8 +58,8 @@ export function Gallery({ images, dict, closeLabel }: Props) {
             <Image
               src={image.src}
               alt={image.alt}
-              width={1600}
-              height={1000}
+              width={image.width}
+              height={image.height}
               sizes="90vw"
               unoptimized={image.src.endsWith(".svg")}
             />

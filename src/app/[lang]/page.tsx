@@ -1,11 +1,15 @@
 import { notFound } from "next/navigation";
+import { ContactForm } from "@/components/ContactForm";
 import { DialogBox } from "@/components/DialogBox";
 import { Gem } from "@/components/Gem";
 import { HeroScene } from "@/components/HeroScene";
 import { Inventory, type InventoryItem } from "@/components/Inventory";
+import { JsonLd } from "@/components/JsonLd";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
+import { whatsappUrl } from "@/lib/contact";
 import { getDictionary, hasLocale } from "@/lib/i18n";
+import { personJsonLd } from "@/lib/site";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -23,7 +27,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       private: p.private,
       tags: p.tags,
       year: p.year,
-      cover: p.images[0] && { src: p.images[0].src, alt: p.images[0].alt[lang] },
+      cover: p.images[0] && { ...p.images[0], alt: p.images[0].alt[lang] },
       links: p.links,
     }));
 
@@ -31,16 +35,19 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     profile.contacts.github && { label: "GitHub", href: profile.contacts.github },
     profile.contacts.linkedin && { label: "LinkedIn", href: profile.contacts.linkedin },
     profile.contacts.email && { label: "E-mail", href: `mailto:${profile.contacts.email}` },
+    whatsappUrl(dict.contact.whatsappText) && { label: "WhatsApp", href: whatsappUrl(dict.contact.whatsappText)! },
   ].filter(Boolean) as { label: string; href: string }[];
+  const channel = (label: string) => label.toLowerCase().replace(/[^a-z]/g, "");
 
   return (
     <>
+      <JsonLd data={{ "@context": "https://schema.org", ...personJsonLd(lang) }} />
       <section className="hero">
         <HeroScene />
         <Gem id="hero" {...gem} className="gem-hero" />
         <div className="container hero-inner">
           <h1 className="hero-title">
-            {profile.name}
+            {profile.name}{" "}
             <span className="hero-role">{profile.role[lang]}</span>
           </h1>
           <DialogBox
@@ -49,9 +56,14 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             nextLabel={dict.hero.next}
             restartLabel={dict.hero.restart}
           />
-          <a className="btn btn-primary hero-cta" href="#inventory">
-            {dict.hero.cta} ↓
-          </a>
+          <div className="btn-row hero-cta">
+            <a className="btn btn-primary" href="#contact">
+              ✉ {dict.hero.ctaContact}
+            </a>
+            <a className="btn btn-ghost" href="#inventory">
+              {dict.hero.cta} ↓
+            </a>
+          </div>
         </div>
       </section>
 
@@ -136,7 +148,14 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <ul className="signposts">
           {contacts.map((c) => (
             <li key={c.label}>
-              <a className="signpost" href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+              <a
+                className="signpost"
+                href={c.href}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+                data-track="contact_click"
+                data-track-channel={channel(c.label)}
+              >
                 {c.label}
               </a>
             </li>
@@ -152,6 +171,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <Gem id="contact" {...gem} />
           </li>
         </ul>
+        <div id="contact-form" className="contact-form-wrap">
+          <ContactForm lang={lang} dict={dict.form} title={dict.contact.formTitle} />
+        </div>
       </section>
     </>
   );

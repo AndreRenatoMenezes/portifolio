@@ -27,6 +27,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Ignora internos do Next e arquivos estáticos (qualquer caminho com ponto).
-  matcher: ["/((?!_next|.*\\..*).*)"],
+  // Só caminhos sem idioma passam pelo proxy. Ficam de fora: /pt e /en (já têm idioma),
+  // internos do Next, arquivos com extensão e os ícones gerados (/icon, /apple-icon).
+  matcher: ["/((?!(?:pt|en)(?:/|$)|_next|(?:apple-)?icon$|.*\\..*).*)"],
 };

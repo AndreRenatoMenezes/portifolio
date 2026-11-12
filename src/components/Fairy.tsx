@@ -20,20 +20,21 @@ export function Fairy({ label, tips }: { label: string; tips: string[] }) {
     if (!fairy || !el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const home = () => ({ x: window.innerWidth - 52, y: window.innerHeight - 60 });
+    // Acima da barra de contato do celular, quando ela existe (--contact-bar-h).
+    const barHeight = () =>
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--contact-bar-h")) || 0;
+    const home = () => ({ x: window.innerWidth - 52, y: window.innerHeight - 60 - barHeight() });
     let pos = home();
     let target = home();
     let current: Element | null = null;
     let leaveTimer = 0;
     let frame = 0;
-    let t = 0;
+    let running = false;
     // Passa a posicionar pelo canto superior esquerdo (o CSS padrão ancora no canto inferior direito).
     Object.assign(el.style, { left: "0px", top: "0px", right: "auto", bottom: "auto" });
+    const place = () => (el.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`);
+    place();
 
-    const aim = (node: Element | null) => {
-      window.clearTimeout(leaveTimer);
-      current = node;
-    };
     const updateTarget = () => {
       if (current && current.isConnected) {
         const r = current.getBoundingClientRect();
@@ -46,31 +47,52 @@ export function Fairy({ label, tips }: { label: string; tips: string[] }) {
       }
     };
 
+    // Só anima enquanto há distância a percorrer; parada, o balanço é só CSS.
+    const loop = () => {
+      updateTarget();
+      const dx = target.x - pos.x;
+      const dy = target.y - pos.y;
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+        pos = target;
+        place();
+        running = false;
+        return;
+      }
+      pos = { x: pos.x + dx * 0.08, y: pos.y + dy * 0.08 };
+      place();
+      frame = requestAnimationFrame(loop);
+    };
+    const kick = () => {
+      if (running) return;
+      running = true;
+      frame = requestAnimationFrame(loop);
+    };
+
+    const aim = (node: Element | null) => {
+      window.clearTimeout(leaveTimer);
+      current = node;
+      kick();
+    };
+
     const onOver = (e: Event) => {
       const node = (e.target as Element).closest?.(TARGETS);
       // Mouse em cima da própria fada: fica parada para poder ser clicada.
       if (node === el) return window.clearTimeout(leaveTimer);
-      if (node) aim(node);
+      if (!node) return;
+      if (node === current) window.clearTimeout(leaveTimer); // ainda no mesmo alvo
+      else aim(node);
     };
     const onOut = () => {
       window.clearTimeout(leaveTimer);
-      leaveTimer = window.setTimeout(() => (current = null), 700);
-    };
-
-    const loop = () => {
-      t += 0.05;
-      updateTarget();
-      pos = { x: pos.x + (target.x - pos.x) * 0.08, y: pos.y + (target.y - pos.y) * 0.08 };
-      const bob = Math.sin(t) * 4;
-      el.style.transform = `translate3d(${pos.x}px, ${pos.y + bob}px, 0)`;
-      frame = requestAnimationFrame(loop);
+      leaveTimer = window.setTimeout(() => aim(null), 700);
     };
 
     document.addEventListener("pointerover", onOver);
     document.addEventListener("focusin", onOver);
     document.addEventListener("pointerout", onOut);
     document.addEventListener("focusout", onOut);
-    frame = requestAnimationFrame(loop);
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("resize", kick);
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(leaveTimer);
@@ -78,6 +100,8 @@ export function Fairy({ label, tips }: { label: string; tips: string[] }) {
       document.removeEventListener("focusin", onOver);
       document.removeEventListener("pointerout", onOut);
       document.removeEventListener("focusout", onOut);
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("resize", kick);
       Object.assign(el.style, { transform: "", left: "", top: "", right: "", bottom: "" });
     };
   }, [fairy]);
@@ -96,9 +120,11 @@ export function Fairy({ label, tips }: { label: string; tips: string[] }) {
         tipIndex.current += 1;
       }}
     >
-      <span className="fairy-wing left" aria-hidden="true" />
-      <span className="fairy-wing right" aria-hidden="true" />
-      <span className="fairy-core" aria-hidden="true" />
+      <span className="fairy-body" aria-hidden="true">
+        <span className="fairy-wing left" />
+        <span className="fairy-wing right" />
+        <span className="fairy-core" />
+      </span>
     </button>
   );
 }

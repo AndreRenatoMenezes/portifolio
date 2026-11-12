@@ -1,14 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import pt from "@/dictionaries/pt.json";
-import en from "@/dictionaries/en.json";
+import { lang as rootLang } from "next/root-params";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 
-/** 404 dentro do layout: a floresta que dá voltas. */
-export default function NotFound() {
-  const lang = usePathname().startsWith("/en") ? "en" : "pt";
-  const dict = (lang === "en" ? en : pt).notFound;
+/** 404 dentro do layout: a floresta que dá voltas. Server Component — nenhum dicionário vai para o cliente. */
+export default async function NotFound() {
+  const raw = await rootLang();
+  const lang = hasLocale(raw) ? raw : "pt";
+  const dict = getDictionary(lang).notFound;
 
   return (
     <section className="section container lost">

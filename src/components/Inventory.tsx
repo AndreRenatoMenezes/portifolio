@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ItemIconSvg, type ItemIcon } from "@/components/icons/ItemIcons";
 import type { Dictionary, Locale } from "@/lib/i18n";
+import { track } from "@/lib/analytics";
 import { playCursor, playItemGet } from "@/lib/sound";
 
 /** Versão já traduzida do projeto, segura para enviar ao cliente. */
@@ -17,7 +18,7 @@ export type InventoryItem = {
   stats: { value: string; label: string }[];
   tags: string[];
   year: number;
-  cover?: { src: string; alt: string };
+  cover?: { src: string; width: number; height: number; alt: string };
   links: { demo?: string; github?: string };
   private?: boolean;
 };
@@ -49,7 +50,7 @@ export function Inventory({ lang, items, dict, modalDict }: Props) {
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState<InventoryItem | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const slotRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const slotRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const totalSlots = Math.max(SLOTS_PER_PAGE, Math.ceil((items.length + 1) / SLOTS_PER_PAGE) * SLOTS_PER_PAGE);
   const current = items[selected];
 
@@ -94,23 +95,30 @@ export function Inventory({ lang, items, dict, modalDict }: Props) {
             return <div key={`empty-${i}`} className="slot slot-empty" aria-hidden="true" title={dict.empty} />;
           }
           return (
-            <button
+            <Link
               key={item.slug}
               ref={(node) => {
                 slotRefs.current[i] = node;
               }}
-              type="button"
+              href={`/${lang}/projects/${item.slug}`}
+              prefetch={false}
+              data-opens-modal
               className="slot"
               data-selected={i === selected || undefined}
               tabIndex={i === selected ? 0 : -1}
-              aria-label={`${item.title} — ${dict.open}`}
               onMouseEnter={() => select(i)}
               onFocus={() => select(i)}
-              onClick={() => setOpen(item)}
+              onClick={(e) => {
+                // Clique simples abre o modal; com modificador (nova aba etc.) segue o link.
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                setOpen(item);
+              }}
             >
               <ItemIconSvg name={item.item} size={44} />
+              <span className="slot-name">{item.title}</span>
               {i === selected && <span className="target-cursor" aria-hidden="true" />}
-            </button>
+            </Link>
           );
         })}
       </div>
@@ -158,6 +166,7 @@ function ItemGetModal({
     if (item && !dialog.open) {
       dialog.showModal();
       playItemGet();
+      track("item_open", { slug: item.slug });
     } else if (!item && dialog.open) {
       dialog.close();
     }
@@ -192,8 +201,8 @@ function ItemGetModal({
               className="item-get-cover"
               src={item.cover.src}
               alt={item.cover.alt}
-              width={960}
-              height={600}
+              width={item.cover.width}
+              height={item.cover.height}
               sizes="(max-width: 640px) 90vw, 560px"
               unoptimized={item.cover.src.endsWith(".svg")}
             />

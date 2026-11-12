@@ -4,10 +4,12 @@
     "description": "André Menezes, Endpoint Engineer: automação para infraestrutura, homologação de hardware e produtos construídos com Spec-Driven Development."
   },
   "nav": {
+    "label": "Navegação principal",
     "skip": "Pular para o conteúdo",
     "projects": "Inventário",
     "about": "Ficha",
-    "contact": "Contato"
+    "contact": "Contato",
+    "cta": "Fale comigo"
   },
   "controls": {
     "language": "Idioma",
@@ -33,7 +35,8 @@
     ],
     "next": "Continuar",
     "restart": "Ouvir de novo",
-    "cta": "Abrir inventário"
+    "cta": "Abrir inventário",
+    "ctaContact": "Fale comigo"
   },
   "inventory": {
     "title": "Inventário",
@@ -76,11 +79,18 @@
   "contact": {
     "title": "Placas do caminho",
     "text": "Quer conversar sobre um projeto, uma vaga ou só trocar ideia? Escolha uma placa.",
-    "cv": "Baixar currículo"
+    "cv": "Baixar currículo",
+    "whatsappText": "Olá, André! Vi seu portfólio e queria conversar.",
+    "barWhatsapp": "WhatsApp",
+    "barMessage": "Mandar mensagem",
+    "barLabel": "Atalhos de contato",
+    "formTitle": "Ou deixe um recado na caixa de correio"
   },
   "footer": {
     "made": "Feito à mão com Next.js e um pouco de magia.",
-    "melody": "Dica de um velho sábio: ♪ ↑ ↓ ← → A"
+    "melody": "Dica de um velho sábio: ♪ ↑ ↓ ← → A",
+    "privacy": "Privacidade",
+    "cookiePrefs": "Preferências de cookies"
   },
   "fairy": {
     "label": "Fada companheira — clique para uma dica",
@@ -105,5 +115,43 @@
     "title": "Você se perdeu na floresta…",
     "text": "Todo caminho por aqui parece dar voltas. Talvez seja melhor voltar para a vila.",
     "back": "Voltar para o início"
+  },
+  "form": {
+    "name": "Nome",
+    "email": "E-mail",
+    "message": "Mensagem",
+    "send": "Enviar mensagem",
+    "sending": "Enviando…",
+    "summary": "Confira os campos destacados antes de enviar.",
+    "general": "Não consegui entregar sua mensagem agora. Seu texto continua aqui: tente de novo em alguns minutos ou fale direto pelo e-mail ou WhatsApp.",
+    "errors": {
+      "nameShort": "Escreva seu nome (pelo menos 2 letras).",
+      "nameLong": "Nome muito longo (máximo 80 caracteres).",
+      "emailInvalid": "Esse e-mail não parece válido. Ex.: voce@email.com",
+      "messageShort": "Conte um pouco mais (pelo menos 10 caracteres).",
+      "messageLong": "Mensagem muito longa (máximo 2.000 caracteres)."
+    }
+  },
+  "thanks": {
+    "metaTitle": "Mensagem enviada",
+    "kicker": "Você entregou",
+    "title": "Mensagem entregue!",
+    "text": "Obrigado pelo contato. Respondo em até 2 dias úteis no e-mail que você informou.",
+    "back": "Voltar ao início"
+  },
+  "loading": {
+    "text": "Carregando…"
+  },
+  "cookies": {
+    "label": "Aviso de cookies",
+    "text": "Uso o Google Analytics para entender, de forma agregada, quais projetos interessam mais. Ele só é ativado se você aceitar.",
+    "accept": "Aceitar",
+    "reject": "Recusar",
+    "policy": "Política de privacidade"
+  },
+  "privacy": {
+    "metaTitle": "Política de privacidade",
+    "metaDescription": "Quais dados este portfólio trata, por quê, com quem e como exercer seus direitos (LGPD).",
+    "updated": "Atualizada em"
   }
 }
