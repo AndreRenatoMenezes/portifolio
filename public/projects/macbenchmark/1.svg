@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750">
+<rect width="1200" height="750" fill="#0d1117"/>
+<rect width="1200" height="56" fill="#161b22"/>
+<circle cx="32" cy="28" r="8" fill="#ff5f57"/><circle cx="58" cy="28" r="8" fill="#febc2e"/><circle cx="84" cy="28" r="8" fill="#28c840"/>
+<text x="600" y="36" font-family="Menlo, Consolas, monospace" font-size="20" fill="#8b949e" text-anchor="middle">MacBenchmark — Apple Silicon Suite</text>
+<g font-family="Menlo, Consolas, monospace">
+<text x="70" y="108" font-size="28" fill="#58a6ff" font-weight="700">MACBENCHMARK</text>
+<text x="70" y="142" font-size="19" fill="#8b949e">Pré-voo: Energia OK · Disco OK · Thermal Cool · Seeds determinísticos · Warmup descartado</text>
+<rect x="70" y="172" width="330" height="150" rx="12" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+<text x="96" y="212" font-size="18" fill="#8b949e">SCORE COMPOSTO (HARMÔNICA)</text>
+<text x="96" y="274" font-size="54" fill="#3fd17a" font-weight="700">1042</text>
+<text x="250" y="274" font-size="20" fill="#8b949e">/ 1000 ref</text>
+<rect x="430" y="172" width="700" height="150" rx="12" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+<text x="458" y="212" font-size="18" fill="#8b949e">TELEMETRIA AO VIVO (IOREPORT)</text>
+<text x="458" y="256" font-size="22" fill="#c9d1d9">CPU: 18.4 W   GPU: 4.1 W   Temp: 62 °C   Bateria: 98%</text>
+<text x="458" y="294" font-size="18" fill="#58a6ff">Execução serial · Resfriamento entre baterias ativo</text>
+<rect x="70" y="350" width="1060" height="270" rx="12" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+<text x="96" y="392" font-size="20" fill="#8b949e">SUÍTES DE TESTE (SINTÉTICAS + APLICATIVOS REAIS)</text>
+<text x="96" y="438" font-size="22" fill="#c9d1d9">1  CPU, RAM e Compressão</text><rect x="520" y="420" width="440" height="20" rx="6" fill="#3fd17a"/><text x="1100" y="438" font-size="22" fill="#3fd17a" text-anchor="end">1058</text>
+<text x="96" y="484" font-size="22" fill="#c9d1d9">2  SSD I/O e Banco Local</text><rect x="520" y="466" width="410" height="20" rx="6" fill="#3fd17a"/><text x="1100" y="484" font-size="22" fill="#3fd17a" text-anchor="end">1019</text>
+<text x="96" y="530" font-size="22" fill="#c9d1d9">3  Apps (Numbers, Pages, Safari)</text><rect x="520" y="512" width="425" height="20" rx="6" fill="#58a6ff"/><text x="1100" y="530" font-size="22" fill="#58a6ff" text-anchor="end">1034</text>
+<text x="96" y="576" font-size="22" fill="#c9d1d9">4  Rede, Bateria e Boot</text><rect x="520" y="558" width="435" height="20" rx="6" fill="#e8b84a"/><text x="1100" y="576" font-size="22" fill="#e8b84a" text-anchor="end">1056</text>
+<rect x="70" y="646" width="1060" height="58" rx="8" fill="#161b22"/>
+<text x="96" y="682" font-size="20" fill="#c9d1d9">Export: baseline.json · raw-metrics.json      Sync PostgreSQL: fila offline pronta</text>
+</g>
+</svg>

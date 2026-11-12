@@ -15,6 +15,10 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 | [T7](#t7--google-search-console-recomendado) | Google Search Console (recomendado) | indexação do sitemap | 10 min |
 | [T8](#t8--prints-reais-dos-projetos-opcional) | Prints reais dos projetos (opcional) | capas melhores | — |
 | [T9](#t9--limite-de-envios-do-formulário-opcional) | Limite de envios do formulário por IP (opcional) | proteção extra contra spam | 10 min |
+| [T10](#t10--conferir-o-site-do-casamento-antes-de-linkar) | Conferir o site do casamento antes de linkar | link ao vivo e prints reais do OpenWeddy (spec 005, CA-03/CA-04) | 5 min |
+| [T11](#t11--aprovar-prints-dos-projetos-do-laboratório) | Aprovar prints dos projetos do laboratório | prints reais em `macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard` (CA-07) | — |
+| [T12](#t12--autorização-do-empregador-opcional) | Autorização do empregador (opcional) | citar o nome da empresa em spec futura | — |
+| [T13](#t13--confirmar-papel-nos-projetos) | Confirmar papel (`role`) e resultado (`outcome`) nos 8 projetos | premissa P1 da spec 005 | 5 min |
 
 ---
 
@@ -164,3 +168,48 @@ O formulário já tem armadilha para robôs (campo oculto e tempo mínimo de pre
 6. Teste: mande uma mensagem pelo site, que deve funcionar normalmente. Depois veja em **Firewall → Overview** se a regra aparece.
 
 > O rate limit do Firewall pode depender do plano da Vercel. Se não estiver disponível no seu, a proteção atual já basta para um portfólio pessoal.
+
+---
+
+## T10 — Conferir o site do casamento antes de linkar
+
+Condiciona a entrada de `openweddy.links.demo` (`https://www.emanuele-andre.site/`) e dos prints reais do OpenWeddy (spec 005, CA-03, CA-04 e CA-31).
+
+- [ ] Abrir `https://www.emanuele-andre.site/` numa janela anônima, sem link de convidado, e confirmar que um estranho **não** vê endereço residencial, chave Pix, telefones nem nomes de convidados, e não consegue enviar RSVP em nome de alguém.
+- [ ] Decisão: marcar como **feito** (libera o link e os prints na WP-13) ou pedir **"sem link"** (mantém `links.demo` ausente).
+
+---
+
+## T11 — Aprovar prints dos projetos do laboratório
+
+Nenhum arquivo raster (`.png`, `.webp`, `.jpg`) pode entrar em `public/projects/macbenchmark/`, `public/projects/linux-endpoint-bench/` ou `public/projects/homolog-dashboard/` sem estar listado e marcado como aprovado abaixo (spec 005, DP-8 e CA-07). Enquanto a tabela estiver vazia, valem as capas ilustradas em SVG (`1.svg`).
+
+**Critério de aprovação:** sem logo, sem nome da empresa ou de marca interna, sem hostname, sem número de série e sem dado interno.
+
+| Projeto (`slug`) | Arquivo proposto | Descrição da tela | Status (`[ ]` pendente / `[x]` aprovada / recusada) |
+|---|---|---|---|
+| — | — | *(nenhum print raster proposto — em uso: capas ilustradas `1.svg`)* | — |
+
+---
+
+## T12 — Autorização do empregador (opcional)
+
+Os 3 projetos de laboratório (`macbenchmark`, `linux-endpoint-bench` e `homolog-dashboard`) são publicados de forma neutra ("laboratório de endpoints de uma fintech") e como repositórios privados (spec 005, DP-2 e CA-05).
+
+- [ ] Se obtiver autorização formal para citar o nome do empregador, registrar aqui a **data** e **quem autorizou**. Só depois disso uma spec futura poderá mencionar o nome.
+
+---
+
+## T13 — Confirmar papel nos projetos
+
+Conferir os textos de `role` (premissa P1 da spec 005: autor único dos 8 projetos) e o `outcome` de uso real do OpenWeddy em `src/content/projects.ts`:
+
+- [ ] `hardware-test-hub` — *"Autor único: framework, módulos de teste e relatórios"*
+- [ ] `macbenchmark` — *"Autor único: arquitetura, app em Swift, backend e metodologia de medição"*
+- [ ] `openweddy` — *"Autor único: produto, front-end, banco e painel dos noivos"* (e `outcome`: *"Usado no meu próprio casamento: convidados confirmaram presença e presentearam por Pix, sem taxa de plataforma."*)
+- [ ] `sdd-maestri` — *"Autor: desenho do método, papéis e documentação"*
+- [ ] `indice` — *"Autor único: API, web, app Android e infraestrutura"*
+- [ ] `linux-endpoint-bench` — *"Autor único: orquestrador, testes e documentação de operação"*
+- [ ] `homolog-dashboard` — *"Autor único: coleta, modelo de dados, geração dos relatórios e integração com IA"*
+- [ ] `orcazen` — *"Autor único: produto, front-end, banco e integração com IA"*
+
