@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
 import { ItemIconSvg } from "@/components/icons/ItemIcons";
+import { JsonLd } from "@/components/JsonLd";
 import { getProject, projects } from "@/content/projects";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
+import { absoluteUrl, alternatesFor, personJsonLd } from "@/lib/site";
 
 export const dynamicParams = false;
 export const generateStaticParams = () =>
@@ -17,8 +19,13 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/projects/[
   return {
     title: project.title[lang],
     description: project.summary[lang],
-    alternates: { languages: { pt: `/pt/projects/${slug}`, en: `/en/projects/${slug}` } },
-    openGraph: { images: project.images[0]?.src.endsWith(".svg") ? undefined : project.images[0]?.src },
+    alternates: alternatesFor(lang, `/projects/${slug}`),
+    openGraph: {
+      type: "article",
+      url: `/${lang}/projects/${slug}`,
+      title: project.title[lang],
+      description: project.summary[lang],
+    },
   };
 }
 
@@ -31,6 +38,21 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
 
   return (
     <article className="section container project">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          name: project.title[lang],
+          description: project.summary[lang],
+          url: absoluteUrl(`/${lang}/projects/${project.slug}`),
+          inLanguage: lang === "pt" ? "pt-BR" : "en",
+          dateCreated: String(project.year),
+          keywords: project.tags.join(", "),
+          programmingLanguage: project.tags,
+          ...(project.links.github && !project.private ? { codeRepository: project.links.github } : {}),
+          author: personJsonLd(lang),
+        }}
+      />
       <Link href={`/${lang}#inventory`} className="back-link">
         ← {dict.project.back}
       </Link>
@@ -99,7 +121,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
             {dict.project.gallery}
           </h2>
           <Gallery
-            images={project.images.map((img) => ({ src: img.src, alt: img.alt[lang] }))}
+            images={project.images.map((img) => ({ ...img, alt: img.alt[lang] }))}
             dict={dict.project}
             closeLabel={dict.modal.close}
           />
