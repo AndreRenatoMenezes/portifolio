@@ -1,0 +1,235 @@
+/* =========================================================
+   Primeira dobra, cartões do modo direto e papéis/resultados (spec 005)
+   ========================================================= */
+
+/* Ajustes de primeira dobra para caber em 1366x768 e 390x844 nos dois modos */
+.hero {
+  min-height: min(68vh, 560px);
+}
+
+.hero-inner {
+  padding-block: 32px 26px;
+  gap: 14px;
+}
+
+.hero-pitch {
+  margin: 0;
+  max-width: 68ch;
+  padding: 11px 15px;
+  border-radius: 10px;
+  background: var(--frame-bg);
+  color: var(--frame-ink);
+  border: 2px solid var(--frame-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  font-size: clamp(0.92rem, 1.3vw, 1.04rem);
+  font-weight: 600;
+  line-height: 1.48;
+}
+
+.hero-cta {
+  align-items: center;
+}
+
+@media (max-height: 800px) {
+  .hero {
+    min-height: min(62vh, 490px);
+  }
+  .hero-inner {
+    padding-block: 22px 20px;
+    gap: 11px;
+  }
+  .hero .dialog-box {
+    margin-top: 2px;
+    padding: 14px 18px 20px;
+  }
+  .hero .dialog-text {
+    min-height: 2.3em;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: auto;
+  }
+  .hero-inner {
+    padding-block: 18px 20px;
+    gap: 10px;
+  }
+  .hero-title {
+    font-size: clamp(1.42rem, 5.8vw, 1.95rem);
+  }
+  .hero-pitch {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  .hero .dialog-box {
+    margin-top: 2px;
+    padding: 13px 14px 18px;
+  }
+  .hero .dialog-text {
+    min-height: 2.4em;
+    font-size: 0.92rem;
+  }
+  .hero-cta {
+    gap: 8px;
+  }
+  .hero-cta .btn,
+  .hero-cta .mode-toggle-hero {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  .hero-cta .mode-toggle-hint {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+}
+
+/* Grade de cartões de projetos (modo direto) */
+.project-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+@media (min-width: 860px) {
+  .project-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.project-card-item {
+  min-width: 0;
+  display: flex;
+}
+
+.project-card {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.project-card-media {
+  border-bottom: 2px solid var(--frame-border);
+  background: rgba(0, 0, 0, 0.28);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.project-card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.project-card-title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.project-card-title a {
+  color: var(--frame-ink);
+  text-decoration: none;
+}
+
+.project-card-title a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.project-card-summary {
+  margin: 0;
+  color: var(--frame-ink);
+  line-height: 1.55;
+}
+
+.project-card-body .project-links {
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+/* Bloco Papel e Resultado (cartões, inventário e página do projeto) */
+.project-role-outcome {
+  margin: 2px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(216, 166, 40, 0.35);
+  display: grid;
+  gap: 8px;
+}
+
+.project-role-outcome > div {
+  display: grid;
+  gap: 2px;
+}
+
+.project-role-outcome dt {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.project-role-outcome dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--frame-ink);
+}
+
+.project-header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.project-header > div {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.project-header .project-role-outcome {
+  margin-top: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--frame-border);
+}
+
+.project-header .project-role-outcome dt {
+  color: var(--muted);
+}
+
+[data-theme="temple"] .project-header .project-role-outcome dt {
+  color: var(--ink);
+}
+
+.project-header .project-role-outcome dd {
+  color: var(--ink);
+}
+
+.project-links {
+  gap: 8px;
+}
+
+.project-links .btn {
+  padding: 9px 14px;
+  font-size: 0.88rem;
+}

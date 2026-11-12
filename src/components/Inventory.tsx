@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ItemIconSvg, type ItemIcon } from "@/components/icons/ItemIcons";
+import { ProjectLinks } from "@/components/ProjectLinks";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { playCursor, playItemGet } from "@/lib/sound";
@@ -13,6 +14,8 @@ export type InventoryItem = {
   slug: string;
   title: string;
   kind: string;
+  role: string;
+  outcome: string;
   summary: string;
   item: ItemIcon;
   stats: { value: string; label: string }[];
@@ -42,11 +45,12 @@ type Props = {
   items: InventoryItem[];
   dict: Dictionary["inventory"];
   modalDict: Dictionary["modal"];
+  projectDict: Dictionary["project"];
 };
 
 const SLOTS_PER_PAGE = 12; // divisível por 3 e 4 (colunas mobile/desktop)
 
-export function Inventory({ lang, items, dict, modalDict }: Props) {
+export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) {
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState<InventoryItem | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -87,7 +91,7 @@ export function Inventory({ lang, items, dict, modalDict }: Props) {
   };
 
   return (
-    <div className="inventory" data-inventory>
+    <div className="inventory" data-inventory data-mode-only="adventure">
       <div className="inventory-grid dialog-frame" ref={gridRef} onKeyDown={onKeyDown}>
         {Array.from({ length: totalSlots }, (_, i) => {
           const item = items[i];
@@ -126,23 +130,52 @@ export function Inventory({ lang, items, dict, modalDict }: Props) {
       {current && (
         <aside className="item-panel dialog-frame" aria-live="polite">
           <p className="item-panel-label">
-            {dict.selected} · {current.kind}
+            {dict.selected} · {current.kind} · {current.year}
           </p>
           <h3 className="item-panel-title">{current.title}</h3>
           <p>{current.summary}</p>
+          <dl className="project-role-outcome">
+            <div>
+              <dt>{projectDict.role}</dt>
+              <dd>{current.role}</dd>
+            </div>
+            <div>
+              <dt>{projectDict.outcome}</dt>
+              <dd>{current.outcome}</dd>
+            </div>
+          </dl>
           <Stats stats={current.stats} />
           <ul className="tags">
             {current.tags.map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
-          <button type="button" className="btn btn-primary" onClick={() => setOpen(current)}>
+          <ProjectLinks
+            lang={lang}
+            slug={current.slug}
+            title={current.title}
+            links={current.links}
+            isPrivate={current.private}
+            liveLabel={projectDict.live}
+            codeLabel={projectDict.code}
+            askDemoLabel={modalDict.askDemo}
+            privateTitle={modalDict.private}
+            moreLabel={modalDict.more}
+            showDetails
+          />
+          <button type="button" className="btn" onClick={() => setOpen(current)}>
             {dict.open}
           </button>
         </aside>
       )}
 
-      <ItemGetModal lang={lang} item={open} dict={modalDict} onClose={() => setOpen(null)} />
+      <ItemGetModal
+        lang={lang}
+        item={open}
+        dict={modalDict}
+        projectDict={projectDict}
+        onClose={() => setOpen(null)}
+      />
     </div>
   );
 }
@@ -151,11 +184,13 @@ function ItemGetModal({
   lang,
   item,
   dict,
+  projectDict,
   onClose,
 }: {
   lang: Locale;
   item: InventoryItem | null;
   dict: Dictionary["modal"];
+  projectDict: Dictionary["project"];
   onClose: () => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -203,32 +238,37 @@ function ItemGetModal({
               alt={item.cover.alt}
               width={item.cover.width}
               height={item.cover.height}
+              loading="lazy"
               sizes="(max-width: 640px) 90vw, 560px"
               unoptimized={item.cover.src.endsWith(".svg")}
             />
           )}
           <p>{item.summary}</p>
+          <dl className="project-role-outcome">
+            <div>
+              <dt>{projectDict.role}</dt>
+              <dd>{item.role}</dd>
+            </div>
+            <div>
+              <dt>{projectDict.outcome}</dt>
+              <dd>{item.outcome}</dd>
+            </div>
+          </dl>
           <Stats stats={item.stats} />
-          <div className="btn-row">
-            {item.links.demo && (
-              <a className="btn btn-primary" href={item.links.demo} target="_blank" rel="noreferrer">
-                {dict.demo} ↗
-              </a>
-            )}
-            {item.links.github && (
-              <a className="btn" href={item.links.github} target="_blank" rel="noreferrer">
-                {dict.github} ↗
-              </a>
-            )}
-            {item.private && (
-              <a className="btn" href={`/${lang}#contact`} onClick={onClose} title={dict.private}>
-                🔒 {dict.askDemo}
-              </a>
-            )}
-            <Link className="btn" href={`/${lang}/projects/${item.slug}`}>
-              {dict.more} →
-            </Link>
-          </div>
+          <ProjectLinks
+            lang={lang}
+            slug={item.slug}
+            title={item.title}
+            links={item.links}
+            isPrivate={item.private}
+            liveLabel={projectDict.live}
+            codeLabel={projectDict.code}
+            askDemoLabel={dict.askDemo}
+            privateTitle={dict.private}
+            moreLabel={dict.more}
+            showDetails
+            onAction={onClose}
+          />
           <button type="button" className="item-get-close" onClick={onClose} aria-label={dict.close}>
             ✕
           </button>
