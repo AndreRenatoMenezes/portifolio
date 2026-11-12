@@ -23,10 +23,15 @@ const listeners = new Set<() => void>();
 
 function load(): Prefs {
   let saved: Partial<Prefs> = {};
+  let storedTheme: string | null = null;
   try {
     saved = JSON.parse(localStorage.getItem(PREFS_KEY) ?? "{}");
+    storedTheme = localStorage.getItem(THEME_KEY);
   } catch {}
-  const theme = (document.documentElement.dataset.theme as Theme) || "day";
+  const candidate = storedTheme ?? saved.theme ?? document.documentElement.dataset.theme;
+  const theme: Theme =
+    candidate === "day" || candidate === "night" || candidate === "temple" ? candidate : "day";
+  document.documentElement.dataset.theme = theme;
   return {
     sound: saved.sound ?? false,
     fairy: saved.fairy ?? true,

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import { type ItemIcon } from "@/components/icons/ItemIcons";
 import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectLinks } from "@/components/ProjectLinks";
@@ -54,6 +54,45 @@ export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) 
   const [open, setOpen] = useState<InventoryItem | null>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const openerRef = useRef<HTMLAnchorElement | null>(null);
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const shouldRestoreFocusRef = useRef(false);
+
+  const restoreFocus = useCallback(() => {
+    const opener = openerRef.current;
+    if (!opener) return;
+    opener.focus();
+    requestAnimationFrame(() => {
+      opener.focus();
+    });
+    window.setTimeout(() => {
+      opener.focus();
+    }, 0);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    shouldRestoreFocusRef.current = true;
+    if (dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+    setOpen(null);
+    restoreFocus();
+  }, [restoreFocus]);
+
+  const handleActionClose = useCallback(() => {
+    shouldRestoreFocusRef.current = false;
+    if (dialogRef.current?.open) {
+      dialogRef.current.close();
+    }
+    setOpen(null);
+  }, []);
+
+  useEffect(() => {
+    if (!open && shouldRestoreFocusRef.current) {
+      shouldRestoreFocusRef.current = false;
+      restoreFocus();
+    }
+  }, [open, restoreFocus]);
+
   const onKeyDown = (e: KeyboardEvent<HTMLUListElement>) => {
     const active = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[data-index]");
     if (!active) return;
@@ -94,6 +133,7 @@ export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) 
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
                   openerRef.current = e.currentTarget;
+                  e.currentTarget.focus();
                   setOpen(item);
                 }}
               >
@@ -144,7 +184,10 @@ export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) 
         item={open}
         dict={modalDict}
         projectDict={projectDict}
-        onClose={() => { setOpen(null); requestAnimationFrame(() => openerRef.current?.focus()); }}
+        dialogRef={dialogRef}
+        openerRef={openerRef}
+        onClose={handleClose}
+        onActionClose={handleActionClose}
       />
     </div>
   );
@@ -155,33 +198,54 @@ function ItemGetModal({
   item,
   dict,
   projectDict,
+  dialogRef,
+  openerRef,
   onClose,
+  onActionClose,
 }: {
   lang: Locale;
   item: InventoryItem | null;
   dict: Dictionary["modal"];
   projectDict: Dictionary["project"];
+  dialogRef: RefObject<HTMLDialogElement | null>;
+  openerRef: RefObject<HTMLAnchorElement | null>;
   onClose: () => void;
+  onActionClose: () => void;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
-    const dialog = ref.current;
+    const dialog = dialogRef.current;
     if (!dialog) return;
     if (item && !dialog.open) {
+      openerRef.current?.focus();
       dialog.showModal();
       playItemGet();
       track("item_open", { slug: item.slug });
     } else if (!item && dialog.open) {
       dialog.close();
     }
-  }, [item]);
+  }, [item, dialogRef, openerRef]);
+
+  useEffect(() => {
+    if (!item) return;
+    const onWindowKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onWindowKeyDown, true);
+    return () => window.removeEventListener("keydown", onWindowKeyDown, true);
+  }, [item, onClose]);
 
   return (
     <dialog
-      ref={ref}
+      ref={dialogRef}
       className="item-get"
       aria-labelledby="item-get-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
       onClose={onClose}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose(); // clique no fundo
@@ -237,7 +301,7 @@ function ItemGetModal({
             privateTitle={dict.private}
             moreLabel={dict.more}
             showDetails
-            onAction={onClose}
+            onAction={onActionClose}
           />
           <button type="button" className="item-get-close" onClick={onClose} aria-label={dict.close}>
             ✕
