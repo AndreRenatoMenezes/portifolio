@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/i18n";
  * revise conforme ACOES-PENDENTES.md (T6). Edite aqui sem mexer em JSX.
  * `{email}` é substituído pelo e-mail de contato do perfil.
  */
-export const privacyUpdated = "2026-11-07";
+export const privacyUpdated = "2026-11-11";
 
 export const privacy: Record<Locale, { title: string; intro: string; sections: { heading: string; body: string[] }[] }> = {
   pt: {
@@ -49,12 +49,13 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
         heading: "Hospedagem",
         body: [
           "O site é hospedado na Vercel, que registra dados técnicos de cada acesso (como endereço IP e navegador) por um período curto, para segurança e operação do serviço.",
+          "O site também usa o Vercel Web Analytics para contar visitas de forma agregada (páginas vistas, origem da visita, país, tipo de aparelho e navegador). Ele não usa cookies de terceiros e não identifica você: cada visita é reconhecida por um código gerado a partir da requisição, descartado depois de 24 horas. Funciona independentemente da sua escolha sobre os cookies do Google Analytics.",
         ],
       },
       {
         heading: "Com quem os dados são compartilhados",
         body: [
-          "Apenas com os prestadores acima, cada um para a sua função: Vercel (hospedagem), Resend (entrega do e-mail do formulário) e Google (Analytics, só com aceite). Eles podem processar dados fora do Brasil, sob as próprias políticas e garantias contratuais.",
+          "Apenas com os prestadores acima, cada um para a sua função: Vercel (hospedagem e métricas de visitas), Resend (entrega do e-mail do formulário) e Google (Analytics, só com aceite). Eles podem processar dados fora do Brasil, sob as próprias políticas e garantias contratuais.",
           "Nenhum dado é vendido nem usado para publicidade.",
         ],
       },
@@ -112,12 +113,13 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
         heading: "Hosting",
         body: [
           "The site is hosted on Vercel, which logs technical data for each request (such as IP address and browser) for a short period, for security and operation of the service.",
+          "The site also uses Vercel Web Analytics to count visits in aggregate (pages viewed, referrer, country, device type and browser). It does not use third-party cookies and does not identify you: each visit is recognized by a hash generated from the request, discarded after 24 hours. It works regardless of your choice about Google Analytics cookies.",
         ],
       },
       {
         heading: "Who data is shared with",
         body: [
-          "Only the providers above, each for its own role: Vercel (hosting), Resend (delivering the form email) and Google (Analytics, only with consent). They may process data outside Brazil under their own policies and contractual safeguards.",
+          "Only the providers above, each for its own role: Vercel (hosting and visit metrics), Resend (delivering the form email) and Google (Analytics, only with consent). They may process data outside Brazil under their own policies and contractual safeguards.",
           "No data is sold or used for advertising.",
         ],
       },

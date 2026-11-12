@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cinzel, Nunito } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { Analytics } from "@/components/Analytics";
 import { Controls } from "@/components/Controls";
 import { CookieNotice, CookiePrefsLink } from "@/components/CookieNotice";
@@ -112,6 +113,8 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
         <MelodyListener successText={dict.melody.success} />
         <CookieNotice lang={lang} dict={dict.cookies} />
         <Analytics />
+        {/* Métricas agregadas da Vercel, sem cookies de terceiros; independe do consentimento do GA4. */}
+        <VercelAnalytics />
         <Starfall />
       </body>
     </html>
