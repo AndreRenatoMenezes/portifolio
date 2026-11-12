@@ -29,6 +29,20 @@ Cada projeto gera a página `/<idioma>/projects/<slug>` automaticamente.
 - 5 gemas escondidas pela página; com todas, o tema "templo" é desbloqueado.
 - Melodia no teclado: ↑ ↓ ← → A (com som ligado, cada tecla toca uma nota).
 
+## Variáveis de ambiente
+
+Todas são opcionais; sem elas o site funciona (sem analytics e com o formulário avisando que o envio está indisponível). Veja `.env.example` e o passo a passo em `ACOES-PENDENTES.md`.
+
+| Variável | Para quê |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | URL oficial (canonical, sitemap, Open Graph) |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4, carregado só com consentimento |
+| `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` | envio do formulário de contato |
+
+## Ícones
+
+`node scripts/make-favicon.mjs` regenera `favicon.ico` e os ícones PWA a partir de `src/app/icon.svg`.
+
 ## Deploy
 
-Suba o repositório no GitHub e importe na Vercel (sem configuração extra).
+Suba o repositório no GitHub e importe na Vercel. Specs e decisões ficam em `.claude/specs/`.
