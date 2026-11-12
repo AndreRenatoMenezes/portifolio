@@ -145,7 +145,7 @@
   },
   "cookies": {
     "label": "Aviso de cookies",
-    "text": "Uso o Google Analytics para entender, de forma agregada, quais projetos interessam mais. Ele só é ativado se você aceitar.",
+    "text": "Uso o Google Tag Manager com o Google Analytics para entender, de forma agregada, quais projetos interessam mais. Eles só são ativados se você aceitar.",
     "accept": "Aceitar",
     "reject": "Recusar",
     "policy": "Política de privacidade"

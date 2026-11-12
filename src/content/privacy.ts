@@ -32,7 +32,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Google Analytics (só com o seu aceite)",
         body: [
-          "Se — e somente se — você clicar em \"Aceitar\" no aviso de cookies, o site carrega o Google Analytics 4, que usa cookies (_ga, _ga_*) para medir de forma agregada quais páginas e projetos são vistos, de onde vêm as visitas e de que tipo de aparelho.",
+          "Se — e somente se — você clicar em \"Aceitar\" no aviso de cookies, o site carrega o Google Tag Manager, que por sua vez carrega o Google Analytics 4. O GA4 usa cookies (_ga, _ga_*) para medir de forma agregada quais páginas e projetos são vistos, de onde vêm as visitas e de que tipo de aparelho. O Tag Manager está configurado só para o Analytics, sem anúncios.",
           "Base legal: consentimento. Sem aceite, nenhuma requisição é feita ao Google.",
           "O GA4 não registra o endereço IP completo. Os dados ficam retidos por até 14 meses nas configurações da conta.",
           "Você pode mudar de ideia a qualquer momento em \"Preferências de cookies\", no rodapé. Ao recusar, a coleta para e os cookies do Analytics são apagados deste navegador.",
@@ -55,7 +55,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Com quem os dados são compartilhados",
         body: [
-          "Apenas com os prestadores acima, cada um para a sua função: Vercel (hospedagem e métricas de visitas), Resend (entrega do e-mail do formulário) e Google (Analytics, só com aceite). Eles podem processar dados fora do Brasil, sob as próprias políticas e garantias contratuais.",
+          "Apenas com os prestadores acima, cada um para a sua função: Vercel (hospedagem e métricas de visitas), Resend (entrega do e-mail do formulário) e Google (Tag Manager e Analytics, só com aceite). Eles podem processar dados fora do Brasil, sob as próprias políticas e garantias contratuais.",
           "Nenhum dado é vendido nem usado para publicidade.",
         ],
       },
@@ -96,7 +96,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Google Analytics (only if you accept)",
         body: [
-          "If — and only if — you click \"Accept\" on the cookie notice, the site loads Google Analytics 4, which uses cookies (_ga, _ga_*) to measure in aggregate which pages and projects are viewed, where visits come from and what kind of device is used.",
+          "If — and only if — you click \"Accept\" on the cookie notice, the site loads Google Tag Manager, which in turn loads Google Analytics 4. GA4 uses cookies (_ga, _ga_*) to measure in aggregate which pages and projects are viewed, where visits come from and what kind of device is used. Tag Manager is set up for Analytics only, with no advertising.",
           "Legal basis: consent. Without it, no request is made to Google.",
           "GA4 does not log full IP addresses. Data is kept for up to 14 months under the account settings.",
           "You can change your mind at any time under \"Cookie preferences\" in the footer. Declining stops collection and deletes the Analytics cookies from this browser.",
@@ -119,7 +119,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Who data is shared with",
         body: [
-          "Only the providers above, each for its own role: Vercel (hosting and visit metrics), Resend (delivering the form email) and Google (Analytics, only with consent). They may process data outside Brazil under their own policies and contractual safeguards.",
+          "Only the providers above, each for its own role: Vercel (hosting and visit metrics), Resend (delivering the form email) and Google (Tag Manager and Analytics, only with consent). They may process data outside Brazil under their own policies and contractual safeguards.",
           "No data is sold or used for advertising.",
         ],
       },

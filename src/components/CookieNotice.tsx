@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { GA_ID } from "@/lib/analytics";
+import { GTM_ID } from "@/lib/analytics";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { reopenConsent, setConsent, usePrefs } from "@/lib/store";
 
-/** Aviso de cookies: só existe se houver GA configurado e o visitante ainda não escolheu. */
+/** Aviso de cookies: só existe se houver GTM configurado e o visitante ainda não escolheu. */
 export function CookieNotice({ lang, dict }: { lang: Locale; dict: Dictionary["cookies"] }) {
   const { consent } = usePrefs();
-  if (!GA_ID || consent !== null) return null; // undefined = ainda hidratando; não pisca
+  if (!GTM_ID || consent !== null) return null; // undefined = ainda hidratando; não pisca
 
   return (
     <section className="cookie-notice dialog-frame" role="region" aria-label={dict.label}>
@@ -28,9 +28,9 @@ export function CookieNotice({ lang, dict }: { lang: Locale; dict: Dictionary["c
   );
 }
 
-/** Link "Preferências de cookies" do rodapé (só com GA configurado). */
+/** Link "Preferências de cookies" do rodapé (só com GTM configurado). */
 export function CookiePrefsLink({ label }: { label: string }) {
-  if (!GA_ID) return null;
+  if (!GTM_ID) return null;
   return (
     <button type="button" className="link-btn" onClick={reopenConsent}>
       {label}

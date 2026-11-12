@@ -4,8 +4,13 @@ const isDev = process.env.NODE_ENV !== "production";
 
 /**
  * Content-Security-Policy.
- * - 'unsafe-inline' em script/style: InlineScript (tema), JsonLd, ga-init e estilos do Next/Tailwind.
- * - Google Tag Manager/Analytics: carregados só após consentimento (src/components/Analytics.tsx).
+ * - 'unsafe-inline' em script/style: InlineScript (tema), JsonLd, gtm-init e estilos do Next/Tailwind.
+ * - Google Tag Manager (gtm.js) e o GA4 dentro dele: carregados só após consentimento
+ *   (src/components/Analytics.tsx). www.googletagmanager.com serve gtm.js e gtag/js;
+ *   *.google-analytics.com e *.analytics.google.com são as coletas do GA4, que usam
+ *   subdomínios regionais (region1..., www...), como na doc de CSP do Google Tag Platform.
+ *   Fora de propósito: doubleclick (Google Signals/Ads), tagassistant (modo Preview do GTM)
+ *   e 'unsafe-eval' (variáveis "JavaScript personalizado" do GTM).
  * - Em dev, o React precisa de 'unsafe-eval' e o HMR de WebSocket.
  */
 const csp = [

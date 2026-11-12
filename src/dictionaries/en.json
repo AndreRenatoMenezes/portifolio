@@ -145,7 +145,7 @@
   },
   "cookies": {
     "label": "Cookie notice",
-    "text": "I use Google Analytics to understand, in aggregate, which projects people find most interesting. It only turns on if you accept.",
+    "text": "I use Google Tag Manager with Google Analytics to understand, in aggregate, which projects people find most interesting. They only turn on if you accept.",
     "accept": "Accept",
     "reject": "Decline",
     "policy": "Privacy policy"

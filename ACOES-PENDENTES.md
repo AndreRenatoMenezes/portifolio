@@ -10,7 +10,7 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 | [T2](#t2--publicar-na-vercel) | Publicar o site na Vercel | T3, T4 e T5 | 10 min |
 | [T3](#t3--domínio-próprio-com-https) | Domínio próprio com HTTPS | item 21; URLs de SEO definitivas | 20 min + propagação |
 | [T4](#t4--serviço-de-e-mail-do-formulário-resend) | Serviço de e-mail do formulário (Resend) | ativa o envio real do formulário (código pronto) | 15 min |
-| [T5](#t5--google-analytics-ga4) | Criar o Google Analytics (GA4) | item 18; spec 003 | 10 min |
+| [T5](#t5--google-analytics-ga4) | Criar o Google Analytics (GA4) e configurá-lo no Google Tag Manager | item 18; spec 003 | 20 min |
 | [T6](#t6--revisar-a-política-de-privacidade) | Revisar a política de privacidade | item 15 (depois da spec 003) | 15 min |
 | [T7](#t7--google-search-console-recomendado) | Google Search Console (recomendado) | indexação do sitemap | 10 min |
 | [T8](#t8--prints-reais-dos-projetos-opcional) | Prints reais dos projetos (opcional) | capas melhores | — |
@@ -102,11 +102,19 @@ O formulário da spec 002 envia as mensagens por e-mail pelo **Resend**, que vei
 3. Em **Coleta de dados**, escolha **Web** → URL do site (o domínio da T3, ou a URL `vercel.app` por enquanto) → nome do fluxo "Site".
 4. Deixe a **Medição otimizada** ligada. Ela registra as trocas de página do site.
 5. Copie o **ID da métrica** (`G-XXXXXXXXXX`).
-6. Vercel → Settings → Environment Variables → `NEXT_PUBLIC_GA_ID` = `G-XXXXXXXXXX` em **Production** → **Save** → **Redeploy**.
-7. (Recomendado) Admin → **Coleta e retenção de dados → Retenção** → 14 meses. Desligue **Google Signals** se não precisar de dados demográficos (menos dados pessoais).
-8. Depois da spec 003 no ar: abra o site, **aceite os cookies**, navegue e confira em **Relatórios → Tempo real**.
+6. (Recomendado) Admin → **Coleta e retenção de dados → Retenção** → 14 meses. **Deixe o Google Signals desligado:** a CSP do site não libera o `doubleclick.net`, e ligado ele gera erros no console e dados de anúncio.
 
-> Sem `NEXT_PUBLIC_GA_ID`, o site não carrega nada do Google e não mostra o aviso de cookies. Isso é intencional.
+O site carrega o **Google Tag Manager** (contêiner `GTM-KH4SD94D`) só depois do aceite de cookies, e o GA4 roda **dentro do GTM**. O ID `G-...` não vai para a Vercel; ele é configurado no GTM:
+
+7. Vercel → Settings → Environment Variables → `NEXT_PUBLIC_GTM_ID` = `GTM-KH4SD94D` em **Production** (e Preview, se quiser) → **Save** → **Redeploy**. Se existir `NEXT_PUBLIC_GA_ID` de antes, pode apagar: o código não usa mais.
+8. No <https://tagmanager.google.com>, contêiner `GTM-KH4SD94D`:
+   - **Tags → Nova → Tag do Google** → ID `G-XXXXXXXXXX` → acionador **Initialization - All Pages** → salvar.
+   - **Eventos do site:** o site envia ao `dataLayer` os eventos `contact_click` (com `channel`), `item_open` (com `slug`) e `generate_lead`. Para vê-los no GA4: **Acionadores → Novo → Evento personalizado**, nome `contact_click|item_open|generate_lead`, marque **Usar correspondência de regex**. Em **Variáveis → Nova → Variável da camada de dados**, crie `channel` e `slug`. Depois, **Tags → Nova → Evento do Google Analytics**, ID `G-XXXXXXXXXX`, nome do evento `{{Event}}`, parâmetros `channel` = `{{channel}}` e `slug` = `{{slug}}`, com o acionador acima.
+   - Não use tags de **HTML personalizado** nem variáveis de **JavaScript personalizado**: a CSP bloqueia scripts externos que não sejam do Google e `eval`.
+   - **Enviar → Publicar**. Sem publicar, o contêiner não faz nada.
+9. Depois do deploy: abra o site, **aceite os cookies**, navegue e confira no GA4 em **Relatórios → Tempo real**. O **Modo de visualização (Preview)** do GTM pode não funcionar no site publicado, porque a CSP não libera o `tagassistant.google.com`. Use o Tempo real do GA4 para conferir.
+
+> Sem `NEXT_PUBLIC_GTM_ID`, o site não carrega nada do Google e não mostra o aviso de cookies. Isso é intencional.
 
 ---
 
