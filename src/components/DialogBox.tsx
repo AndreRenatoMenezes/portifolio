@@ -37,7 +37,7 @@ export function DialogBox({ speaker, lines, nextLabel, restartLabel }: Props) {
   };
 
   return (
-    <div className="dialog-box dialog-frame" data-mode-only="adventure">
+    <div className="dialog-box dialog-frame">
       <span className="dialog-speaker">{speaker}</span>
       <p className="dialog-text">
         <span aria-hidden="true">{text.slice(0, chars)}</span>

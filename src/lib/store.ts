@@ -3,24 +3,21 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Estado do visitante (som, fada, gemas, tema, modo), guardado no localStorage.
- * O tema e o modo iniciais são aplicados antes da pintura pelo script inline do layout;
- * aqui só lemos os atributos `data-theme` e `data-mode` do <html>.
+ * Estado do visitante (som, fada, gemas e tema), guardado no localStorage.
+ * O tema inicial é aplicado antes da pintura pelo script inline do layout.
  */
 export type Theme = "day" | "night" | "temple";
-export type Mode = "direct" | "adventure";
 export type Consent = "granted" | "denied" | null;
 /** `consent` é `undefined` só no servidor/hidratação (ainda não sabemos); `null` = visitante não escolheu. */
-export type Prefs = { sound: boolean; fairy: boolean; gems: string[]; theme: Theme; mode: Mode; consent?: Consent };
+export type Prefs = { sound: boolean; fairy: boolean; gems: string[]; theme: Theme; consent?: Consent };
 
 export const GEM_IDS = ["hero", "inventory", "about", "contact", "footer"] as const;
 export type GemId = (typeof GEM_IDS)[number];
 
 const PREFS_KEY = "portfolio-prefs";
 export const THEME_KEY = "portfolio-theme";
-export const MODE_KEY = "portfolio-mode";
 
-const serverSnapshot: Prefs = { sound: false, fairy: true, gems: [], theme: "day", mode: "direct" };
+const serverSnapshot: Prefs = { sound: false, fairy: true, gems: [], theme: "day" };
 let state: Prefs | null = null;
 const listeners = new Set<() => void>();
 
@@ -30,14 +27,11 @@ function load(): Prefs {
     saved = JSON.parse(localStorage.getItem(PREFS_KEY) ?? "{}");
   } catch {}
   const theme = (document.documentElement.dataset.theme as Theme) || "day";
-  const rawMode = document.documentElement.dataset.mode;
-  const mode: Mode = rawMode === "adventure" ? "adventure" : "direct";
   return {
     sound: saved.sound ?? false,
     fairy: saved.fairy ?? true,
     gems: Array.isArray(saved.gems) ? saved.gems.filter((g) => GEM_IDS.includes(g as GemId)) : [],
     theme,
-    mode,
     consent: saved.consent === "granted" || saved.consent === "denied" ? saved.consent : null,
   };
 }
@@ -58,10 +52,8 @@ function setPrefs(patch: Partial<Prefs>) {
     const { sound, fairy, gems, consent } = state;
     localStorage.setItem(PREFS_KEY, JSON.stringify({ sound, fairy, gems, consent }));
     if (patch.theme) localStorage.setItem(THEME_KEY, patch.theme);
-    if (patch.mode) localStorage.setItem(MODE_KEY, patch.mode);
   } catch {}
   if (patch.theme) document.documentElement.dataset.theme = patch.theme;
-  if (patch.mode) document.documentElement.dataset.mode = patch.mode;
   listeners.forEach((l) => l());
 }
 
@@ -70,7 +62,6 @@ export const readPrefs = getSnapshot;
 
 export const toggleSound = () => setPrefs({ sound: !getSnapshot().sound });
 export const toggleFairy = () => setPrefs({ fairy: !getSnapshot().fairy });
-export const setMode = (mode: Mode) => setPrefs({ mode });
 
 /** Escolha do aviso de cookies (só existe uma categoria opcional: analytics). */
 export function setConsent(consent: "granted" | "denied") {

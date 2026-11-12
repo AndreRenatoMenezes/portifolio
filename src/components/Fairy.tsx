@@ -113,7 +113,6 @@ export function Fairy({ label, tips }: { label: string; tips: string[] }) {
       ref={ref}
       type="button"
       className="fairy"
-      data-mode-only="adventure"
       aria-label={label}
       title={label}
       onClick={() => {

@@ -21,7 +21,6 @@ export function Gem({ id, label, foundText, allText, className = "" }: Props) {
     <button
       type="button"
       className={`gem ${className}`}
-      data-mode-only="adventure"
       aria-label={label}
       onClick={() => {
         const result = collectGem(id);
