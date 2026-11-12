@@ -6,7 +6,7 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 
 | Task | O quê | Libera | Tempo |
 |---|---|---|---|
-| [T1](#t1--confirmar-dados-de-contato) | Confirmar e-mail e número do WhatsApp | itens 11 e 19; spec 002 | 5 min |
+| [T1](#t1--confirmar-dados-de-contato) | ✅ Concluída — e-mail e WhatsApp definidos | itens 11 e 19; spec 002 | — |
 | [T2](#t2--publicar-na-vercel) | Publicar o site na Vercel | T3, T4 e T5 | 10 min |
 | [T3](#t3--domínio-próprio-com-https) | Domínio próprio com HTTPS | item 21; URLs de SEO definitivas | 20 min + propagação |
 | [T4](#t4--serviço-de-e-mail-do-formulário-resend) | Serviço de e-mail do formulário (Resend) | ativa o envio real do formulário (código pronto) | 15 min |
@@ -19,11 +19,11 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 
 ## T1 — Confirmar dados de contato
 
-- [ ] **E-mail.** O e-mail do site hoje é `andrereanto.ti@gmail.com`, copiado do README do seu perfil no GitHub. Parece faltar um "n" ("renato"). Confirme qual é o certo.
-- [ ] **WhatsApp.** Informe o número no formato internacional, **só dígitos**: país + DDD + número. Exemplo: `5521999999999`.
-- [ ] **Mensagem inicial do WhatsApp (opcional).** Padrão proposto: "Olá, André! Vi seu portfólio e queria conversar." Sugira outra, se quiser.
+✅ **Concluída.** Valores em `src/content/profile.ts` → `contacts`.
 
-**Como entregar:** me mande os dados no chat, ou edite `src/content/profile.ts` → `contacts.email` e `contacts.whatsapp`.
+- [x] **E-mail.** `andre@bragademenezes.com`.
+- [x] **WhatsApp.** `5521972764096`.
+- [x] **Mensagem inicial do WhatsApp.** Mantida a padrão: "Olá, André! Vi seu portfólio e queria conversar."
 
 > Endereço físico: num portfólio pessoal, cidade + e-mail + WhatsApp bastam ("Rio de Janeiro" já aparece). Não recomendo publicar rua e número.
 
@@ -74,14 +74,14 @@ O formulário da spec 002 envia as mensagens por e-mail pelo **Resend**, que vei
      ```
    Se pedir login ou aceite no navegador, conclua por lá. Isso cria a variável `RESEND_API_KEY` no projeto.
 2. **Remetente:**
-   - **Sem domínio verificado (para começar):** use `onboarding@resend.dev`. Ele só entrega para o e-mail da sua conta Resend, o que basta para receber as mensagens do formulário.
-   - **Com domínio (depois da T3, recomendado):** no painel do Resend → **Domains → Add Domain** → crie no DNS os registros que ele mostrar (SPF/DKIM) → espere ficar **Verified**.
+   - **Com o domínio `bragademenezes.com` (recomendado):** para enviar como `contato@bragademenezes.com`, o domínio precisa estar verificado no Resend: painel do Resend → **Domains → Add Domain** → `bragademenezes.com` → crie no DNS os registros que ele mostrar (SPF/DKIM) → espere ficar **Verified**. Sem isso, o Resend recusa o envio.
+   - **Sem domínio verificado (para começar):** use `onboarding@resend.dev`. Atenção: ele **só entrega para o e-mail da sua conta Resend**. Se a conta Resend não for `andre@bragademenezes.com`, as mensagens para o `CONTACT_TO` abaixo não chegam; nesse caso, verifique o domínio ou use temporariamente o e-mail da conta Resend como `CONTACT_TO`.
 3. **Variáveis** (Vercel → Settings → Environment Variables, em Production e Preview):
 
    | Nome | Valor |
    |---|---|
-   | `CONTACT_TO` | o e-mail que recebe as mensagens (o confirmado na T1) |
-   | `CONTACT_FROM` | `Portfólio <onboarding@resend.dev>` ou, com domínio verificado, `Portfólio <contato@seu-dominio>` |
+   | `CONTACT_TO` | `andre@bragademenezes.com` |
+   | `CONTACT_FROM` | com domínio verificado, `Portfólio <contato@bragademenezes.com>`; sem verificação, `Portfólio <onboarding@resend.dev>` (veja a limitação acima) |
 
 4. **Redeploy** (Deployments → **⋯ → Redeploy**). O código do envio já está pronto e liga sozinho quando as três variáveis existem.
 5. **Teste:** mande uma mensagem pelo formulário do site. Ela deve chegar no `CONTACT_TO`, e "Responder" deve ir para o e-mail de quem escreveu. Se aparecer o erro geral, veja Vercel → **Logs**, procurando por `[contato]`. Para testar localmente:

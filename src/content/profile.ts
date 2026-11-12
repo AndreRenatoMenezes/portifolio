@@ -49,9 +49,9 @@ export const profile = {
   contacts: {
     github: "https://github.com/AndreRenatoMenezes",
     linkedin: "https://www.linkedin.com/in/andrerenatomenezes/",
-    email: "andrereanto.ti@gmail.com", // TODO (ACOES-PENDENTES T1): confirmar — parece faltar um "n"
+    email: "andre@bragademenezes.com",
     /** WhatsApp só com dígitos: país + DDD + número (ex.: "5521999999999"). Vazio esconde o botão. */
-    whatsapp: "", // TODO (ACOES-PENDENTES T1)
+    whatsapp: "5521972764096",
   },
   /** Caminho do currículo em /public (ex.: "/cv.pdf"). Vazio esconde o botão. */
   cv: "",
