@@ -12,12 +12,15 @@ import { Gem } from "@/components/Gem";
 import { Hud } from "@/components/Hud";
 import { InlineScript } from "@/components/InlineScript";
 import { MobileContactBar } from "@/components/MobileContactBar";
+import { ModeText } from "@/components/ModeText";
+import { ModeToggle } from "@/components/ModeToggle";
 import { NavProgress } from "@/components/NavProgress";
 import { profile } from "@/content/profile";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
 import { whatsappUrl } from "@/lib/contact";
 import { alternatesFor, siteUrl } from "@/lib/site";
 import "../globals.css";
+import "../mode.css";
 
 const display = Cinzel({ variable: "--font-display", subsets: ["latin"], weight: ["800"] });
 const body = Nunito({ variable: "--font-body", subsets: ["latin"] });
@@ -53,8 +56,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   };
 }
 
-/** Aplica o tema antes da primeira pintura: salvo pelo visitante ou pela hora local. */
-const themeScript = `(function(){var t;try{t=localStorage.getItem("portfolio-theme")}catch(e){}if(t!=="day"&&t!=="night"&&t!=="temple"){var h=new Date().getHours();t=h>=6&&h<18?"day":"night"}document.documentElement.dataset.theme=t})()`;
+/** Aplica o tema e o modo antes da primeira pintura: salvos pelo visitante ou padrão. */
+const themeScript = `(function(){var t,m;try{t=localStorage.getItem("portfolio-theme");m=localStorage.getItem("portfolio-mode")}catch(e){}if(t!=="day"&&t!=="night"&&t!=="temple"){var h=new Date().getHours();t=h>=6&&h<18?"day":"night"}if(m!=="direct"&&m!=="adventure"){m="direct"}var d=document.documentElement;d.dataset.theme=t;d.dataset.mode=m})()`;
 
 export default async function LangLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
@@ -62,7 +65,7 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
   const dict = getDictionary(lang);
 
   return (
-    <html lang={lang === "pt" ? "pt-BR" : "en"} data-theme="day" suppressHydrationWarning className={`${display.variable} ${body.variable}`}>
+    <html lang={lang === "pt" ? "pt-BR" : "en"} data-theme="day" data-mode="direct" suppressHydrationWarning className={`${display.variable} ${body.variable}`}>
       <head>
         <InlineScript html={themeScript} />
       </head>
@@ -76,14 +79,19 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
               <span className="logo-mark" aria-hidden="true">◆</span> {profile.name}
             </Link>
             <nav aria-label={dict.nav.label} className="main-nav">
-              <a href={`/${lang}#inventory`}>{dict.nav.projects}</a>
-              <a href={`/${lang}#about`}>{dict.nav.about}</a>
+              <a href={`/${lang}#inventory`}>
+                <ModeText direct={dict.direct.nav.projects} adventure={dict.nav.projects} />
+              </a>
+              <a href={`/${lang}#about`}>
+                <ModeText direct={dict.direct.nav.about} adventure={dict.nav.about} />
+              </a>
               <a href={`/${lang}#contact`} className="btn btn-primary nav-cta">
                 <span className="cta-long">{dict.nav.cta}</span>
                 <span className="cta-short">{dict.nav.contact}</span>
               </a>
             </nav>
             <Hud dict={dict.hud} />
+            <ModeToggle dict={dict.mode} variant="header" />
             <Controls lang={lang} dict={dict.controls} />
           </div>
         </header>
@@ -99,7 +107,7 @@ export default async function LangLayout({ children, params }: LayoutProps<"/[la
               <Link href={`/${lang}/privacy`}>{dict.footer.privacy}</Link>
               <CookiePrefsLink label={dict.footer.cookiePrefs} />
             </p>
-            <p className="melody-hint">
+            <p className="melody-hint" data-mode-only="adventure">
               {dict.footer.melody}
               <Gem id="footer" label={dict.gems.collect} foundText={dict.gems.found} allText={dict.gems.all} className="gem-inline" />
             </p>

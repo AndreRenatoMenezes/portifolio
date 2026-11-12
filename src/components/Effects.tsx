@@ -24,7 +24,7 @@ export function MessageToast() {
   }, []);
 
   return (
-    <div className="toast-region" aria-live="polite" role="status">
+    <div className="toast-region" aria-live="polite" role="status" data-mode-only="adventure">
       {text && (
         <p key={key} className="toast dialog-frame">
           {text}
@@ -50,6 +50,7 @@ export function MelodyListener({ successText }: { successText: string }) {
   useEffect(() => {
     let played: string[] = [];
     const onKey = (e: KeyboardEvent) => {
+      if (document.documentElement.dataset.mode !== "adventure") return;
       if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
       const target = e.target as HTMLElement;
       if (target.closest("input, textarea, select, [contenteditable], [data-inventory], dialog")) return;
@@ -101,7 +102,7 @@ export function Starfall() {
 
   if (!stars.length) return null;
   return (
-    <div className="starfall" aria-hidden="true">
+    <div className="starfall" aria-hidden="true" data-mode-only="adventure">
       {stars.map((s) => (
         <span
           key={s.id}

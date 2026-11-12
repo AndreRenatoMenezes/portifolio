@@ -10,9 +10,11 @@ export function Controls({ lang, dict }: { lang: Locale; dict: Dictionary["contr
   const prefs = usePrefs();
   const pathname = usePathname();
   const other: Locale = lang === "pt" ? "en" : "pt";
-  // Trocar de idioma remonta o <html> (layout raiz por idioma): reaplica o tema atual.
+  // Trocar de idioma remonta o <html> (layout raiz por idioma): reaplica o tema e o modo atuais.
   useEffect(() => {
-    document.documentElement.dataset.theme = readPrefs().theme;
+    const current = readPrefs();
+    document.documentElement.dataset.theme = current.theme;
+    document.documentElement.dataset.mode = current.mode;
   }, [lang]);
 
   const otherPath = pathname.replace(/^\/(pt|en)(?=\/|$)/, `/${other}`);
@@ -31,6 +33,7 @@ export function Controls({ lang, dict }: { lang: Locale; dict: Dictionary["contr
       <button
         type="button"
         className="icon-btn"
+        data-mode-only="adventure"
         onClick={toggleSound}
         aria-pressed={prefs.sound}
         aria-label={prefs.sound ? dict.soundOn : dict.soundOff}
@@ -41,6 +44,7 @@ export function Controls({ lang, dict }: { lang: Locale; dict: Dictionary["contr
       <button
         type="button"
         className="icon-btn"
+        data-mode-only="adventure"
         onClick={toggleFairy}
         aria-pressed={prefs.fairy}
         aria-label={prefs.fairy ? dict.fairyOn : dict.fairyOff}

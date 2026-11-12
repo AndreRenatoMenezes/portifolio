@@ -29,7 +29,7 @@ export function GemShape({ size = 16 }: { size?: number }) {
 export function Hud({ dict }: { dict: Dictionary["hud"] }) {
   const { gems } = usePrefs();
   return (
-    <div className="hud">
+    <div className="hud" data-mode-only="adventure">
       <span className="hud-hearts" role="img" aria-label={dict.hearts}>
         <Heart />
         <Heart />
