@@ -5,9 +5,6 @@ import { Gem } from "@/components/Gem";
 import { HeroScene } from "@/components/HeroScene";
 import { Inventory, type InventoryItem } from "@/components/Inventory";
 import { JsonLd } from "@/components/JsonLd";
-import { ModeText } from "@/components/ModeText";
-import { ModeToggle } from "@/components/ModeToggle";
-import { ProjectCards } from "@/components/ProjectCards";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { whatsappUrl } from "@/lib/contact";
@@ -29,6 +26,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     outcome: p.outcome[lang],
     summary: p.summary[lang],
     item: p.item,
+    icon: p.icon,
     stats: p.stats.map((s) => ({ value: s.value, label: s.label[lang] })),
     private: p.private,
     tags: p.tags,
@@ -57,6 +55,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <span className="hero-role">{profile.role[lang]}</span>
           </h1>
           <p className="hero-pitch">{dict.hero.pitch}</p>
+          <p className="hero-game-hint">{dict.hero.gameHint}</p>
           <DialogBox
             speaker={dict.hero.speaker}
             lines={dict.hero.lines}
@@ -67,32 +66,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <a className="btn btn-primary" href="#contact">
               ✉ {dict.hero.ctaContact}
             </a>
-            {profile.contacts.github && (
-              <a
-                className="btn btn-ghost"
-                href={profile.contacts.github}
-                target="_blank"
-                rel="noreferrer"
-                data-mode-only="direct"
-              >
-                GitHub ↗
-              </a>
-            )}
-            {profile.contacts.linkedin && (
-              <a
-                className="btn btn-ghost"
-                href={profile.contacts.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                data-mode-only="direct"
-              >
-                LinkedIn ↗
-              </a>
-            )}
-            <a className="btn btn-ghost" href="#inventory" data-mode-only="adventure">
+            <a className="btn btn-ghost" href="#inventory">
               {dict.hero.cta} ↓
             </a>
-            <ModeToggle dict={dict.mode} variant="hero" />
           </div>
         </div>
       </section>
@@ -100,17 +76,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="inventory" className="section container" aria-labelledby="inventory-title">
         <header className="section-header">
           <h2 id="inventory-title" className="section-title">
-            <ModeText
-              direct={dict.direct.projects.title}
-              adventure={`${dict.inventory.title} · ${dict.direct.projects.title}`}
-            />
+            {dict.inventory.title} · {dict.sections.projects}
           </h2>
           <p>
-            <ModeText direct={dict.direct.projects.subtitle} adventure={dict.inventory.subtitle} />
+            {dict.inventory.subtitle}
           </p>
           <Gem id="inventory" {...gem} className="gem-inline" />
         </header>
-        <ProjectCards lang={lang} items={items} projectDict={dict.project} modalDict={dict.modal} />
         <Inventory
           lang={lang}
           items={items}
@@ -123,13 +95,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="about" className="section container" aria-labelledby="about-title">
         <header className="section-header">
           <h2 id="about-title" className="section-title">
-            <ModeText
-              direct={dict.direct.about.title}
-              adventure={`${dict.about.title} · ${dict.direct.about.title}`}
-            />
+            {dict.about.title} · {dict.sections.about}
           </h2>
           <p>
-            <ModeText direct={dict.direct.about.subtitle} adventure={dict.about.subtitle} />
+            {dict.about.subtitle}
           </p>
         </header>
         <div className="about-grid">
@@ -145,13 +114,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <dl className="stats">
               <div>
                 <dt>
-                  <ModeText direct={dict.direct.about.role} adventure={dict.about.class} />
+                  {dict.about.class}
                 </dt>
                 <dd>{profile.role[lang]}</dd>
               </div>
               <div>
                 <dt>
-                  <ModeText direct={dict.direct.about.location} adventure={dict.about.home} />
+                  {dict.about.home}
                 </dt>
                 <dd>{profile.home[lang]}</dd>
               </div>
@@ -162,7 +131,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
           <div className="about-side">
             <h3 className="subhead">
-              <ModeText direct={dict.direct.about.skills} adventure={dict.about.equipment} />
+              {dict.about.equipment}
             </h3>
             <ul className="equipment">
               {profile.skills.map((s) => (
@@ -172,7 +141,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               ))}
             </ul>
             <h3 className="subhead">
-              <ModeText direct={dict.direct.about.learning} adventure={dict.about.training} />
+              {dict.about.training}
             </h3>
             <ul className="equipment equipment-training">
               {profile.training.map((s) => (
@@ -180,7 +149,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               ))}
             </ul>
             <h3 className="subhead">
-              <ModeText direct={dict.direct.about.timeline} adventure={dict.about.questLog} />
+              {dict.about.questLog}
             </h3>
             <ol className="quests">
               {profile.quests.map((q) => (
@@ -198,13 +167,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <section id="contact" className="section container" aria-labelledby="contact-title">
         <header className="section-header">
           <h2 id="contact-title" className="section-title">
-            <ModeText
-              direct={dict.direct.contact.title}
-              adventure={`${dict.contact.title} · ${dict.direct.contact.title}`}
-            />
+            {dict.contact.title} · {dict.sections.contact}
           </h2>
           <p>
-            <ModeText direct={dict.direct.contact.text} adventure={dict.contact.text} />
+            {dict.contact.text}
           </p>
         </header>
         <ul className="signposts">
@@ -229,7 +195,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </a>
             </li>
           )}
-          <li className="signpost-gem" data-mode-only="adventure">
+          <li className="signpost-gem">
             <Gem id="contact" {...gem} />
           </li>
         </ul>

@@ -1,8 +1,8 @@
 /* =========================================================
-   Primeira dobra, cartões do modo direto e papéis/resultados (spec 005)
+   Primeira dobra, fichas de projeto e papéis/resultados (spec 005)
    ========================================================= */
 
-/* Ajustes de primeira dobra para caber em 1366x768 e 390x844 nos dois modos */
+/* Ajustes de primeira dobra para caber em 1366x768 e 390x844 */
 .hero {
   min-height: min(68vh, 560px);
 }
@@ -74,96 +74,112 @@
   .hero-cta {
     gap: 8px;
   }
-  .hero-cta .btn,
-  .hero-cta .mode-toggle-hero {
+  .hero-cta .btn {
     padding: 8px 12px;
     font-size: 0.85rem;
   }
-  .hero-cta .mode-toggle-hint {
-    padding: 5px 10px;
-    font-size: 0.78rem;
-  }
 }
 
-/* Grade de cartões de projetos (modo direto) */
-.project-cards {
+/* Inventário em fichas */
+.hero-game-hint {
+  margin: 0;
+  color: var(--frame-ink);
+  font-weight: 700;
+}
+
+.inventory-sheets {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
 }
 
-@media (min-width: 860px) {
-  .project-cards {
+.inventory { display: block; }
+
+.inventory-sheets > li,
+.item-sheet { min-width: 0; }
+
+.item-sheet {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 16px;
+}
+
+.item-sheet-slot {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.item-sheet-slot img,
+.project-icon-real {
+  display: block;
+  object-fit: contain;
+  filter: none;
+  transition: transform 160ms ease;
+}
+
+.item-sheet-slot:hover img,
+.item-sheet-slot:focus-visible img { transform: scale(1.08); }
+
+.item-sheet-slot:hover svg,
+.item-sheet-slot:focus-visible svg { transform: scale(1.12) rotate(-6deg); }
+
+.item-sheet-slot:hover .target-cursor,
+.item-sheet-slot:focus-visible .target-cursor { opacity: 1; }
+.item-sheet-slot .target-cursor { opacity: 0; }
+
+.item-sheet-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-sheet-title,
+.item-sheet-summary { margin: 0; }
+
+.item-sheet-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.18rem;
+  line-height: 1.25;
+}
+
+.item-sheet-summary { color: var(--frame-ink); line-height: 1.5; }
+.item-sheet .tags li { overflow-wrap: anywhere; }
+
+@media (min-width: 900px) {
+  .inventory-sheets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.project-card-item {
-  min-width: 0;
-  display: flex;
+@media (max-width: 559px) {
+  .item-sheet-slot { width: 72px; height: 72px; }
+  .item-sheet-slot img,
+  .item-sheet-slot svg { width: 48px; height: 48px; }
+  .item-sheet { gap: 12px; padding: 12px; }
+  .item-sheet-body { overflow-wrap: anywhere; }
 }
 
-.project-card {
-  width: 100%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+@media (prefers-reduced-motion: reduce) {
+  .item-sheet-slot svg,
+  .item-sheet-slot img,
+  .item-sheet-slot:hover svg,
+  .item-sheet-slot:focus-visible svg,
+  .item-sheet-slot:hover img,
+  .item-sheet-slot:focus-visible img { transform: none; }
+  .item-sheet-slot .target-cursor { animation: none; }
 }
 
-.project-card-media {
-  border-bottom: 2px solid var(--frame-border);
-  background: rgba(0, 0, 0, 0.28);
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-}
-
-.project-card-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.project-card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-  min-width: 0;
-}
-
-.project-card-title {
-  margin: 0;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 1.3rem;
-  font-weight: 800;
-  line-height: 1.25;
-}
-
-.project-card-title a {
-  color: var(--frame-ink);
-  text-decoration: none;
-}
-
-.project-card-title a:hover {
-  color: var(--accent);
-  text-decoration: underline;
-}
-
-.project-card-summary {
-  margin: 0;
-  color: var(--frame-ink);
-  line-height: 1.55;
-}
-
-.project-card-body .project-links {
-  margin-top: auto;
-  padding-top: 6px;
+.item-get-icon:has(.project-icon-real) {
+  filter: none;
 }
 
 /* Bloco Papel e Resultado (cartões, inventário e página do projeto) */

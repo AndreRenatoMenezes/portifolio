@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
-import { ItemIconSvg } from "@/components/icons/ItemIcons";
 import { JsonLd } from "@/components/JsonLd";
-import { ModeText } from "@/components/ModeText";
+import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectLinks } from "@/components/ProjectLinks";
 import { getProject, projects } from "@/content/projects";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
@@ -57,12 +56,12 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
         }}
       />
       <Link href={`/${lang}#inventory`} className="back-link">
-        ← <ModeText direct={dict.direct.project.back} adventure={dict.project.back} />
+        ← {dict.project.back}
       </Link>
 
       <header className="project-header">
         <span className="project-icon dialog-frame">
-          <ItemIconSvg name={project.item} size={64} />
+          <ProjectIcon icon={project.icon} item={project.item} size={64} />
         </span>
         <div>
           <p className="item-panel-label">{project.kind[lang]}</p>
@@ -100,7 +99,7 @@ export default async function ProjectPage({ params }: PageProps<"/[lang]/project
             <dt>{dict.project.year}</dt>
             <dd>{project.year}</dd>
             <dt>
-              <ModeText direct={dict.direct.project.stack} adventure={dict.project.stack} />
+              {dict.project.stack}
             </dt>
             <dd>
               <ul className="tags">

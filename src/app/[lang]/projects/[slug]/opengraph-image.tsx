@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ItemIconSvg } from "@/components/icons/ItemIcons";
 import { OgFrame, ogSize } from "@/components/OgFrame";
 import { profile } from "@/content/profile";
@@ -15,6 +17,9 @@ export default async function Image({ params }: { params: Promise<{ lang: string
   const { lang: raw, slug } = await params;
   const lang = hasLocale(raw) ? raw : "pt";
   const project = getProject(slug) ?? projects[0];
+  const iconData = project.icon
+    ? `data:image/svg+xml;base64,${(await readFile(join(process.cwd(), "public", project.icon.src))).toString("base64")}`
+    : null;
 
   return new ImageResponse(
     (
@@ -32,7 +37,9 @@ export default async function Image({ params }: { params: Promise<{ lang: string
               background: "rgba(6,10,26,0.85)",
             }}
           >
-            <ItemIconSvg name={project.item} size={128} />
+            {iconData ? (
+              <img src={iconData} width={128} height={128} alt="" />
+            ) : <ItemIconSvg name={project.item} size={128} />}
           </div>
           <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
             <div style={{ display: "flex", fontSize: 28, color: "#f0c75e", letterSpacing: 4, textTransform: "uppercase" }}>

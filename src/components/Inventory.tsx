@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { ItemIconSvg, type ItemIcon } from "@/components/icons/ItemIcons";
+import { type ItemIcon } from "@/components/icons/ItemIcons";
+import { ProjectIcon } from "@/components/ProjectIcon";
 import { ProjectLinks } from "@/components/ProjectLinks";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
@@ -18,6 +19,7 @@ export type InventoryItem = {
   outcome: string;
   summary: string;
   item: ItemIcon;
+  icon?: { src: string; width: number; height: number };
   stats: { value: string; label: string }[];
   tags: string[];
   year: number;
@@ -48,114 +50,82 @@ type Props = {
   projectDict: Dictionary["project"];
 };
 
-const SLOTS_PER_PAGE = 12; // divisível por 3 e 4 (colunas mobile/desktop)
-
 export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) {
-  const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState<InventoryItem | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const slotRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const totalSlots = Math.max(SLOTS_PER_PAGE, Math.ceil((items.length + 1) / SLOTS_PER_PAGE) * SLOTS_PER_PAGE);
-  const current = items[selected];
-
-  const select = (index: number, focus = false) => {
-    if (index < 0 || index >= items.length) return;
-    if (index !== selected) playCursor();
-    setSelected(index);
-    if (focus) slotRefs.current[index]?.focus();
-  };
-
-  const columns = () => {
-    const grid = gridRef.current;
-    if (!grid) return 4;
-    return getComputedStyle(grid).gridTemplateColumns.split(" ").length;
-  };
-
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+  const listRef = useRef<HTMLUListElement>(null);
+  const openerRef = useRef<HTMLAnchorElement | null>(null);
+  const onKeyDown = (e: KeyboardEvent<HTMLUListElement>) => {
+    const active = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[data-index]");
+    if (!active) return;
+    const index = Number(active.dataset.index);
+    if (!Number.isInteger(index)) return;
+    const columns = getComputedStyle(e.currentTarget).gridTemplateColumns.split(" ").length;
     const moves: Record<string, number> = {
-      ArrowLeft: -1,
-      ArrowRight: 1,
-      ArrowUp: -columns(),
-      ArrowDown: columns(),
+      ArrowLeft: -1, ArrowRight: 1, ArrowUp: -columns, ArrowDown: columns,
     };
     if (e.key in moves) {
       e.preventDefault();
-      select(selected + moves[e.key], true);
+      const next = index + moves[e.key];
+      const slot = listRef.current?.querySelector<HTMLAnchorElement>(`[data-index="${next}"]`);
+      if (slot) { slot.focus(); playCursor(); }
     } else if (e.key === "Home") {
       e.preventDefault();
-      select(0, true);
+      listRef.current?.querySelector<HTMLAnchorElement>('[data-index="0"]')?.focus();
     } else if (e.key === "End") {
       e.preventDefault();
-      select(items.length - 1, true);
+      listRef.current?.querySelector<HTMLAnchorElement>(`[data-index="${items.length - 1}"]`)?.focus();
     }
   };
 
   return (
-    <div className="inventory" data-inventory data-mode-only="adventure">
-      <div className="inventory-grid dialog-frame" ref={gridRef} onKeyDown={onKeyDown}>
-        {Array.from({ length: totalSlots }, (_, i) => {
-          const item = items[i];
-          if (!item) {
-            return <div key={`empty-${i}`} className="slot slot-empty" aria-hidden="true" title={dict.empty} />;
-          }
-          return (
-            <Link
-              key={item.slug}
-              ref={(node) => {
-                slotRefs.current[i] = node;
-              }}
-              href={`/${lang}/projects/${item.slug}`}
-              prefetch={false}
-              data-opens-modal
-              className="slot"
-              data-selected={i === selected || undefined}
-              tabIndex={i === selected ? 0 : -1}
-              onMouseEnter={() => select(i)}
-              onFocus={() => select(i)}
-              onClick={(e) => {
-                // Clique simples abre o modal; com modificador (nova aba etc.) segue o link.
-                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                e.preventDefault();
-                setOpen(item);
-              }}
-            >
-              <ItemIconSvg name={item.item} size={44} />
-              <span className="slot-name">{item.title}</span>
-              {i === selected && <span className="target-cursor" aria-hidden="true" />}
-            </Link>
-          );
-        })}
-      </div>
-
-      {current && (
-        <aside className="item-panel dialog-frame" aria-live="polite">
-          <p className="item-panel-label">
-            {dict.selected} · {current.kind} · {current.year}
-          </p>
-          <h3 className="item-panel-title">{current.title}</h3>
-          <p>{current.summary}</p>
+    <div className="inventory" data-inventory>
+      <ul className="inventory-sheets" ref={listRef} onKeyDown={onKeyDown}>
+        {items.map((item, i) => (
+          <li key={item.slug}>
+            <article className="item-sheet dialog-frame">
+              <Link
+                ref={i === 0 ? undefined : undefined}
+                href={`/${lang}/projects/${item.slug}`}
+                prefetch={false}
+                aria-label={`${dict.open}: ${item.title}`}
+                data-index={i}
+                className="slot item-sheet-slot"
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  openerRef.current = e.currentTarget;
+                  setOpen(item);
+                }}
+              >
+                <ProjectIcon icon={item.icon} item={item.item} size={56} />
+                <span className="target-cursor" aria-hidden="true" />
+              </Link>
+              <div className="item-sheet-body">
+          <p className="item-panel-label">{item.kind} · {item.year}</p>
+          <h3 className="item-sheet-title">{item.title}</h3>
+          <p className="item-sheet-summary">{item.summary}</p>
           <dl className="project-role-outcome">
             <div>
               <dt>{projectDict.role}</dt>
-              <dd>{current.role}</dd>
+              <dd>{item.role}</dd>
             </div>
             <div>
               <dt>{projectDict.outcome}</dt>
-              <dd>{current.outcome}</dd>
+              <dd>{item.outcome}</dd>
             </div>
           </dl>
-          <Stats stats={current.stats} />
+          <Stats stats={item.stats} />
           <ul className="tags">
-            {current.tags.map((t) => (
+            {item.tags.map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
           <ProjectLinks
             lang={lang}
-            slug={current.slug}
-            title={current.title}
-            links={current.links}
-            isPrivate={current.private}
+            slug={item.slug}
+            title={item.title}
+            links={item.links}
+            isPrivate={item.private}
             liveLabel={projectDict.live}
             codeLabel={projectDict.code}
             askDemoLabel={modalDict.askDemo}
@@ -163,18 +133,18 @@ export function Inventory({ lang, items, dict, modalDict, projectDict }: Props) 
             moreLabel={modalDict.more}
             showDetails
           />
-          <button type="button" className="btn" onClick={() => setOpen(current)}>
-            {dict.open}
-          </button>
-        </aside>
-      )}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
 
       <ItemGetModal
         lang={lang}
         item={open}
         dict={modalDict}
         projectDict={projectDict}
-        onClose={() => setOpen(null)}
+        onClose={() => { setOpen(null); requestAnimationFrame(() => openerRef.current?.focus()); }}
       />
     </div>
   );
@@ -222,7 +192,7 @@ function ItemGetModal({
           <div className="item-get-hero" aria-hidden="true">
             <span className="item-get-rays" />
             <span className="item-get-icon">
-              <ItemIconSvg name={item.item} size={72} />
+            <ProjectIcon icon={item.icon} item={item.item} size={72} />
             </span>
           </div>
           <p className="item-get-kicker">
