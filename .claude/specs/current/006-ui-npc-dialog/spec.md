@@ -57,6 +57,56 @@ Depois do merge do PR #1, o usuário ajustou o site manualmente no trabalho (com
 | CA-08 | 390px e 1366px: sem overflow horizontal; retrato não sobrepõe nem comprime o texto |
 | CA-09 | Relatório de revisão visual entregue com achados **dentro** (corrigidos) e **fora** da posse (só listados); nada fora da posse alterado |
 
+## Emenda 1 — WP-17: correções do relatório de revisão (2026-11-12)
+
+A revisão visual do Pixel listou 6 sugestões fora da posse da WP-16 (CA-09). O usuário aprovou **todas as 6** em 2026-11-12. Esta emenda cria a WP-17, empilhada na mesma branch/PR (ainda não mesclado).
+
+### Escopo WP-17 (os 6 itens, na ordem do relatório)
+
+1. **Mover** as regras `.hero .dialog-box` e `.hero .dialog-text` de `projects.css` para `globals.css` e **remover** o override de especificidade `.hero .dialog-box.dialog-frame` criado na WP-16. Padding/margin finais devem permanecer visualmente idênticos (comparar 390px e 1366px antes/depois).
+2. Definir sombra/fundo da `.hero-game-hint` em `projects.css` (contraste ≥ 4.5:1 nos temas dia e templo, com ou sem a sombra global).
+3. `MobileContactBar`: em 390px o botão "Mandar mensagem" tem a mesma altura do WhatsApp (rótulo mais curto ou `white-space: nowrap`).
+4. Contraste no tema templo: texto dourado sobre moldura (inclui o eyebrow "FERRAMENTA DE LABORATÓRIO" das fichas) ≥ 4.5:1 — escurecer `--frame-bg` do templo ou clarear `--accent`; cor da etiqueta do falante continua legível.
+5. `.hero-role` legível nos temas dia e templo (≥ 4.5:1) — decisão de design é do executor (faixa escura, contorno ou cor alternativa); registrar a escolha no relatório.
+6. Header em 390px: nome não quebra em 2 linhas ao lado dos 4 botões (nome oculto ou fonte reduzida abaixo de 420px).
+
+### Posses WP-17 (dono único: Pixel)
+
+`src/app/projects.css`, `src/components/MobileContactBar.tsx`, `src/app/globals.css`, e o(s) arquivo(s) onde vive o header mobile identificado na inspeção (#6, provavelmente `Hud.tsx`/`Controls.tsx`/`layout.tsx` — confirmar antes de editar; se o arquivo for de outro dono histórico, abrir bloqueio para o Maestro).
+
+### Critérios de aceite WP-17 (binários)
+
+| ID | Critério |
+|----|----------|
+| CA-10 | `projects.css` não contém mais regras para `.hero .dialog-box`/`.dialog-text`; override 0,3,0 removido; layout visual da caixa inalterado em 390/1366 |
+| CA-11 | `.hero-game-hint` com contraste ≥ 4.5:1 nos temas dia e templo, medido |
+| CA-12 | Em 390px, botões do MobileContactBar com alturas iguais |
+| CA-13 | Contraste ≥ 4.5:1 medido no templo para o texto dourado sobre moldura (inclui eyebrow das fichas) |
+| CA-14 | `.hero-role` com contraste ≥ 4.5:1 em dia e templo, medido; decisão de design no relatório |
+| CA-15 | Em 390px, nome do header em 1 linha |
+| CA-16 | lint, tsc e build exit 0; Lighthouse a11y 100 em `/pt` e `/en`; paridade pt/en mantida |
+| CA-17 | Termos vedados = 0 linhas nos staged; diff exclusivamente nos paths da WP-17 |
+
+Evidências: medidas de contraste reais (não relato), comparação visual antes/depois, validação independente da Lupa.
+
+## Emenda 2 — WP-18: restilização do avatar de NPC (2026-11-12)
+
+O usuário forneceu referência visual própria (imagem 16-bit retro gerada por ele, em `/Users/andre/Downloads/Gemini_Generated_Image_w01lf1w01lf1w01l.jpeg`): retrato pixel-art de herói verde com cabelo castanho, barba e sorriso. Pedido: o avatar do diálogo deve seguir **essa linha**.
+
+### Escopo WP-18 (dono: Pixel)
+
+1. **Redesenhar** `public/npc-andre.svg` no estilo 16-bit da referência: cabelo castanho, barba, expressão amigável, túnica verde da paleta do site. O retrato continua SVG (sem raster), ≤ 20 KB, `width`/`height` explícitos.
+2. **Direitos: estilo, não personagem.** A referência evoca um personagem licenciado — o retrato NÃO deve reproduzir elementos identificáveis de marca (espada icônica, escudo, design exato de chapéu). Herói de RPG genérico com a vibe da referência.
+3. Ajustar `.npc-portrait` em `globals.css` se o novo enquadramento exigir (janela com céu do tema mantida).
+
+### Critérios de aceite WP-18
+
+| ID | Critério |
+|----|----------|
+| CA-18 | Retrato redesenhado no estilo 16-bit da referência (cabelo castanho + barba + expressão amigável + túnica verde), visível e íntegro em 390/1366 nos 3 temas, pt/en |
+| CA-19 | Sem elementos de marca licenciada reconhecíveis |
+| CA-20 | Continua SVG ≤ 20 KB, decorativo, sem raster; lint/tsc/build 0; termos vedados 0; diff só nos paths da WP-18 |
+
 ## Evidências esperadas
 
 - Diff/commit feitos pelo Git Master (branch nova, sem push sem autorização).
