@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { playBlip } from "@/lib/sound";
 
@@ -8,10 +9,11 @@ type Props = {
   lines: string[];
   nextLabel: string;
   restartLabel: string;
+  continueLabel: string;
 };
 
-/** Caixa de diálogo com texto "digitado" letra a letra. Clique/Enter avança. */
-export function DialogBox({ speaker, lines, nextLabel, restartLabel }: Props) {
+/** Caixa de diálogo de NPC: retrato decorativo + texto "digitado" letra a letra. Clique/Enter avança. */
+export function DialogBox({ speaker, lines, nextLabel, restartLabel, continueLabel }: Props) {
   const [line, setLine] = useState(0);
   const [chars, setChars] = useState(0);
   const text = lines[line];
@@ -38,13 +40,21 @@ export function DialogBox({ speaker, lines, nextLabel, restartLabel }: Props) {
 
   return (
     <div className="dialog-box dialog-frame">
+      <div className="npc-portrait" aria-hidden="true">
+        <Image src="/npc-andre.svg" alt="" width={80} height={88} loading="eager" />
+      </div>
       <span className="dialog-speaker">{speaker}</span>
       <p className="dialog-text">
         <span aria-hidden="true">{text.slice(0, chars)}</span>
         <span className="sr-only">{text}</span>
       </p>
       <button type="button" className="dialog-next" onClick={advance} aria-label={last && done ? restartLabel : nextLabel}>
-        {done && <span aria-hidden="true">{last ? "↺" : "▼"}</span>}
+        {done && (
+          <span className="dialog-prompt" aria-hidden="true">
+            {last ? restartLabel : continueLabel}
+            <span className="dialog-prompt-arrow">{last ? "↺" : "▼"}</span>
+          </span>
+        )}
       </button>
     </div>
   );

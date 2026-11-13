@@ -61,6 +61,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             lines={dict.hero.lines}
             nextLabel={dict.hero.next}
             restartLabel={dict.hero.restart}
+            continueLabel={dict.hero.continue}
           />
           <div className="btn-row hero-cta">
             <a className="btn btn-primary" href="#contact">
