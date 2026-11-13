@@ -277,7 +277,8 @@ a {
 }
 .header-inner {
   display: grid;
-  grid-template-columns: 1fr auto;
+  /* minmax(0, …): a coluna do logo pode encolher abaixo do conteúdo (senão estoura em 360–375px). */
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "logo controls"
     "hud nav";
@@ -298,10 +299,23 @@ a {
   color: var(--gem);
 }
 @media (max-width: 419px) {
-  /* Ao lado dos 4 controles o nome quebrava em 2 linhas: fonte menor e sem quebra. */
+  /* A coluna da direita era dimensionada pela nav (linha 2), mais larga que os controles,
+     e espremia o nome. Com 3 colunas o logo ocupa também a sobra acima da nav. */
+  .header-inner {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "logo logo controls"
+      "hud nav nav";
+    column-gap: 8px;
+  }
+  /* Ao lado dos 4 controles o nome quebrava em 2 linhas: fonte menor e sem quebra;
+     reticências só como rede de segurança abaixo de 360px. */
   .logo {
     font-size: 0.9rem;
     white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 .main-nav {
