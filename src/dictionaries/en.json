@@ -34,6 +34,7 @@
       "The inventory below holds the items I've forged, from the lab to open-source products. Oh… and keep an eye out for hidden gems along the way."
     ],
     "next": "Continue",
+    "continue": "Continue",
     "restart": "Listen again",
     "cta": "Open inventory",
     "ctaContact": "Contact me"
