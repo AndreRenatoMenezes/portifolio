@@ -25,15 +25,15 @@
     "gems": "Gemas encontradas"
   },
   "hero": {
-    "speaker": "André",
     "pitch": "Automatizo a infraestrutura de endpoints — homologação de hardware em Windows, macOS e Linux — e construo produtos com times de agentes de IA guiados por spec.",
     "gameHint": "Este portfólio é um jogo: abra o inventário, siga a fada e procure as gemas escondidas.",
     "lines": [
-      "Olá, viajante! Eu sou o André, Endpoint Engineer no Rio de Janeiro.",
-      "Automatizo a infraestrutura: testo hardware, padronizo máquinas e escrevo scripts que rodam sozinhos — cada teste devolve PASS ou FAIL.",
-      "No inventário abaixo estão os itens que forjei, do laboratório a produtos open source. Ah… e fique de olho em gemas escondidas pelo caminho."
+      "Olá, viajante! Que bom ver você por aqui. Sente-se perto da fogueira.",
+      "Meu ofício é tirar trabalho manual do caminho: testo hardware, padronizo máquinas e escrevo scripts que rodam sozinhos. Cada teste devolve PASS ou FAIL.",
+      "O que eu forjei está logo abaixo. E se a jornada pedir um aliado, as placas do caminho levam até mim."
     ],
     "next": "Continuar",
+    "continue": "Continuar",
     "restart": "Ouvir de novo",
     "cta": "Abrir inventário",
     "ctaContact": "Fale comigo"

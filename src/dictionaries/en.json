@@ -25,15 +25,15 @@
     "gems": "Gems found"
   },
   "hero": {
-    "speaker": "André",
     "pitch": "I automate endpoint infrastructure — hardware certification across Windows, macOS and Linux — and build products with spec-driven AI agent teams.",
     "gameHint": "This portfolio is a game: open the inventory, follow the fairy and look for hidden gems.",
     "lines": [
-      "Hello, traveler! I'm André, an Endpoint Engineer in Rio de Janeiro.",
-      "I automate infrastructure: I test hardware, standardize machines and write scripts that run on their own — every test returns PASS or FAIL.",
-      "The inventory below holds the items I've forged, from the lab to open-source products. Oh… and keep an eye out for hidden gems along the way."
+      "Hello, traveler! Good to see you here. Take a seat by the fire.",
+      "My craft is getting manual work out of the way: I test hardware, standardize machines and write scripts that run on their own. Every test returns PASS or FAIL.",
+      "What I've forged is right below. And if your journey calls for an ally, the signposts lead to me."
     ],
     "next": "Continue",
+    "continue": "Continue",
     "restart": "Listen again",
     "cta": "Open inventory",
     "ctaContact": "Contact me"
