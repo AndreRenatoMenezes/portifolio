@@ -1,0 +1,4 @@
+lh-en-desktop a11y=100 perf=100 CLS=0.0007
+lh-en-mobile a11y=100 perf=95 CLS=0.0039
+lh-pt-desktop a11y=100 perf=100 CLS=0.0007
+lh-pt-mobile a11y=100 perf=95 CLS=0.0037

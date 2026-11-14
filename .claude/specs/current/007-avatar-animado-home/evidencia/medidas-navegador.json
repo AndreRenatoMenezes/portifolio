@@ -1,0 +1,370 @@
+{
+ "pt": {
+  "desk": {
+   "andre": 2,
+   "andreWhere": [
+    "André Menezes",
+    "André Menezes"
+   ],
+   "roleHeroVis": 1,
+   "roleSr": 0,
+   "speakerEl": false,
+   "dlgW": 96,
+   "dlgXfrac": [
+    0,
+    0.84375
+   ],
+   "svgInsidePortrait": true,
+   "aboutW": 96,
+   "aboutState": "idle",
+   "aboutHasAM": false,
+   "roleFont": "29.568px",
+   "roleColor": "rgb(232, 184, 74)",
+   "roleBg": "rgba(14, 22, 48, 0.92)",
+   "h1": true,
+   "pitch": true,
+   "hint": true,
+   "heroCta": true,
+   "mobileBar": false,
+   "wh": [
+    "96",
+    "96"
+   ]
+  },
+  "theme_desk_day": "day",
+  "theme_desk_night": "night",
+  "theme_desk_temple": "temple",
+  "mob": {
+   "andre": 2,
+   "andreWhere": [
+    "André Menezes",
+    "André Menezes"
+   ],
+   "roleHeroVis": 1,
+   "roleSr": 0,
+   "speakerEl": false,
+   "dlgW": 64,
+   "dlgXfrac": [
+    0,
+    0.6875
+   ],
+   "svgInsidePortrait": true,
+   "aboutW": 96,
+   "aboutState": "idle",
+   "aboutHasAM": false,
+   "roleFont": "11.52px",
+   "roleColor": "rgb(232, 184, 74)",
+   "roleBg": "rgba(14, 22, 48, 0.92)",
+   "h1": true,
+   "pitch": true,
+   "hint": true,
+   "heroCta": true,
+   "mobileBar": true,
+   "wh": [
+    "96",
+    "96"
+   ]
+  },
+  "theme_mob_day": "day",
+  "theme_mob_night": "night",
+  "theme_mob_temple": "temple",
+  "contrast": {
+   "day": {
+    "fg": "rgb(232, 184, 74)",
+    "bg": "rgba(14, 22, 48, 0.92)",
+    "bgImg": "none",
+    "ratio": 9.68
+   },
+   "temple": {
+    "fg": "rgb(197, 139, 43)",
+    "bg": "rgba(28, 16, 6, 0.97)",
+    "bgImg": "none",
+    "ratio": 6.31
+   },
+   "night": {
+    "fg": "rgb(240, 199, 94)",
+    "bg": "rgba(6, 10, 26, 0.92)",
+    "bgImg": "none",
+    "ratio": 12.23
+   }
+  },
+  "ca26": {
+   "360": [
+    360,
+    360
+   ],
+   "375": [
+    375,
+    375
+   ],
+   "390": [
+    390,
+    390
+   ]
+  }
+ },
+ "en": {
+  "desk": {
+   "andre": 2,
+   "andreWhere": [
+    "André Menezes",
+    "André Menezes"
+   ],
+   "roleHeroVis": 1,
+   "roleSr": 0,
+   "speakerEl": false,
+   "dlgW": 96,
+   "dlgXfrac": [
+    0,
+    0.21875
+   ],
+   "svgInsidePortrait": true,
+   "aboutW": 96,
+   "aboutState": "idle",
+   "aboutHasAM": false,
+   "roleFont": "29.568px",
+   "roleColor": "rgb(232, 184, 74)",
+   "roleBg": "rgba(14, 22, 48, 0.92)",
+   "h1": true,
+   "pitch": true,
+   "hint": true,
+   "heroCta": true,
+   "mobileBar": false,
+   "wh": [
+    "96",
+    "96"
+   ]
+  },
+  "theme_desk_day": "day",
+  "theme_desk_night": "night",
+  "theme_desk_temple": "temple",
+  "mob": {
+   "andre": 2,
+   "andreWhere": [
+    "André Menezes",
+    "André Menezes"
+   ],
+   "roleHeroVis": 1,
+   "roleSr": 0,
+   "speakerEl": false,
+   "dlgW": 64,
+   "dlgXfrac": [
+    0,
+    0.6875
+   ],
+   "svgInsidePortrait": true,
+   "aboutW": 96,
+   "aboutState": "idle",
+   "aboutHasAM": false,
+   "roleFont": "11.52px",
+   "roleColor": "rgb(232, 184, 74)",
+   "roleBg": "rgba(14, 22, 48, 0.92)",
+   "h1": true,
+   "pitch": true,
+   "hint": true,
+   "heroCta": true,
+   "mobileBar": true,
+   "wh": [
+    "96",
+    "96"
+   ]
+  },
+  "theme_mob_day": "day",
+  "theme_mob_night": "night",
+  "theme_mob_temple": "temple",
+  "contrast": {
+   "day": {
+    "fg": "rgb(232, 184, 74)",
+    "bg": "rgba(14, 22, 48, 0.92)",
+    "bgImg": "none",
+    "ratio": 9.68
+   },
+   "temple": {
+    "fg": "rgb(197, 139, 43)",
+    "bg": "rgba(28, 16, 6, 0.97)",
+    "bgImg": "none",
+    "ratio": 6.31
+   },
+   "night": {
+    "fg": "rgb(240, 199, 94)",
+    "bg": "rgba(6, 10, 26, 0.92)",
+    "bgImg": "none",
+    "ratio": 12.23
+   }
+  },
+  "ca26": {
+   "360": [
+    360,
+    360
+   ],
+   "375": [
+    375,
+    375
+   ],
+   "390": [
+    390,
+    390
+   ]
+  }
+ },
+ "anim": {
+  "initial": "talking",
+  "blinkIdle": {
+   "states": [
+    "talking",
+    "idle"
+   ],
+   "runs": [
+    [
+     3017,
+     148
+    ],
+    [
+     7013,
+     149
+    ]
+   ],
+   "both": 0
+  },
+  "ca08talking": "talking",
+  "ca11": {
+   "n": 27,
+   "both": 0,
+   "none": 0,
+   "rest": 16,
+   "open": 11,
+   "state": "talking"
+  },
+  "blinkTalking": {
+   "states": [
+    "talking"
+   ],
+   "runs": [
+    [
+     1352,
+     153
+    ]
+   ],
+   "both": 0
+  },
+  "ca08idle": "idle",
+  "ca09": {
+   "state": "happy",
+   "smile": true,
+   "heart": true,
+   "rest": false
+  },
+  "blinkHappy": {
+   "states": [
+    "happy"
+   ],
+   "runs": [
+    [
+     3301,
+     153
+    ],
+    [
+     7300,
+     153
+    ]
+   ],
+   "both": 0
+  },
+  "anims": [
+   {
+    "n": "npc-breathe",
+    "l": "body",
+    "d": 2400,
+    "tf": "steps(1)",
+    "kf": [
+     "steps(1)"
+    ],
+    "props": [
+     "transform"
+    ]
+   },
+   {
+    "n": "npc-blink-open",
+    "l": "eyes-open",
+    "d": 4000,
+    "tf": "steps(1)",
+    "kf": [
+     "steps(1)"
+    ],
+    "props": [
+     "visibility"
+    ]
+   },
+   {
+    "n": "npc-blink-closed",
+    "l": "eyes-closed",
+    "d": 4000,
+    "tf": "steps(1)",
+    "kf": [
+     "steps(1)"
+    ],
+    "props": [
+     "visibility"
+    ]
+   },
+   {
+    "n": "npc-heart-rise",
+    "l": "heart",
+    "d": 600,
+    "tf": "steps(2)",
+    "kf": [
+     "steps(2)"
+    ],
+    "props": [
+     "transform"
+    ]
+   }
+  ],
+  "heartTransform": "matrix(1, 0, 0, 1, 0, -2)"
+ },
+ "ca10": {
+  "before": "idle",
+  "clickToHappy": 12,
+  "happyDur": 1597,
+  "after": "idle"
+ },
+ "ca14": {
+  "idle": {
+   "anims": 0,
+   "eyesOpen": true,
+   "eyesClosed": false,
+   "rest": true,
+   "open": false,
+   "smile": false,
+   "heart": false
+  },
+  "talking": {
+   "anims": 0,
+   "eyesOpen": true,
+   "eyesClosed": false,
+   "rest": true,
+   "open": false,
+   "smile": false,
+   "heart": false
+  },
+  "happy": {
+   "anims": 0,
+   "eyesOpen": true,
+   "eyesClosed": false,
+   "rest": false,
+   "open": false,
+   "smile": true,
+   "heart": false
+  },
+  "aboutAnims": 0
+ },
+ "ca14flow": {
+  "st": [
+   "idle",
+   "happy"
+  ],
+  "smile": "visible",
+  "heart": "hidden",
+  "anims": 0
+ }
+}
