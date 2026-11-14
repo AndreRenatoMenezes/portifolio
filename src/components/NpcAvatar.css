@@ -1,100 +1,84 @@
-/* Animação do avatar (spec 007, DP-3 a DP-5).
-   Só transform/visibility com steps(): sem interpolação, o pixel art não borra.
-   Em SVG, 1px de transform = 1 unidade do viewBox = 1 pixel lógico do sprite.
-   CSS global importado pelo componente (decisão do T4, spec 007): classe e keyframes
-   com prefixo npc- para serem únicos no site inteiro.
-   Toda animação (e o coração) só existe com prefers-reduced-motion: no-preference;
-   com movimento reduzido sobra o quadro estático da expressão do estado. */
+/* Animação do avatar (spec 007, emenda 1: DP-12, DP-4, DP-5).
+   CSS global importado pelo componente: classe e keyframes com prefixo npc-.
+   O <image> é a tira de 8 quadros de 64 px; o viewBox mostra um quadro e
+   translateX em múltiplos de 64 escolhe qual (em SVG, 1px = 1 unidade do viewBox).
+   Quadros: 1 idle, 2 respirar, 3 piscar, 4 falar, 5 falar 2, 6 feliz, 7 feliz + coração, 8 feliz piscando.
+   Só transform, em degraus (step-end): sem interpolação, o pixel art não borra. */
 
 .npc-avatar {
   display: block;
 }
-
-/* Expressão por estado (vale também com movimento reduzido). */
-.npc-avatar [data-layer="eyes-closed"],
-.npc-avatar [data-layer="mouth-open"],
-.npc-avatar [data-layer="mouth-smile"],
-.npc-avatar [data-layer="heart"],
-.npc-avatar[data-state="happy"] [data-layer="mouth-rest"] {
-  visibility: hidden;
+.npc-avatar image {
+  image-rendering: pixelated;
+  /* Quadro estático (também o de movimento reduzido): 1 em idle/talking, 6 em happy. */
+  transform: translateX(0);
 }
-.npc-avatar[data-state="happy"] [data-layer="mouth-smile"] {
-  visibility: visible;
+.npc-avatar[data-state="happy"] image {
+  transform: translateX(-320px);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Respiração: o corpo desce 1 pixel na segunda metade de cada 2,4 s. */
-  .npc-avatar [data-layer="body"] {
-    animation: npc-breathe 2.4s steps(1, end) infinite;
+  /* 1 (1,2 s) -> 2 (1,2 s) -> 1 (1,2 s) -> 2 (1,05 s) -> 3 (150 ms) */
+  .npc-avatar[data-state="idle"] image {
+    animation: npc-idle 4.8s step-end infinite;
   }
-
-  /* Piscar: 150 ms fechado no fim de cada ciclo de 4 s (3,75%), em todos os estados. */
-  .npc-avatar [data-layer="eyes-open"] {
-    animation: npc-blink-open 4s steps(1, end) infinite;
+  /* 4 -> 1 -> 5 -> 1, 140 ms cada */
+  .npc-avatar[data-state="talking"] image {
+    animation: npc-talking 560ms step-end infinite;
   }
-  .npc-avatar [data-layer="eyes-closed"] {
-    animation: npc-blink-closed 4s steps(1, end) infinite;
-  }
-
-  /* Fala: boca fechada e aberta se revezam a cada 140 ms; mesmo relógio, nunca as duas. */
-  .npc-avatar[data-state="talking"] [data-layer="mouth-rest"] {
-    animation: npc-mouth-rest 280ms steps(1, end) infinite;
-  }
-  .npc-avatar[data-state="talking"] [data-layer="mouth-open"] {
-    animation: npc-mouth-open 280ms steps(1, end) infinite;
-  }
-
-  /* Feliz: coração acima do ombro que sobe 2 pixels, uma vez, e fica. */
-  .npc-avatar[data-state="happy"] [data-layer="heart"] {
-    visibility: visible;
-    animation: npc-heart-rise 600ms steps(2, end) forwards;
+  /* entrada: 6 por 300 ms; depois ciclo de 4 s em 7, com 8 nos últimos 150 ms */
+  .npc-avatar[data-state="happy"] image {
+    animation:
+      npc-happy-in 300ms step-end,
+      npc-happy-loop 4s step-end 300ms infinite;
   }
 }
 
-@keyframes npc-breathe {
-  50%,
-  100% {
-    transform: translateY(1px);
-  }
-}
-@keyframes npc-blink-open {
+@keyframes npc-idle {
   0% {
-    visibility: visible;
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-64px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-64px);
+  }
+  96.875%,
+  100% {
+    transform: translateX(-128px);
+  }
+}
+@keyframes npc-talking {
+  0% {
+    transform: translateX(-192px);
+  }
+  25% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-256px);
+  }
+  75%,
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes npc-happy-in {
+  0%,
+  100% {
+    transform: translateX(-320px);
+  }
+}
+@keyframes npc-happy-loop {
+  0% {
+    transform: translateX(-384px);
   }
   96.25%,
   100% {
-    visibility: hidden;
-  }
-}
-@keyframes npc-blink-closed {
-  0% {
-    visibility: hidden;
-  }
-  96.25%,
-  100% {
-    visibility: visible;
-  }
-}
-@keyframes npc-mouth-rest {
-  0% {
-    visibility: visible;
-  }
-  50%,
-  100% {
-    visibility: hidden;
-  }
-}
-@keyframes npc-mouth-open {
-  0% {
-    visibility: hidden;
-  }
-  50%,
-  100% {
-    visibility: visible;
-  }
-}
-@keyframes npc-heart-rise {
-  to {
-    transform: translateY(-2px);
+    transform: translateX(-448px);
   }
 }
