@@ -35,7 +35,7 @@ Todas são opcionais; sem elas o site funciona (sem analytics e com o formulári
 
 | Variável | Para quê |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | URL oficial (canonical, sitemap, Open Graph) |
+| `NEXT_PUBLIC_SITE_URL` | URL oficial (`https://bragademenezes.com` — canonical, sitemap, Open Graph) |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (o GA4 é configurado dentro dele), carregado só com consentimento |
 | `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` | envio do formulário de contato |
 

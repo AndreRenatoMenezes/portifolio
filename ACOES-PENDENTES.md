@@ -8,7 +8,7 @@ Itens do checklist de lançamento que dependem de conta, dados pessoais ou decis
 |---|---|---|---|
 | [T1](#t1--confirmar-dados-de-contato) | ✅ Concluída — e-mail e WhatsApp definidos | itens 11 e 19; spec 002 | — |
 | [T2](#t2--publicar-na-vercel) | Publicar o site na Vercel | T3, T4 e T5 | 10 min |
-| [T3](#t3--domínio-próprio-com-https) | Domínio próprio com HTTPS | item 21; URLs de SEO definitivas | 20 min + propagação |
+| [T3](#t3--domínio-próprio-com-https) | Domínio canônico `https://bragademenezes.com` (variável e redirect na Vercel) | item 21; spec 008 (CA-05/CA-06) | 10 min |
 | [T4](#t4--serviço-de-e-mail-do-formulário-resend) | Serviço de e-mail do formulário (Resend) | ativa o envio real do formulário (código pronto) | 15 min |
 | [T5](#t5--google-analytics-ga4) | Criar o Google Analytics (GA4) e configurá-lo no Google Tag Manager | item 18; spec 003 | 20 min |
 | [T6](#t6--revisar-a-política-de-privacidade) | Revisar a política de privacidade | item 15 (depois da spec 003) | 15 min |
@@ -55,15 +55,14 @@ A partir daqui, todo `git push` na `main` publica sozinho.
 
 ## T3 — Domínio próprio com HTTPS
 
-1. **Escolha e compre o domínio.** Opções: comprar direto na Vercel (Dashboard → **Domains** → **Buy**), num registrador como o Registro.br (`.com.br`) ou em qualquer outro.
-2. **Conecte ao projeto:** Vercel → projeto `portifolio` → **Settings → Domains → Add** → digite o domínio (ex.: `andremenezes.dev`). Adicione também o `www.` e deixe um redirecionando para o outro (a Vercel oferece isso na mesma tela).
-3. **DNS** (só se o domínio não foi comprado na Vercel): no painel do registrador, crie **exatamente** os registros que a tela de Domains da Vercel mostrar (normalmente um `A` para o domínio raiz e um `CNAME` para o `www`). Use os valores da tela, não de tutoriais antigos.
-4. **Espere** a Vercel marcar o domínio como **Valid Configuration**. O certificado HTTPS é emitido automaticamente, em geral em minutos; a propagação do DNS pode levar até 48 h.
-5. **Defina a URL oficial do site:** Settings → **Environment Variables** → adicione `NEXT_PUBLIC_SITE_URL` = `https://seu-dominio` (sem barra no final) em **Production** → **Save**.
-6. **Faça um redeploy:** Deployments → último deploy → **⋯ → Redeploy**. Sem isso, canonical, sitemap e imagem de compartilhamento continuam com a URL antiga.
-7. **Confira:**
-   - `https://seu-dominio/sitemap.xml` lista URLs com o domínio novo;
-   - `http://seu-dominio` redireciona para `https://`.
+O endereço canônico do site é o domínio apex `https://bragademenezes.com` (spec 008). Verificações pendentes no painel da Vercel:
+
+- [ ] **Domínio principal e redirect (spec 008, CA-05):** em Vercel → projeto `portifolio` → **Settings → Domains**, confirmar que `bragademenezes.com` (sem `www`) está ativo como domínio principal (respondendo `200`) e que o subdomínio antigo (`portifolio.*`) e `www.bragademenezes.com` estão configurados com redirect permanente (`301`/`308`) para `https://bragademenezes.com`.
+- [ ] **Variável `NEXT_PUBLIC_SITE_URL` (spec 008, DP-03 / CA-06):** em Vercel → **Settings → Environment Variables**, conferir se `NEXT_PUBLIC_SITE_URL` está definida em **Production**; se estiver com o valor do subdomínio antigo, atualizar para `https://bragademenezes.com` (sem barra no final) → **Save**.
+- [ ] **Redeploy:** se alterou variáveis ou domínios, ir em **Deployments** → último deploy → **⋯ → Redeploy** para que canonical, Open Graph, JSON-LD e `sitemap.xml` reflitam `https://bragademenezes.com`.
+- [ ] **Conferir em produção:**
+  - `https://bragademenezes.com/sitemap.xml` e `https://bragademenezes.com/robots.txt` listam URLs com `https://bragademenezes.com`;
+  - `http://bragademenezes.com` e o subdomínio antigo redirecionam (`301`/`308`) para `https://bragademenezes.com`.
 
 ---
 
@@ -139,7 +138,7 @@ Ajuda o Google a indexar o site mais rápido e mostra erros de SEO. Depende da T
 
 1. Acesse <https://search.google.com/search-console> → **Adicionar propriedade** → **Domínio** → digite o domínio.
 2. Crie no DNS o registro `TXT` de verificação que ele mostrar → **Verificar**.
-3. Menu **Sitemaps** → envie `https://seu-dominio/sitemap.xml`.
+3. Menu **Sitemaps** → envie `https://bragademenezes.com/sitemap.xml`.
 4. Em **Inspeção de URL**, teste a home e peça a indexação.
 
 ---

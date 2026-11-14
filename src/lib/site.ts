@@ -3,12 +3,10 @@ import { locales } from "@/lib/i18n";
 
 /**
  * URL absoluta do site (única fonte). Ordem:
- * NEXT_PUBLIC_SITE_URL → URL de produção da Vercel → localhost.
+ * NEXT_PUBLIC_SITE_URL → domínio canônico (https://bragademenezes.com).
  */
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
-  "http://localhost:3000"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://bragademenezes.com"
 ).replace(/\/$/, "");
 
 import { profile } from "@/content/profile";
