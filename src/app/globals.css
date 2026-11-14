@@ -520,11 +520,11 @@ a {
   padding: 20px 24px 38px;
   margin-top: 0;
 }
-/* Retrato do NPC: janela com o céu do tema atrás do pixel-art (grade 32x32 em escala inteira 3x/2x). Decorativo. */
+/* Retrato do NPC: janela com o céu do tema atrás do pixel-art (grade 64x64 em escala inteira 2x/1x). Decorativo. */
 .npc-portrait {
   box-sizing: content-box;
-  width: 96px;
-  height: 96px;
+  width: 128px;
+  height: 128px;
   border: 2px solid var(--frame-border);
   border-radius: 10px;
   background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
@@ -533,8 +533,8 @@ a {
 }
 .npc-portrait svg {
   display: block;
-  width: 96px;
-  height: 96px;
+  width: 128px;
+  height: 128px;
 }
 .dialog-text {
   min-height: 3.4em;
@@ -898,8 +898,8 @@ a {
 }
 .avatar {
   box-sizing: content-box;
-  width: 96px;
-  height: 96px;
+  width: 128px;
+  height: 128px;
   border-radius: 10px;
   display: grid;
   place-items: center;
@@ -911,8 +911,8 @@ a {
 .avatar img,
 .avatar svg {
   display: block;
-  width: 96px;
-  height: 96px;
+  width: 128px;
+  height: 128px;
   object-fit: cover;
 }
 .stats {
