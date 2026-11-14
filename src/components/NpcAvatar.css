@@ -1,0 +1,100 @@
+/* Animação do avatar (spec 007, DP-3 a DP-5).
+   Só transform/visibility com steps(): sem interpolação, o pixel art não borra.
+   Em SVG, 1px de transform = 1 unidade do viewBox = 1 pixel lógico do sprite.
+   CSS global importado pelo componente (decisão do T4, spec 007): classe e keyframes
+   com prefixo npc- para serem únicos no site inteiro.
+   Toda animação (e o coração) só existe com prefers-reduced-motion: no-preference;
+   com movimento reduzido sobra o quadro estático da expressão do estado. */
+
+.npc-avatar {
+  display: block;
+}
+
+/* Expressão por estado (vale também com movimento reduzido). */
+.npc-avatar [data-layer="eyes-closed"],
+.npc-avatar [data-layer="mouth-open"],
+.npc-avatar [data-layer="mouth-smile"],
+.npc-avatar [data-layer="heart"],
+.npc-avatar[data-state="happy"] [data-layer="mouth-rest"] {
+  visibility: hidden;
+}
+.npc-avatar[data-state="happy"] [data-layer="mouth-smile"] {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Respiração: o corpo desce 1 pixel na segunda metade de cada 2,4 s. */
+  .npc-avatar [data-layer="body"] {
+    animation: npc-breathe 2.4s steps(1, end) infinite;
+  }
+
+  /* Piscar: 150 ms fechado no fim de cada ciclo de 4 s (3,75%), em todos os estados. */
+  .npc-avatar [data-layer="eyes-open"] {
+    animation: npc-blink-open 4s steps(1, end) infinite;
+  }
+  .npc-avatar [data-layer="eyes-closed"] {
+    animation: npc-blink-closed 4s steps(1, end) infinite;
+  }
+
+  /* Fala: boca fechada e aberta se revezam a cada 140 ms; mesmo relógio, nunca as duas. */
+  .npc-avatar[data-state="talking"] [data-layer="mouth-rest"] {
+    animation: npc-mouth-rest 280ms steps(1, end) infinite;
+  }
+  .npc-avatar[data-state="talking"] [data-layer="mouth-open"] {
+    animation: npc-mouth-open 280ms steps(1, end) infinite;
+  }
+
+  /* Feliz: coração acima do ombro que sobe 2 pixels, uma vez, e fica. */
+  .npc-avatar[data-state="happy"] [data-layer="heart"] {
+    visibility: visible;
+    animation: npc-heart-rise 600ms steps(2, end) forwards;
+  }
+}
+
+@keyframes npc-breathe {
+  50%,
+  100% {
+    transform: translateY(1px);
+  }
+}
+@keyframes npc-blink-open {
+  0% {
+    visibility: visible;
+  }
+  96.25%,
+  100% {
+    visibility: hidden;
+  }
+}
+@keyframes npc-blink-closed {
+  0% {
+    visibility: hidden;
+  }
+  96.25%,
+  100% {
+    visibility: visible;
+  }
+}
+@keyframes npc-mouth-rest {
+  0% {
+    visibility: visible;
+  }
+  50%,
+  100% {
+    visibility: hidden;
+  }
+}
+@keyframes npc-mouth-open {
+  0% {
+    visibility: hidden;
+  }
+  50%,
+  100% {
+    visibility: visible;
+  }
+}
+@keyframes npc-heart-rise {
+  to {
+    transform: translateY(-2px);
+  }
+}
