@@ -70,3 +70,37 @@ Numeração continua a da nota `tasks` (última: WP-18b).
 ## Banco
 
 Não há. Nenhum estado novo no `localStorage`.
+
+## Emenda 1 — sprite em PNG (2026-11-14)
+
+Lê-se com a seção "Emenda 1" da `spec.md`. Revoga T2, T3 e T5 (camadas e desenho em `<path>`). T1, T4, T6 a T10 continuam valendo.
+
+### Decisões técnicas
+
+- **T11 — A raiz continua `<svg>`, com um `<image>` dentro.** O `viewBox="0 0 N N"` recorta um quadro da tira de 8N × N; mover o `<image>` em múltiplos de N troca o quadro. Motivo: `globals.css` dimensiona o avatar por `.npc-portrait svg` e `.avatar svg`, e o `DialogBox` só passa `state`. Mantendo a raiz, a integração não é tocada (CA-33). Em SVG, 1 px de `transform` é 1 unidade do `viewBox`, ou seja, 1 pixel da arte.
+- **T12 — Um `@keyframes` por estado, só `transform`, em degraus.** `idle`: 4,8 s com `step-end`, paradas em 0%, 25%, 50%, 75% e 96,875% (quadros 1, 2, 1, 2, 3). `talking`: 560 ms, paradas em 0%, 25%, 50%, 75% (quadros 4, 1, 5, 1). `happy`: duas animações na mesma regra, a entrada (300 ms no quadro 6, uma vez) e o ciclo de 4 s (quadro 7, com o 8 nos últimos 150 ms) com `animation-delay` de 300 ms. Tudo dentro de `@media (prefers-reduced-motion: no-preference)`; fora dela, o quadro vem de `transform` fixo por `data-state` (quadro 1 ou 6).
+- **T13 — Preparo da imagem é script descartável, fora do repositório.** Passos: detectar o lado do pixel da arte na folha (tamanho do degrau, em pixels da folha); reduzir cada célula por vizinho mais próximo para a resolução nativa; tirar o magenta com alfa binário; reduzir a paleta para até 32 cores; recortar ou completar a célula para N × N; montar os quadros 2 a 8 sobre o quadro 1 limpo, copiando só a região do rosto (e o coração no 7; o corpo 1 pixel abaixo no 2), para cumprir o CA-32; exportar a tira. Ferramenta à escolha do dono (o `sips` do macOS e Node bastam); **nada entra em `package.json`** (CA-16). Só o PNG final vai para o stage.
+- **T14 — `image-rendering: pixelated` no `<image>`**, por CSS em `NpcAvatar.css`. Conferir no Safari; se não valer, abrir bloqueio (plano B na tabela de riscos da spec).
+
+### Pacotes de trabalho
+
+#### WP-22 — Sprite em PNG e animação por quadro (dono A, UI Designer)
+
+- **Possui:** `src/components/NpcAvatar.tsx`, `src/components/NpcAvatar.css`, `public/avatar/**`.
+- **Fora de escopo:** todo o resto, inclusive `DialogBox.tsx`, `page.tsx`, `globals.css` e dicionários.
+- **Objetivo:** trocar o sprite SVG em camadas pela tira PNG da folha do usuário, com as sequências da DP-12.
+- **Aceite:** CA-01 a CA-06, CA-11 a CA-14, CA-16, CA-32, CA-33.
+- **Depende de:** `ref/sprites-gemini.png` (já na pasta da spec).
+
+#### WP-23 — Revisão independente da emenda (Lupa)
+
+- **Possui:** evidências. Não edita código.
+- **Objetivo:** medir os CAs reescritos e novos (02 a 06, 09, 11 a 14, 32, 33) e medir de novo os que dependem do avatar (07, 08, 10, 15, 24, 25, 27, 29, 30).
+- **Depende de:** WP-22.
+
+### Verificação adicional
+
+- CA-03 e CA-32: script que lê o PNG (dimensões, alfa, contagem de cores, teste de blocos k×k, diferenças entre quadros por região). Saída numérica anexada.
+- CA-09, CA-11 a CA-14: `new DOMMatrix(getComputedStyle(image).transform).m41 / -N` dá o índice do quadro (0 a 7); amostrar com `setInterval` de 35 ms.
+- CA-33: `git diff --stat <commit aprovado> -- src/components/DialogBox.tsx "src/app/[lang]/page.tsx" src/app/globals.css src/dictionaries` vazio.
+
