@@ -104,3 +104,16 @@ Lê-se com a seção "Emenda 1" da `spec.md`. Revoga T2, T3 e T5 (camadas e dese
 - CA-09, CA-11 a CA-14: `new DOMMatrix(getComputedStyle(image).transform).m41 / -N` dá o índice do quadro (0 a 7); amostrar com `setInterval` de 35 ms.
 - CA-33: `git diff --stat <commit aprovado> -- src/components/DialogBox.tsx "src/app/[lang]/page.tsx" src/app/globals.css src/dictionaries` vazio.
 
+## Emenda 2 — 128 px no desktop (2026-11-14)
+
+- **T15 — Tamanhos.** `NpcAvatar.tsx`: `width="128" height="128"`. `globals.css`: `.npc-portrait` e `.npc-portrait svg` em 128 px (64 px em `max-width: 559px`, como hoje); `.avatar` e `.avatar svg` em 128 px. O comentário de `.npc-portrait` que cita "grade 32x32 em escala inteira 3x/2x" é atualizado para 64 e 2×/1×.
+- **T16 — Primeira dobra.** O retrato fica 32 px mais alto no desktop. Se o botão do hero sair da primeira dobra em 1366×768 (CA-25), o ajuste é no espaçamento de `.dialog-box` (inclusive o bloco `max-height: 800px`), não no tamanho do avatar.
+- **WP-24 (dono A, UI Designer):** possui `NpcAvatar.tsx`, `NpcAvatar.css`, `public/avatar/**` e os blocos `.dialog-box`, `.npc-portrait` e `.avatar` de `globals.css`. Aceite: CA-07, CA-25, CA-26, CA-27, CA-30, CA-33. Inclui a correção da cintilação da cabeça na fala, depois do diagnóstico da Lupa.
+- **WP-25 (Lupa):** diagnóstico da cintilação e nova medição dos CAs acima.
+
+## Emenda 3 — CA-32 apertado (2026-11-14)
+
+- **T17 — Remontagem da tira.** Base única: quadro 1 limpo. Quadro 3 = quadro 1 + caixa dos olhos do quadro de piscar. Quadros 4 e 5 = quadro 1 + caixa da boca (com até 2 px de margem para acertar a barba). Quadro 6 = quadro 1 + boca e olhos felizes. Quadro 7 = quadro 6 + coração. Quadro 8 = quadro 6 + olhos fechados felizes. Quadro 2 = quadro 1 com a parte de baixo (y ≥ 32) deslocada. Assim contorno da cabeça, gorro, cajado e túnica saem idênticos por construção.
+- **Verificação:** script que compara os quadros e imprime, por par, a caixa envolvente dos pixels diferentes e a contagem fora da região permitida (tem de ser 0).
+- **WP-24** passa a incluir o CA-32 no aceite; **WP-25** mede.
+

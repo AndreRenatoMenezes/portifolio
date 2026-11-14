@@ -1,7 +1,7 @@
 # 007 — Avatar animado do site e revisão da tela inicial
 
 - **Domínio:** ui
-- **Status:** emendada (emenda 1, 2026-11-14) — versão original implementada e aprovada pela Lupa (31/31); a emenda troca o sprite
+- **Status:** emendada (emendas 1, 2 e 3, 2026-11-14) — versão original implementada e aprovada pela Lupa (31/31); a emenda troca o sprite
 - **Autor:** Arquiteto (Prisma)
 - **Data:** 2026-11-14
 - **Origem:** pedido do usuário em 2026-11-14, literal: "Quero que esse avatar seja meu avatar do site do portfólio, faça orquestração para implementar esse avatar com sistema de animação. Quero que faça uma revisão nessa tela inicial, por exemplo meu nome aparece em mais 3 lugares diferentes só na primeira tela, etc."
@@ -50,7 +50,7 @@ O site é só modo aventura (spec 005, emenda 1). A spec 006 colocou um retrato 
 | DP-9 | **Os dois "Fale comigo" ficam** (C1 e C2). C2 é exigido por CA-02 da 002 e CA-25 da 005; C1 é a ação fixa do cabeçalho nas demais páginas. Registrado como redundância aceita. | Esconder C1 na home | Baixo |
 | DP-11 | **Emenda 1 (decisão do usuário: "quero usar essas para meu avatar").** A arte do avatar é a folha de 8 quadros de `ref/sprites-gemini.png`, limpa e servida como **PNG** em `public/avatar/andre-sprites.png`: fundo transparente, resolução nativa da pixel art (1 pixel da arte = 1 pixel do PNG), paleta reduzida, quadros alinhados. Revoga "raster não entra" e "SVG por camadas". | Manter o sprite SVG 32×32 da versão original (aprovado 31/31, mas não é a arte que o usuário escolheu) | Baixo: o sprite SVG está no histórico do git; a API do componente não muda |
 | DP-12 | **Emenda 1.** Animação por **troca de quadro**: uma tira horizontal de 8 quadros, deslocada por `transform` com função de tempo em degraus e `image-rendering: pixelated`. Sequências por estado na tabela do contrato de `NpcAvatar.css`. Consequências aceitas: não há piscar durante a fala (a folha não tem esse quadro) e o coração aparece em vez de subir. | Recortar olhos e boca em camadas a partir do PNG (reintroduz o desenho manual que o usuário dispensou) | Baixo |
-| DP-13 | **Emenda 1.** Os tamanhos de tela ficam 96 px (desktop e ficha "Sobre") e 64 px (celular), como na versão aprovada, para não reabrir o trabalho de integração. A célula do PNG tem lado N ∈ {32, 64}. Com N = 64, a escala em pixels de dispositivo é inteira em telas de densidade 2 ou mais (todo celular e todo notebook de alta densidade) e é 1,5× em monitor de densidade 1 no desktop, onde os pixels da arte ficam com larguras desiguais. Limitação aceita e listada em Riscos. | Subir o desktop para 128 px (2× exato em densidade 1): muda `globals.css`, que é de outro dono, e reabre o CA-25 | Baixo: uma regra de CSS |
+| DP-13 | **Reescrita pela emenda 2 (decisão do usuário).** O avatar mede **128 px no desktop**, na caixa de diálogo e na ficha "Sobre", e **64 px no celular** na caixa de diálogo. Na ficha "Sobre" no celular mede 128 px (decisão do Arquiteto: o usuário não citou esse caso; uma regra só, e o cartão comporta). A célula do PNG tem N = 64, então a escala é sempre inteira: 2× e 1×, em qualquer densidade de tela. A limitação de 1,5× da emenda 1 deixa de existir. | 96/64 da emenda 1 (1,5× em monitor de densidade 1, pixels desiguais) | Baixo: três regras de CSS e dois atributos |
 | DP-10 | `profile.avatar` continua reservado para foto real e segue `undefined`. Com foto definida, a ficha "Sobre" mostra a foto, como hoje. | Usar `profile.avatar` para o sprite | Baixo |
 
 ## Escopo (dentro)
@@ -80,7 +80,7 @@ export function NpcAvatar(props: { state?: AvatarState; className?: string }): J
 ```
 
 - Sem `"use client"` e sem hooks: pode ser usado por componente de servidor (`page.tsx`) e de cliente (`DialogBox.tsx`).
-- **Emenda 1.** Renderiza um único `<svg>` com `viewBox="0 0 N N"` (N = lado da célula do PNG), `width="96"`, `height="96"`, `aria-hidden="true"`, `focusable="false"`, classe `npc-avatar` e `data-state` igual a `state` (padrão `idle`).
+- **Emenda 1.** Renderiza um único `<svg>` com `viewBox="0 0 N N"` (N = lado da célula do PNG), `width="128"`, `height="128"` (emenda 2), `aria-hidden="true"`, `focusable="false"`, classe `npc-avatar` e `data-state` igual a `state` (padrão `idle`).
 - Dentro do `<svg>` há exatamente um filho: `<image href="/avatar/andre-sprites.png" width="8N" height="N">`. O `viewBox` funciona como janela de um quadro; o deslocamento do `<image>` escolhe o quadro. Não há mais `data-layer`.
 - A raiz continua `<svg>` de propósito: os seletores `.npc-portrait svg` e `.avatar svg` de `globals.css`, o `DialogBox.tsx` e o `page.tsx` seguem valendo sem edição.
 
@@ -162,7 +162,7 @@ Valem em `/pt` e `/en`. "Desktop" = 1366×768; "celular" = 390×844. "Primeira t
 | CA-04 | **Reescrito (emenda 1).** Conferência visual contra `ref/sprites-gemini.png`: os 8 quadros da tira estão na ordem da tabela do contrato e cada um mostra a expressão da célula correspondente da folha; em todos aparecem gorro verde, cabelo e barba castanhos, gola clara, túnica verde, alça marrom com fivela dourada e cajado com gema verde à esquerda da imagem; o coração aparece só no quadro 7 |
 | CA-05 | **Reescrito (emenda 1).** Lista de proibidos, todos ausentes nos 8 quadros: espada; escudo; orelhas pontudas; gorro comprido caído; emblema de triângulos. Não há URI `data:` em `NpcAvatar.tsx` nem em `NpcAvatar.css` |
 | CA-06 | **Reescrito (emenda 1).** `NpcAvatar.tsx` tem no máximo 4 KB; `public/avatar/` contém só `andre-sprites.png`; `public/npc-andre.svg` não existe e `grep -r "npc-andre" src public` devolve 0 linhas |
-| CA-07 | Na caixa de diálogo, a largura e a altura renderizadas do `<svg>` são 96 px no desktop e 64 px no celular; na ficha "Sobre" são 96 px nos dois. (Texto ajustado pela emenda 1: sai a menção à grade 32; os números não mudam.) |
+| CA-07 | **Reescrito (emenda 2).** Largura e altura renderizadas do `<svg>` do avatar: na caixa de diálogo, 128 px no desktop e 64 px no celular; na ficha "Sobre", 128 px no desktop e no celular. Em todos os casos, medida ÷ 64 é inteiro |
 
 ### Animação
 
@@ -200,10 +200,10 @@ Valem em `/pt` e `/en`. "Desktop" = 1366×768; "celular" = 390×844. "Primeira t
 | CA-27 | CLS da home ≤ 0,02 no Lighthouse (desktop e celular); o avatar tem `width` e `height` explícitos |
 | CA-28 | `npm run lint`, `npx tsc --noEmit` e `npm run build` saem com código 0 |
 | CA-29 | Lighthouse acessibilidade = 100 em `/pt` e `/en` |
-| CA-30 | Avatar íntegro (sem corte, sem borrão, sem franja magenta) nos temas dia, noite e templo, em desktop e celular: 6 capturas por idioma anexadas à revisão. **Emenda 1:** capturas com densidade de pixels 2 (`deviceScaleFactor: 2`), mais uma captura do desktop em densidade 1 para registrar a limitação da DP-13 |
+| CA-30 | Avatar íntegro (sem corte, sem borrão, sem franja magenta) nos temas dia, noite e templo, em desktop e celular: 6 capturas por idioma anexadas à revisão. **Emenda 2:** capturas do desktop em densidade 1 e do celular em densidade 2; a captura extra de limitação da emenda 1 deixa de ser exigida |
 | CA-31 | Termos vedados = 0 linhas nos arquivos em stage; o diff só toca os caminhos listados em "Fronteiras de arquivo" |
-| CA-32 | **Novo (emenda 1), alinhamento dos quadros.** Comparando pixel a pixel dentro da tira: (a) os quadros 3, 4, 5, 6 e 8 só diferem do quadro 1 dentro do retângulo central x, y ∈ [N/4, 7N/8); (b) o quadro 2 difere do quadro 1 em ao menos 1 pixel e só em y ≥ N/2; (c) o quadro 7 difere do quadro 6 em ao menos 1 pixel e só em x < N/2 e y < N/2 (o coração) |
-| CA-33 | **Novo (emenda 1), sem retrabalho de integração.** O diff da emenda, em relação ao estado aprovado pela Lupa (31/31), é vazio em `DialogBox.tsx`, `src/app/[lang]/page.tsx`, `globals.css`, `pt.json` e `en.json` |
+| CA-32 | **Reescrito (emenda 3), alinhamento dos quadros.** Coordenadas em pixels do quadro (N = 64, origem no canto superior esquerdo, limites inclusivos). Caixas: **boca** x 26–40, y 33–43; **margem da boca** = boca alargada em 2 px para cada lado (x 24–42, y 31–45), para retoque de barba; **olhos** x 22–45, y 22–30; **coração** x 5–13, y 9–16. Comparando pixel a pixel dentro da tira, todo pixel diferente tem de cair na região indicada e tem de haver ao menos 1 pixel diferente: (a) quadro 3 × quadro 1: só olhos; (b) quadros 4 e 5 × quadro 1: só margem da boca; (c) quadro 6 × quadro 1: só margem da boca e olhos; (d) quadro 7 × quadro 6: só coração; (e) quadro 8 × quadro 6: só olhos; (f) quadro 2 × quadro 1: só em y ≥ 32. Fora dessas regiões os quadros são idênticos, inclusive no alfa |
+| CA-33 | **Reescrito (emenda 2), integração mínima.** Em relação ao estado aprovado pela Lupa (31/31): diff vazio em `DialogBox.tsx`, `src/app/[lang]/page.tsx`, `pt.json` e `en.json`; em `globals.css`, o diff só toca os blocos da caixa de diálogo (`.dialog-box`, `.npc-portrait`) e `.avatar` |
 
 ## Riscos
 
@@ -212,10 +212,10 @@ Valem em `/pt` e `/en`. "Desktop" = 1366×768; "celular" = 390×844. "Primeira t
 | ~~Semelhança com a referência é subjetiva~~ | — | Resolvido pela emenda 1: a arte é a que o usuário entregou |
 | Sprite ainda evocar personagem de franquia (touca verde + túnica verde) | Médio | DP-2 e CA-05; touca arredondada, cajado com gema do site, sem orelhas pontudas; a Lupa confere a lista |
 | PR #2 aberto toca os mesmos arquivos (`DialogBox.tsx`, `globals.css`, `page.tsx`) | Médio | Branch da 007 empilhada sobre `feat/006-ui-npc-dialog`; decisão de base e de ordem de merge é do Maestro com o Sentinela |
-| Retrato maior (96 px) empurrar o botão do hero para fora da primeira dobra em 1366×768 | Médio | CA-25 é critério de regressão; ajuste de espaçamento do diálogo fica na posse da WP de integração |
+| Retrato maior (128 px no desktop, emenda 2) empurrar o botão do hero para fora da primeira dobra em 1366×768 | Alto | CA-25 é critério de regressão e precisa ser medido de novo; o ajuste de espaçamento da caixa de diálogo fica com o dono de `globals.css` na emenda 2 |
 | Animação infinita gastar bateria ou distrair | Baixo | Só `transform` em degraus (CA-13); `prefers-reduced-motion` (CA-14) |
 | Emenda 1: a folha veio de gerador de imagem; os quadros não nascem alinhados e trazem borrão, cores a mais e franja magenta | Alto | Regras da imagem no contrato; CA-03 e CA-32 medem por script, pixel a pixel. O caminho esperado é montar os quadros 2 a 8 a partir do quadro 1 limpo, trocando só rosto, coração e deslocamento do corpo |
-| Emenda 1: com N = 64, desktop de densidade 1 mostra a arte em 1,5× (pixels desiguais) | Médio | DP-13 registra a limitação; captura em densidade 1 no CA-30 para o usuário ver. Saída, se ele não aceitar: 128 px no desktop, que é trabalho de outro dono |
+| ~~Emenda 1: com N = 64, desktop de densidade 1 mostra a arte em 1,5×~~ | — | Resolvido pela emenda 2 (128 px = 2×) |
 | Emenda 1: `image-rendering: pixelated` em `<image>` de SVG pode não valer em algum navegador (conferir Safari) | Médio | CA-13 mede o valor computado; conferência manual no Safari. Plano B: raiz vira `<span>` com `background-image`, o que muda os seletores de `globals.css` e exige bloqueio para o Maestro |
 | Emenda 1: o PNG carrega depois do HTML e o retrato fica vazio por um instante | Baixo | `width`/`height` fixos, sem deslocamento de layout (CA-27); arquivo ≤ 30 KB |
 | `data-state="talking"` no HTML do servidor deixaria a boca mexendo sem JS | Baixo | CA-15 |
@@ -227,7 +227,7 @@ Um dono por caminho. O Maestro particiona e pode fundir donos.
 
 | Dono sugerido | Possui | Fora de escopo |
 |---------------|--------|----------------|
-| **A — UI Designer (sprite e animação)** | `src/components/NpcAvatar.tsx`, `src/components/NpcAvatar.css`, `public/avatar/**` (emenda 1) | Todo o resto. Não edita `DialogBox.tsx`, `globals.css` nem `page.tsx` |
+| **A — UI Designer (sprite e animação)** | `src/components/NpcAvatar.tsx`, `src/components/NpcAvatar.css`, `public/avatar/**` (emenda 1); em `src/app/globals.css`, só os blocos da caixa de diálogo (`.dialog-box`, `.npc-portrait`) e `.avatar` (emenda 2) | Todo o resto. Não edita `DialogBox.tsx`, `page.tsx` nem dicionários |
 | **B — Engineer (integração e home)** | Entregue e aprovado na versão original: `DialogBox.tsx`, `page.tsx`, `globals.css`, dicionários, remoção de `public/npc-andre.svg`. **Na emenda 1 não possui nada**: esses caminhos não podem aparecer no diff (CA-33) | `NpcAvatar.*`; `public/avatar/**`; `layout.tsx`; `projects.css`; demais componentes |
 | **Reviewer (Lupa)** | Evidências dos CAs, capturas | Não edita código |
 | **Git Master (Sentinela)** | Branch, stage, commit, push e PR quando autorizado | — |
@@ -282,4 +282,26 @@ Nenhum CA da WP-20 exige mudança de código. Como a raiz continua `<svg>` com `
 ### Fronteira
 
 Um dono só: UI Designer, com `src/components/NpcAvatar.tsx`, `src/components/NpcAvatar.css` e `public/avatar/**`. Revisão independente pela Lupa. Git pelo Sentinela.
+
+## Emenda 2 — avatar em 128 px no desktop (2026-11-14)
+
+**Origem:** decisão do usuário, depois de ver a emenda 1: avatar em 128 px no desktop, na caixa de diálogo e na ficha "Sobre"; no celular continua 64 px. Autor da emenda: Arquiteto (Prisma), a pedido do Maestro.
+
+**O que muda:** DP-13, CA-07, CA-30 e CA-33 (texto acima já atualizado); o atributo `width`/`height` do `<svg>` passa a 128; a fronteira do dono A ganha três blocos de `globals.css`.
+
+**Decisão do Arquiteto dentro da emenda:** a ficha "Sobre" no celular fica em 128 px. O usuário não citou esse caso; 96 px (valor anterior) daria 1,5× e 64 px ficaria pequeno no cartão. Custo de reverter: uma regra de CSS.
+
+**Medir de novo:** CA-07, CA-25 (primeira dobra em 1366×768, risco alto com o retrato 32 px mais alto), CA-26, CA-27 e CA-30.
+
+### Defeito conhecido, em diagnóstico (não muda o contrato)
+
+O usuário relatou que, durante a fala, a cabeça parece maior em algum quadro (cintilação). A Lupa está diagnosticando; a correção é do dono A, nos arquivos que ele já possui. O contrato já proíbe esse efeito: o CA-32(a) exige que os quadros 4 e 5 só difiram do quadro 1 dentro do retângulo central, e a regra de alinhamento do PNG exige que o que não muda fique idêntico pixel a pixel. Se o diagnóstico mostrar que a diferença está **dentro** do retângulo central (contorno do rosto ou da barba variando entre quadros), o CA-32 passa e o defeito continua; nesse caso o Arquiteto aperta o CA-32 em nova emenda.
+
+## Emenda 3 — CA-32 apertado (2026-11-14)
+
+**Origem:** diagnóstico da Lupa sobre a cintilação relatada pelo usuário (cabeça parecendo maior em alguns quadros). O CA-32(a) da emenda 1 aceitava diferença em todo o retângulo central (x, y de 16 a 55), que cobre o rosto inteiro; por isso a variação de contorno dos quadros 5 a 8 passou. A ressalva registrada na emenda 2 se confirmou.
+
+**O que muda:** só o CA-32, reescrito acima com caixas por região (boca, olhos, coração) e tolerância de 2 px em volta da boca para retoque de barba. A seção "Defeito conhecido" da emenda 2 fica superada: agora o contrato mede o defeito.
+
+**Consequência para a arte:** a tira aprovada na emenda 1 deixa de passar. Os quadros 3 a 8 têm de ser remontados sobre o quadro 1 (e o 7 e o 8 sobre o 6), copiando só as caixas. Dono: A (UI Designer), em `public/avatar/**`. Nenhum outro CA muda.
 
