@@ -15,8 +15,8 @@ export function NpcAvatar({ state = "idle", className }: { state?: AvatarState; 
   return (
     <svg
       viewBox={`0 0 ${N} ${N}`}
-      width="96"
-      height="96"
+      width="128"
+      height="128"
       aria-hidden="true"
       focusable="false"
       data-state={state}
