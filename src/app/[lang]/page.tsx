@@ -5,6 +5,7 @@ import { Gem } from "@/components/Gem";
 import { HeroScene } from "@/components/HeroScene";
 import { Inventory, type InventoryItem } from "@/components/Inventory";
 import { JsonLd } from "@/components/JsonLd";
+import { NpcAvatar } from "@/components/NpcAvatar";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { whatsappUrl } from "@/lib/contact";
@@ -57,7 +58,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           <p className="hero-pitch">{dict.hero.pitch}</p>
           <p className="hero-game-hint">{dict.hero.gameHint}</p>
           <DialogBox
-            speaker={dict.hero.speaker}
             lines={dict.hero.lines}
             nextLabel={dict.hero.next}
             restartLabel={dict.hero.restart}
@@ -109,7 +109,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={profile.avatar} alt={profile.name} />
               ) : (
-                profile.initials
+                <NpcAvatar />
               )}
             </div>
             <dl className="stats">
