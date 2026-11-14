@@ -1,0 +1,84 @@
+/* Animação do avatar (spec 007, emenda 1: DP-12, DP-4, DP-5).
+   CSS global importado pelo componente: classe e keyframes com prefixo npc-.
+   O <image> é a tira de 8 quadros de 64 px; o viewBox mostra um quadro e
+   translateX em múltiplos de 64 escolhe qual (em SVG, 1px = 1 unidade do viewBox).
+   Quadros: 1 idle, 2 respirar, 3 piscar, 4 falar, 5 falar 2, 6 feliz, 7 feliz + coração, 8 feliz piscando.
+   Só transform, em degraus (step-end): sem interpolação, o pixel art não borra. */
+
+.npc-avatar {
+  display: block;
+}
+.npc-avatar image {
+  image-rendering: pixelated;
+  /* Quadro estático (também o de movimento reduzido): 1 em idle/talking, 6 em happy. */
+  transform: translateX(0);
+}
+.npc-avatar[data-state="happy"] image {
+  transform: translateX(-320px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 1 (1,2 s) -> 2 (1,2 s) -> 1 (1,2 s) -> 2 (1,05 s) -> 3 (150 ms) */
+  .npc-avatar[data-state="idle"] image {
+    animation: npc-idle 4.8s step-end infinite;
+  }
+  /* 4 -> 1 -> 5 -> 1, 140 ms cada */
+  .npc-avatar[data-state="talking"] image {
+    animation: npc-talking 560ms step-end infinite;
+  }
+  /* entrada: 6 por 300 ms; depois ciclo de 4 s em 7, com 8 nos últimos 150 ms */
+  .npc-avatar[data-state="happy"] image {
+    animation:
+      npc-happy-in 300ms step-end,
+      npc-happy-loop 4s step-end 300ms infinite;
+  }
+}
+
+@keyframes npc-idle {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-64px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-64px);
+  }
+  96.875%,
+  100% {
+    transform: translateX(-128px);
+  }
+}
+@keyframes npc-talking {
+  0% {
+    transform: translateX(-192px);
+  }
+  25% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-256px);
+  }
+  75%,
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes npc-happy-in {
+  0%,
+  100% {
+    transform: translateX(-320px);
+  }
+}
+@keyframes npc-happy-loop {
+  0% {
+    transform: translateX(-384px);
+  }
+  96.25%,
+  100% {
+    transform: translateX(-448px);
+  }
+}
