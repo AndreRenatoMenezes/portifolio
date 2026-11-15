@@ -747,12 +747,6 @@ a {
 .private-note a {
   color: var(--accent);
 }
-.equipment-training li {
-  background: transparent;
-  border: 2px dashed var(--accent);
-  border-radius: 10px;
-  color: var(--ink);
-}
 
 /* =========================================================
    Modal "item get"
@@ -864,21 +858,38 @@ a {
    ========================================================= */
 .about-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 28px;
 }
 @media (min-width: 900px) {
   .about-grid {
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
   }
 }
 .hero-card {
   position: relative;
+  min-width: 0;
   padding: 26px;
   display: grid;
   gap: 16px;
   align-content: start;
 }
 .hero-card p {
+  color: var(--frame-muted);
+}
+.hero-card .hero-card-name {
+  font-family: var(--font-display), serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--frame-ink);
+}
+.hero-card .hero-card-headline {
+  margin-top: -8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
   color: var(--frame-muted);
 }
 .avatar {
@@ -900,10 +911,31 @@ a {
   height: 128px;
   object-fit: cover;
 }
+.avatar-photo {
+  width: 240px;
+  height: 300px;
+  aspect-ratio: 4 / 5;
+  background: none;
+  box-shadow: none;
+}
+.avatar-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 899px) {
+  .avatar-photo {
+    width: 200px;
+    height: 250px;
+  }
+}
 .stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+.stats > div {
+  min-width: 0;
 }
 .stats dt {
   font-size: 0.72rem;
@@ -914,30 +946,35 @@ a {
 }
 .stats dd {
   font-weight: 700;
+  overflow-wrap: break-word;
 }
-.equipment {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
+.cv-download {
+  justify-self: start;
+  justify-content: center;
 }
-.equipment li {
-  padding: 10px 12px;
-  font-weight: 700;
-  font-size: 0.92rem;
-  text-align: center;
-  border-radius: 10px;
+@media (max-width: 767px) {
+  .cv-download {
+    justify-self: stretch;
+  }
+}
+.about-side {
+  min-width: 0;
+}
+.about-side > .subhead:first-child {
+  margin-top: 0;
 }
 .quests {
   display: grid;
-  gap: 16px;
+  gap: 20px;
   border-left: 3px dashed var(--accent);
   padding-left: 18px;
 }
-.quests li {
+.quests > li {
   display: grid;
+  gap: 3px;
   position: relative;
 }
-.quests li::before {
+.quests > li::before {
   content: "";
   position: absolute;
   left: -26px;
@@ -953,8 +990,73 @@ a {
   font-weight: 800;
   color: var(--muted);
 }
-.quests span:last-child {
+.quest-detail {
+  font-size: 0.82rem;
   color: var(--muted);
+}
+.quest-points {
+  display: grid;
+  gap: 5px;
+  margin-top: 6px;
+  padding-left: 18px;
+  list-style: disc;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.quest-points li::marker {
+  color: var(--muted);
+}
+.scrolls {
+  display: grid;
+  gap: 12px;
+}
+.scrolls li {
+  display: grid;
+  gap: 2px;
+}
+.scrolls strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.scrolls span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.equipment-groups {
+  display: grid;
+  gap: 18px;
+}
+.equipment-groups > div {
+  display: grid;
+  gap: 8px;
+}
+.equipment-group-title {
+  justify-self: start;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--frame-bg);
+  border: 1px solid var(--frame-border);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.equipment {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+.equipment li {
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  text-align: center;
+  border-radius: 10px;
 }
 
 /* =========================================================

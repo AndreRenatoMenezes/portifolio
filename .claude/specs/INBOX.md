@@ -9,3 +9,4 @@ Ideias soltas, bugs e dívidas — uma linha cada. O Spec Architect promove iten
 - [x] Servir `/favicon.ico` → promovido para a spec 004
 - [ ] Favicon, ícones do manifest e imagem OpenGraph com o avatar novo da spec 007 (fora do escopo da 007)
 - [ ] Celular: a gema do hero (`.gem-hero`) fica sobre o botão "Fale comigo"/"Contact me" do hero. Preexistente, anterior à spec 007; achado da Lupa na revisão da 007 (2026-11-14)
+- [ ] Docx-mestre do currículo (fora do repo) ainda aponta `portifolio.bragademenezes.com`; os PDFs da spec 010 usam `bragademenezes.com`. O usuário corrige no arquivo dele (2026-11-15)
