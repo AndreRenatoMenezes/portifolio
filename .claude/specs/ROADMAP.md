@@ -11,3 +11,4 @@
 | 007 | Avatar animado do site e revisão da tela inicial | ui | Alta | concluída (PR #3 merged em `main`) → `current/007-avatar-animado-home/` | 006 |
 | 008 | Domínio canônico apex (`bragademenezes.com`) | infra | Alta | PR #4 aberto → `current/008-dominio-apex/` | T3 |
 | 009 | Revisão da UI: nome completo, padronização das fichas e simplificação do hero | ui | Alta | em execução (`feat/009-revisao-ui` a partir de `origin/development` `bd47b61`) → `current/009-revisao-ui/` | — |
+| 010 | Currículo na ficha do herói, download do CV (PDF PT/EN) e headline AI Builder | conteúdo + ui | Alta | aprovada para particionamento (`feat/010-curriculo-ficha-heroi` empilhada em `origin/feat/009-revisao-ui` `50b532e`) → `current/010-curriculo-ficha-heroi/` | 009 |
