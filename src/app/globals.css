@@ -290,13 +290,22 @@ a {
   grid-area: logo;
   font-family: var(--font-display), serif;
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  line-height: 1.2;
+  min-width: 0;
   color: var(--ink);
   text-decoration: none;
   letter-spacing: 0.02em;
 }
 .logo-mark {
   color: var(--gem);
+}
+@media (max-width: 559px) {
+  .logo {
+    font-size: 0.82rem;
+    line-height: 1.2;
+    min-width: 0;
+  }
 }
 @media (max-width: 419px) {
   /* A coluna da direita era dimensionada pela nav (linha 2), mais larga que os controles,
@@ -308,14 +317,10 @@ a {
       "hud nav nav";
     column-gap: 8px;
   }
-  /* Ao lado dos 4 controles o nome quebrava em 2 linhas: fonte menor e sem quebra;
-     reticências só como rede de segurança abaixo de 360px. */
   .logo {
-    font-size: 0.9rem;
-    white-space: nowrap;
+    font-size: 0.82rem;
+    line-height: 1.2;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 .main-nav {
@@ -357,10 +362,14 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1080px) {
   .header-inner {
     grid-template-columns: auto auto 1fr auto;
     grid-template-areas: "logo hud nav controls";
+  }
+  .logo {
+    font-size: clamp(0.88rem, 1.1vw, 1rem);
+    white-space: nowrap;
   }
 }
 
@@ -403,30 +412,6 @@ a {
   display: grid;
   gap: 20px;
   justify-items: start;
-}
-.hero-title {
-  font-family: var(--font-display), serif;
-  font-weight: 800;
-  font-size: clamp(2.2rem, 7vw, 4.4rem);
-  line-height: 1.05;
-  color: #fff;
-  text-shadow:
-    0 3px 0 rgba(0, 0, 0, 0.35),
-    0 0 30px rgba(0, 0, 0, 0.25);
-}
-.hero-role {
-  /* Placa de título: dourado sobre a moldura escura, legível em qualquer céu (dia/templo/noite). */
-  display: table;
-  font-size: max(0.42em, 0.72rem);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-top: 10px;
-  padding: 0.2em 0.6em;
-  border: 2px solid var(--frame-border);
-  border-radius: 8px;
-  background: var(--frame-bg);
-  text-shadow: none;
 }
 .hero-cta {
   margin-top: 4px;
