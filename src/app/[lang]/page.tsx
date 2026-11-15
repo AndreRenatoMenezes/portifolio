@@ -51,12 +51,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <HeroScene />
         <Gem id="hero" {...gem} className="gem-hero" />
         <div className="container hero-inner">
-          <h1 className="hero-title">
-            {profile.name}{" "}
-            <span className="hero-role">{profile.role[lang]}</span>
+          <h1 className="sr-only">
+            {profile.name} — {profile.role[lang]}
           </h1>
-          <p className="hero-pitch">{dict.hero.pitch}</p>
-          <p className="hero-game-hint">{dict.hero.gameHint}</p>
           <DialogBox
             lines={dict.hero.lines}
             nextLabel={dict.hero.next}

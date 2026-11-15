@@ -4,7 +4,7 @@ import type { Localized } from "@/lib/i18n";
  * Seus dados pessoais (baseados no README do perfil do GitHub).
  */
 export const profile = {
-  name: "André Menezes",
+  name: "Andre Renato Silva Braga de Menezes",
   initials: "AM",
   /** Foto opcional em /public (ex.: "/avatar.jpg"). Sem foto, mostra as iniciais. */
   avatar: undefined as string | undefined,
