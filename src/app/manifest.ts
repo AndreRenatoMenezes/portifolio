@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Andre Renato Silva Braga de Menezes — Portfólio",
     short_name: "Andre",
-    description: "Portfólio de Andre Renato Silva Braga de Menezes, Endpoint Engineer.",
+    description: "Portfólio de Andre Renato Silva Braga de Menezes, AI Builder.",
     start_url: "/",
     display: "standalone",
     background_color: "#0d1430",
