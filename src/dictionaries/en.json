@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "André Menezes — Portfolio",
-    "description": "André Menezes, Endpoint Engineer: infrastructure automation, hardware certification and products built with Spec-Driven Development."
+    "title": "Andre Renato Silva Braga de Menezes — Portfolio",
+    "description": "Andre Renato Silva Braga de Menezes, Endpoint Engineer: infrastructure automation, hardware certification and products built with Spec-Driven Development."
   },
   "nav": {
     "label": "Main navigation",
@@ -25,12 +25,10 @@
     "gems": "Gems found"
   },
   "hero": {
-    "pitch": "I automate endpoint infrastructure — hardware certification across Windows, macOS and Linux — and build products with spec-driven AI agent teams.",
-    "gameHint": "This portfolio is a game: open the inventory, follow the fairy and look for hidden gems.",
     "lines": [
-      "Hello, traveler! Good to see you here. Take a seat by the fire.",
+      "Hello, traveler! I'm an Endpoint Engineer in Rio de Janeiro: I automate endpoint infrastructure across Windows, macOS and Linux and build products with spec-driven AI agent teams.",
       "My craft is getting manual work out of the way: I test hardware, standardize machines and write scripts that run on their own. Every test returns PASS or FAIL.",
-      "What I've forged is right below. And if your journey calls for an ally, the signposts lead to me."
+      "This portfolio is a game: explore the inventory below, follow the fairy and look for hidden gems. If your journey calls for an ally, the signposts lead to me."
     ],
     "next": "Continue",
     "continue": "Continue",

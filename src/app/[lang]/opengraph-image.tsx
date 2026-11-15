@@ -16,14 +16,14 @@ export default async function Image({ params }: { params: Promise<{ lang: string
   return new ImageResponse(
     (
       <OgFrame footer={dict.meta.title}>
-        <div style={{ display: "flex", fontSize: 92, fontWeight: 800, lineHeight: 1.05, marginTop: 70 }}>{profile.name}</div>
+        <div style={{ display: "flex", fontSize: 56, fontWeight: 800, lineHeight: 1.05, marginTop: 24 }}>{profile.name}</div>
         <div style={{ display: "flex", fontSize: 40, color: "#f0c75e", letterSpacing: 6, marginTop: 14, textTransform: "uppercase" }}>
           {profile.role[lang]} · {profile.home[lang]}
         </div>
         <div
           style={{
             display: "flex",
-            marginTop: 44,
+            marginTop: 28,
             maxWidth: 860,
             padding: "22px 28px",
             fontSize: 30,

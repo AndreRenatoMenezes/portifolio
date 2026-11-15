@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "André Menezes — Portfólio",
-    "description": "André Menezes, Endpoint Engineer: automação para infraestrutura, homologação de hardware e produtos construídos com Spec-Driven Development."
+    "title": "Andre Renato Silva Braga de Menezes — Portfólio",
+    "description": "Andre Renato Silva Braga de Menezes, Endpoint Engineer: automação para infraestrutura, homologação de hardware e produtos construídos com Spec-Driven Development."
   },
   "nav": {
     "label": "Navegação principal",
@@ -25,12 +25,10 @@
     "gems": "Gemas encontradas"
   },
   "hero": {
-    "pitch": "Automatizo a infraestrutura de endpoints — homologação de hardware em Windows, macOS e Linux — e construo produtos com times de agentes de IA guiados por spec.",
-    "gameHint": "Este portfólio é um jogo: abra o inventário, siga a fada e procure as gemas escondidas.",
     "lines": [
-      "Olá, viajante! Que bom ver você por aqui. Sente-se perto da fogueira.",
+      "Olá, viajante! Sou Endpoint Engineer no Rio de Janeiro: automatizo a infraestrutura de endpoints em Windows, macOS e Linux e construo produtos com times de agentes de IA guiados por spec.",
       "Meu ofício é tirar trabalho manual do caminho: testo hardware, padronizo máquinas e escrevo scripts que rodam sozinhos. Cada teste devolve PASS ou FAIL.",
-      "O que eu forjei está logo abaixo. E se a jornada pedir um aliado, as placas do caminho levam até mim."
+      "Este portfólio é um jogo: explore o inventário abaixo, siga a fada e procure as gemas escondidas. Se a jornada pedir um aliado, as placas do caminho levam até mim."
     ],
     "next": "Continuar",
     "continue": "Continuar",
