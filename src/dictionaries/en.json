@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "André Menezes — Portfolio",
-    "description": "André Menezes, Endpoint Engineer: infrastructure automation, hardware certification and products built with Spec-Driven Development."
+    "title": "Andre Renato Silva Braga de Menezes — Portfolio",
+    "description": "Andre Renato Silva Braga de Menezes, AI Builder: infrastructure automation, AI agents and Python, with products built through Spec-Driven Development."
   },
   "nav": {
     "label": "Main navigation",
@@ -25,12 +25,10 @@
     "gems": "Gems found"
   },
   "hero": {
-    "pitch": "I automate endpoint infrastructure — hardware certification across Windows, macOS and Linux — and build products with spec-driven AI agent teams.",
-    "gameHint": "This portfolio is a game: open the inventory, follow the fairy and look for hidden gems.",
     "lines": [
-      "Hello, traveler! Good to see you here. Take a seat by the fire.",
-      "My craft is getting manual work out of the way: I test hardware, standardize machines and write scripts that run on their own. Every test returns PASS or FAIL.",
-      "What I've forged is right below. And if your journey calls for an ally, the signposts lead to me."
+      "Hello, traveler! I'm an AI Builder in Rio de Janeiro: I build end-to-end solutions with AI, automate infrastructure with Python and guide spec-driven AI agent teams.",
+      "My craft is getting manual work out of the way: I automate performance and benchmark testing, certify operating system and security agent updates and digitize business workflows. Every test returns PASS or FAIL.",
+      "This portfolio is a game: explore the inventory below, follow the fairy and look for hidden gems. If your journey calls for an ally, the signposts lead to me."
     ],
     "next": "Continue",
     "continue": "Continue",
@@ -75,9 +73,12 @@
     "subtitle": "Who's behind the inventory.",
     "class": "Class",
     "home": "Home village",
-    "equipment": "Equipment",
-    "questLog": "Quest log",
-    "training": "In training"
+    "experience": "Experience",
+    "degree": "Education",
+    "questLog": "Quest log · Experience",
+    "scrolls": "Scrolls · Education and certifications",
+    "equipment": "Equipment · Technical skills",
+    "cv": "Download résumé (PDF)"
   },
   "contact": {
     "title": "Signposts",

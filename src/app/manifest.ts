@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "André Menezes — Portfólio",
-    short_name: "André",
-    description: "Portfólio de André Menezes, Endpoint Engineer.",
+    name: "Andre Renato Silva Braga de Menezes — Portfólio",
+    short_name: "Andre",
+    description: "Portfólio de Andre Renato Silva Braga de Menezes, AI Builder.",
     start_url: "/",
     display: "standalone",
     background_color: "#0d1430",

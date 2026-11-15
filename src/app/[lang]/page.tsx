@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ContactForm } from "@/components/ContactForm";
 import { DialogBox } from "@/components/DialogBox";
@@ -5,7 +6,6 @@ import { Gem } from "@/components/Gem";
 import { HeroScene } from "@/components/HeroScene";
 import { Inventory, type InventoryItem } from "@/components/Inventory";
 import { JsonLd } from "@/components/JsonLd";
-import { NpcAvatar } from "@/components/NpcAvatar";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { whatsappUrl } from "@/lib/contact";
@@ -51,12 +51,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <HeroScene />
         <Gem id="hero" {...gem} className="gem-hero" />
         <div className="container hero-inner">
-          <h1 className="hero-title">
-            {profile.name}{" "}
-            <span className="hero-role">{profile.role[lang]}</span>
+          <h1 className="sr-only">
+            {profile.name} — {profile.role[lang]}
           </h1>
-          <p className="hero-pitch">{dict.hero.pitch}</p>
-          <p className="hero-game-hint">{dict.hero.gameHint}</p>
           <DialogBox
             lines={dict.hero.lines}
             nextLabel={dict.hero.next}
@@ -104,14 +101,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         </header>
         <div className="about-grid">
           <div className="hero-card dialog-frame">
-            <div className="avatar" aria-hidden={!profile.avatar}>
-              {profile.avatar ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={profile.avatar} alt={profile.name} />
-              ) : (
-                <NpcAvatar />
-              )}
+            <div className="avatar avatar-photo">
+              <Image
+                src={profile.avatar}
+                alt={profile.name}
+                width={800}
+                height={1000}
+                sizes="(min-width: 900px) 240px, 200px"
+              />
             </div>
+            <p className="hero-card-name">{profile.name}</p>
+            <p className="hero-card-headline">{profile.headline[lang]}</p>
             <dl className="stats">
               <div>
                 <dt>
@@ -125,42 +125,90 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 </dt>
                 <dd>{profile.home[lang]}</dd>
               </div>
+              <div>
+                <dt>
+                  {dict.about.experience}
+                </dt>
+                <dd>{profile.experience[lang]}</dd>
+              </div>
+              <div>
+                <dt>
+                  {dict.about.degree}
+                </dt>
+                <dd>{profile.education[0].title[lang]}</dd>
+              </div>
             </dl>
             <p>{profile.bio[lang]}</p>
+            <a
+              className="btn btn-primary cv-download"
+              href={profile.cv[lang]}
+              download
+              data-track="cv_download"
+              data-track-channel={lang}
+            >
+              {dict.about.cv}
+            </a>
             <Gem id="about" {...gem} className="gem-corner" />
           </div>
 
           <div className="about-side">
             <h3 className="subhead">
-              {dict.about.equipment}
-            </h3>
-            <ul className="equipment">
-              {profile.skills.map((s) => (
-                <li key={s} className="dialog-frame">
-                  {s}
-                </li>
-              ))}
-            </ul>
-            <h3 className="subhead">
-              {dict.about.training}
-            </h3>
-            <ul className="equipment equipment-training">
-              {profile.training.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-            <h3 className="subhead">
               {dict.about.questLog}
             </h3>
             <ol className="quests">
               {profile.quests.map((q) => (
-                <li key={q.title.en}>
+                <li key={`${q.when.en}-${q.title.en}`}>
                   <span className="quest-when">{q.when[lang]}</span>
-                  <strong>{q.title[lang]}</strong>
-                  <span>{q.text[lang]}</span>
+                  <strong>
+                    {q.title[lang]}
+                    {q.org ? ` · ${q.org}` : ""}
+                  </strong>
+                  {q.detail && <span className="quest-detail">{q.detail[lang]}</span>}
+                  <ul className="quest-points">
+                    {q.points.map((point) => (
+                      <li key={point.en}>{point[lang]}</li>
+                    ))}
+                  </ul>
                 </li>
               ))}
             </ol>
+            <h3 className="subhead">
+              {dict.about.scrolls}
+            </h3>
+            <ul className="scrolls">
+              {profile.education.map((edu) => (
+                <li key={edu.title.en}>
+                  <strong>{edu.title[lang]}</strong>
+                  <span>
+                    {edu.org} · {edu.when[lang]}
+                  </span>
+                </li>
+              ))}
+              {profile.certifications.map((cert) => (
+                <li key={cert.title}>
+                  <strong>
+                    {cert.title} — {cert.org}
+                  </strong>
+                </li>
+              ))}
+            </ul>
+            <h3 className="subhead">
+              {dict.about.equipment}
+            </h3>
+            <div className="equipment-groups">
+              {profile.skills.map((group) => (
+                <div key={group.group.en}>
+                  <h4 className="equipment-group-title">{group.group[lang]}</h4>
+                  <ul className="equipment">
+                    {group.items.map((item) => (
+                      <li key={item.en} className="dialog-frame">
+                        {item[lang]}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -189,13 +237,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               </a>
             </li>
           ))}
-          {profile.cv && (
-            <li>
-              <a className="signpost" href={profile.cv} download>
-                {dict.contact.cv}
-              </a>
-            </li>
-          )}
+          <li>
+            <a
+              className="signpost"
+              href={profile.cv[lang]}
+              download
+              data-track="cv_download"
+              data-track-channel={lang}
+            >
+              {dict.contact.cv}
+            </a>
+          </li>
           <li className="signpost-gem">
             <Gem id="contact" {...gem} />
           </li>

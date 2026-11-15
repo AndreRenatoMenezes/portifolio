@@ -16,7 +16,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Quem é o responsável",
         body: [
-          "André Menezes, pessoa física, Rio de Janeiro, Brasil — o controlador dos dados, nos termos da LGPD (Lei 13.709/2018).",
+          "Andre Renato Silva Braga de Menezes, pessoa física, Rio de Janeiro, Brasil — o controlador dos dados, nos termos da LGPD (Lei 13.709/2018).",
           "Contato para qualquer assunto de privacidade: {email}.",
         ],
       },
@@ -80,7 +80,7 @@ export const privacy: Record<Locale, { title: string; intro: string; sections: {
       {
         heading: "Who is responsible",
         body: [
-          "André Menezes, an individual based in Rio de Janeiro, Brazil — the data controller under Brazil's LGPD (Law 13,709/2018).",
+          "Andre Renato Silva Braga de Menezes, an individual based in Rio de Janeiro, Brazil — the data controller under Brazil's LGPD (Law 13,709/2018).",
           "Contact for any privacy matter: {email}.",
         ],
       },
